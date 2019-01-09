@@ -112,7 +112,7 @@ systemctl enable $app.service
 # INSTALL ADGUARD
 #==============================================
 
-setcap CAP_NET_BIND_SERVICE=+eip .$final_path/AdGuardHome
+#setcap CAP_NET_BIND_SERVICE=+eip .$final_path/AdGuardHome
 
 #=================================================
 # NGINX CONFIGURATION
