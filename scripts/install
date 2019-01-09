@@ -176,4 +176,6 @@ fi
 
 # Reload services
 systemctl reload nginx
+systemctl stop dnsmasq.service
+systemctl disable dnsmasq.service
 systemctl start $app.service
