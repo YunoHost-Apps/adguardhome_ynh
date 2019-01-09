@@ -32,7 +32,6 @@
                 },
                 "example": "example.com"
             },
-
             {
                 "name": "path",
                 "type": "path",
@@ -43,7 +42,6 @@
                 "example": "/adguard",
                 "default": "/adguard"
             },
-            
             {
                 "name": "is_public",
                 "type": "boolean",
@@ -52,6 +50,24 @@
                     "fr": "Est-ce un site public ?"
                 },
                 "default": "true"
+            },
+            {
+                "name": "user",
+                "type": "user",
+                "ask": {
+                    "en": "Enter your admin username ?",
+                    "fr": "Entrez votre nom d'utilisateur ?"
+                },
+                "example": "liberodark"
+            },
+            {
+                "name": "password",
+                "type": "password",
+                "ask": {
+                    "en": "Enter your password !",
+                    "fr": "Entrez votre mot de passe !"
+                },
+                "example": "mypassword"
             }
         ]
     }
