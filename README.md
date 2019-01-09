@@ -1,8 +1,6 @@
 # AdGuard Home app for YunoHost
 AdGuard Home Server
 
-# IS NOT WORK IS IN DEV
-
 - [Yunohost project](https://yunohost.org)
 - [AdGuard Home website](https://github.com/AdguardTeam/AdGuardHome)
 
