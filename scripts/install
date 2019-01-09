@@ -70,7 +70,7 @@ ynh_app_setting_set $app is_public $is_public
 # INSTALL DEPS
 #==============================================
 
-#ynh_package_install setcap
+ynh_package_install libcap2-bin
 
 #=================================================
 # FIND AND OPEN A PORT
