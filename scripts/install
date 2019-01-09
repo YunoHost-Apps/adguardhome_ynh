@@ -28,8 +28,8 @@ ynh_abort_if_errors
 domain=$YNH_APP_ARG_DOMAIN
 path_url=$YNH_APP_ARG_PATH
 is_public=$YNH_APP_ARG_IS_PUBLIC
-ad_user=$YNH_APP_ARG_IS_AD_USER
-ad_password=$YNH_APP_ARG_IS_AD_PASSWORD
+ad_user=$YNH_APP_ARG_AD_USER
+ad_password=$YNH_APP_ARG_AD_PASSWORD
 
 ### If it's a multi-instance app, meaning it can be installed several times independently
 ### The id of the app as stated in the manifest is available as $YNH_APP_ID
@@ -158,7 +158,6 @@ ynh_store_file_checksum "$final_path/AdGuardHome.yaml"
 
 # Set permissions to app files
 #chown -R root: /etc/loolwsd
-
 
 #=================================================
 # SETUP SSOWAT
