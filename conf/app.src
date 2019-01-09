@@ -1,0 +1,7 @@
+SOURCE_URL=https://github.com/MediaBrowser/Emby.Releases/releases/download/3.5.3.0/emby-server-deb_3.5.3.0_amd64.deb
+SOURCE_SUM=ae9acfa988b87fe91c51caae3e3512d1a05c23744d50fde5e6ef935da959b473113e635050466ba03c2ebd0a286e1d28fd9557f1d1235c538f29376a5153fbdb
+SOURCE_SUM_PRG=sha512sum
+SOURCE_FORMAT=deb
+SOURCE_IN_SUBDIR=false
+SOURCE_EXTRACT=false
+SOURCE_FILENAME=emby-server-deb.deb
