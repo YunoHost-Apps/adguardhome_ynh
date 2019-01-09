@@ -66,6 +66,12 @@ ynh_app_setting_set $app domain $domain
 ynh_app_setting_set $app path $path_url
 ynh_app_setting_set $app is_public $is_public
 
+#==============================================
+# INSTALL DEPS
+#==============================================
+
+ynh_package_install setcap
+
 #=================================================
 # FIND AND OPEN A PORT
 #=================================================
@@ -76,7 +82,7 @@ ynh_app_setting_set $app is_public $is_public
 ###		- Remove the section "CLOSE A PORT" in the remove script
 
 # Find a free port
-port=$(ynh_find_port 8096)
+port=$(ynh_find_port 53)
 # Open this port
 yunohost firewall allow --no-upnp TCP $port 2>&1
 ynh_app_setting_set $app port $port
@@ -90,10 +96,10 @@ ynh_app_setting_set $app final_path $final_path
 ynh_setup_source "$final_path"
 
 #==============================================
-# INSTALL EMBY
+# INSTALL ADGUARD
 #==============================================
 
-dpkg --install  $final_path/emby-server-deb*
+setcap CAP_NET_BIND_SERVICE=+eip .$final_path/AdGuardHome
 
 #=================================================
 # NGINX CONFIGURATION

@@ -1,13 +1,13 @@
 {
-    "name": "EmbyServer",
-    "id": "embyserver",
+    "name": "AdGuard Home",
+    "id": "adguard",
     "packaging_format": 1,
     "description": {
-        "en": "EmbyServer package for YunoHost.",
-        "fr": "EmbyServer pour YunoHost."
+        "en": "AdGuard Home package for YunoHost.",
+        "fr": "AdGuard Home pour YunoHost."
     },
-    "version": "3.5.3.0",
-    "url": "https://emby.media/",
+    "version": "0.9.2",
+    "url": "https://github.com/AdguardTeam/AdGuardHome",
     "license": "free",
     "maintainer": {
         "name": "liberodark",
@@ -16,7 +16,7 @@
     "requirements": {
         "yunohost": ">= 2.7.2"
     },
-    "multi_instance": true,
+    "multi_instance": false,
     "services": [
         "nginx",
         "php5-fpm",
@@ -27,8 +27,8 @@
                 "name": "domain",
                 "type": "domain",
                 "ask": {
-                    "en": "Choose a domain name for EmbyServer",
-                    "fr": "Choisissez un nom de domaine pour EmbyServer"
+                    "en": "Choose a domain name for AdGuard Home",
+                    "fr": "Choisissez un nom de domaine pour AdGuard Home"
                 },
                 "example": "example.com"
             },
@@ -37,11 +37,11 @@
                 "name": "path",
                 "type": "path",
                 "ask": {
-                    "en": "Choose a path for EmbyServer /emby is accepted",
-                    "fr": "Choisissez un chemin pour EmbyServer /emby est accepté"
+                    "en": "Choose a path for AdGuard Home /adguard is accepted",
+                    "fr": "Choisissez un chemin pour AdGuard Home /adguard est accepté"
                 },
-                "example": "/emby",
-                "default": "/emby"
+                "example": "/adguard",
+                "default": "/adguard"
             },
             
             {
