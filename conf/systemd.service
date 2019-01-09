@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 WorkingDirectory=__FINALPATH__
-User=admin
+User=root
 Group=users
 Type=simple
 UMask=000
