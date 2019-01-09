@@ -95,6 +95,19 @@ ynh_app_setting_set $app final_path $final_path
 # Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source "$final_path"
 
+#=================================================
+# MODIFY A CONFIG FILE
+#=================================================
+
+ynh_replace_string "__FINALPATH__" "$final_path" "../conf/systemd.service"
+
+#=================================================
+# SETUP SYSTEMD
+#=================================================
+
+ynh_add_systemd_config
+systemctl enable $app.service
+
 #==============================================
 # INSTALL ADGUARD
 #==============================================
@@ -160,3 +173,4 @@ fi
 
 # Reload services
 systemctl reload nginx
+systemctl start $app.service

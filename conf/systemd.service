@@ -1,0 +1,16 @@
+[Unit]
+Description=adguard
+After=network.target
+
+[Service]
+WorkingDirectory=__FINALPATH__
+User=admin
+Group=users
+Type=simple
+UMask=000
+ExecStart=__FINALPATH__/AdGuardHome
+RestartSec=15
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
