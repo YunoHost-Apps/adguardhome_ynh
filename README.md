@@ -15,6 +15,10 @@ AdGuard Home Server
 
          $ sudo yunohost app install https://github.com/YunoHost-Apps/adguard_ynh
 
+         Fail to start ?
+
+         $ netstat -tlnp | grep 53
+
  
 ### Upgrade this package:
 
