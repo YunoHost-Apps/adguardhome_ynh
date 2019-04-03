@@ -13,11 +13,11 @@ AdGuard Home Server
 
 ### Installing guide
 
- 1. App can be installed by YunoHost **admin web-interface** or by **running following command**:
+ App can be installed by YunoHost **admin web-interface** or by **running following command**:
 
          $ sudo yunohost app install https://github.com/YunoHost-Apps/adguard_ynh
 
- 2. Fail to start ? try :
+ Fail to start ? try :
 
          $ netstat -tlnp | grep 53
 
