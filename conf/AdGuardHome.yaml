@@ -1,30 +1,46 @@
-bind_host: 127.0.0.1
-bind_port: 3000
+bind_host: 0.0.0.0
+bind_port: 80
 auth_name: __USER__
 auth_pass: __PWD__
 language: ""
+rlimit_nofile: 0
 dns:
+  bind_host: 0.0.0.0
   port: 53
   protection_enabled: true
   filtering_enabled: true
+  blocking_mode: nxdomain
   blocked_response_ttl: 10
   querylog_enabled: true
   ratelimit: 20
   ratelimit_whitelist: []
   refuse_any: true
-  bootstrap_dns: 8.8.8.8:53
+  bootstrap_dns:
+  - 1.1.1.1:53
+  all_servers: false
+  allowed_clients: []
+  disallowed_clients: []
+  blocked_hosts: []
+  filtering_temp_filename: ""
   parental_sensitivity: 0
   parental_enabled: false
   safesearch_enabled: false
   safebrowsing_enabled: false
+  resolveraddress: ""
   upstream_dns:
-  - tls://1.1.1.1
-  - tls://1.0.0.1
+  - https://dns.cloudflare.com/dns-query
+tls:
+  enabled: false
+  server_name: ""
+  force_https: false
+  port_https: 443
+  port_dns_over_tls: 853
+  certificate_chain: ""
+  private_key: ""
 filters:
 - enabled: true
   url: https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt
   name: AdGuard Simplified Domain Names filter
-  last_updated: 2018-12-28T10:03:32.660659837+01:00
   id: 1
 - enabled: false
   url: https://adaway.org/hosts.txt
@@ -35,7 +51,7 @@ filters:
   name: hpHosts - Ad and Tracking servers only
   id: 3
 - enabled: false
-  url: http://www.malwaredomainlist.com/hostslist/hosts.txt
+  url: https://www.malwaredomainlist.com/hostslist/hosts.txt
   name: MalwareDomainList.com Hosts List
   id: 4
 user_rules: []
@@ -46,5 +62,9 @@ dhcp:
   subnet_mask: ""
   range_start: ""
   range_end: ""
-  lease_duration: 0
-schema_version: 2
+  lease_duration: 86400
+  icmp_timeout_msec: 1000
+clients: []
+log_file: ""
+verbose: false
+schema_version: 3
