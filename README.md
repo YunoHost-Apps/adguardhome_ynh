@@ -19,6 +19,7 @@ AdGuard Home Server
 
  Fail to start ? try :
 
+         $ systemctl status adguard
          $ apt install -y net-tools
          $ netstat -tlnp | grep 53
 
