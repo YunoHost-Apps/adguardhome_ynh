@@ -123,4 +123,7 @@ ynh_system_user_delete $app
 # END OF SCRIPT
 #=================================================
 
+systemctl start dnsmasq.service
+systemctl enable dnsmasq.service
+
 ynh_print_info "Removal of $app completed"
