@@ -50,7 +50,7 @@ ynh_print_info "Removing dependencies"
 
 # Remove metapackage and its dependencies
 #ynh_remove_app_dependencies
-ynh_package_remove plexmediaserver
+ynh_package_remove libcap2-bin
 
 #=================================================
 # REMOVE APP MAIN DIR
