@@ -54,6 +54,18 @@ filters:
   url: https://www.malwaredomainlist.com/hostslist/hosts.txt
   name: MalwareDomainList.com Hosts List
   id: 4
+ - enabled: false
+  url: https://filters.adtidy.org/extension/chromium/filters/16.txt
+  name: French filter
+  id: 5
+ - enabled: false
+  url: https://filters.adtidy.org/extension/chromium/filters/3.txt
+  name: Tracking Protection filter
+  id: 6
+ - enabled: false
+  url: https://filters.adtidy.org/extension/chromium/filters/14.txt
+  name: Annoyances filter
+  id: 7
 user_rules: []
 dhcp:
   enabled: false
