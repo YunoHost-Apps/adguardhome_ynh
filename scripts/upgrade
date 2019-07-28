@@ -10,9 +10,6 @@ final_path=/opt/yunohost/$app
 # Source YunoHost helpers
 source /usr/share/yunohost/helpers
 
-# Stop Adguard service
-systemctl stop adguard
-
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
@@ -43,4 +40,4 @@ ynh_setup_source "$final_path"
 #fi
 
 # Start Adguard service
-systemctl start adguard
+systemctl restart adguard
