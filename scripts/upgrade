@@ -10,7 +10,7 @@ final_path=/opt/yunohost/$app
 # Source YunoHost helpers
 source /usr/share/yunohost/helpers
 
-cp -a "/opt/yunohost/$app/AdGuardHome.yaml /opt/yunohost/$app/AdGuardHome.yaml.bak.$(date)"
+cp -a /opt/yunohost/$app/AdGuardHome.yaml /opt/yunohost/$app/AdGuardHome.yaml.bak.$(date)
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
