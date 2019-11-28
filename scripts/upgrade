@@ -11,13 +11,13 @@ date=$(date +%Y.%m.%d_%H-%M-%S)
 # Source YunoHost helpers
 source /usr/share/yunohost/helpers
 
-cp -a /opt/yunohost/$app/AdGuardHome.yaml /opt/yunohost/$app/AdGuardHome.yaml.$date.bak
+cp -a /opt/yunohost/"$app"/AdGuardHome.yaml /opt/yunohost/"$app"/AdGuardHome.yaml."$date".bak
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 
-ynh_app_setting_set $app final_path $final_path
+ynh_app_setting_set "$app" final_path "$final_path"
 # Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source "$final_path"
 
