@@ -6,11 +6,12 @@ set -eu
 # See comments in install script
 app=$YNH_APP_INSTANCE_NAME
 final_path=/opt/yunohost/$app
+date=$(date +%Y.%m.%d_%H-%M-%S)
 
 # Source YunoHost helpers
 source /usr/share/yunohost/helpers
 
-#cp -a /opt/yunohost/$app/AdGuardHome.yaml /opt/yunohost/$app/AdGuardHome.yaml.bak
+cp -a /opt/yunohost/$app/AdGuardHome.yaml /opt/yunohost/$app/AdGuardHome.yaml.$date.bak
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
