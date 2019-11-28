@@ -53,20 +53,20 @@ final_path=/opt/yunohost/$app
 test ! -e "$final_path" || ynh_die "This path already contains a folder"
 
 # Normalize the url path syntax
-path_url=$(ynh_normalize_url_path $path_url)
+path_url=$(ynh_normalize_url_path "$path_url")
 
 # Check web path availability
-ynh_webpath_available $domain $path_url
+ynh_webpath_available "$domain" "$path_url"
 # Register (book) web path
-ynh_webpath_register $app $domain $path_url
+ynh_webpath_register "$app" "$domain" "$path_url"
 
 #=================================================
 # STORE SETTINGS FROM MANIFEST
 #=================================================
 
-ynh_app_setting_set $app domain $domain
-ynh_app_setting_set $app path $path_url
-ynh_app_setting_set $app is_public $is_public
+ynh_app_setting_set "$app" domain "$domain"
+ynh_app_setting_set "$app" path "$path_url"
+ynh_app_setting_set "$app" is_public "$is_public"
 
 #==============================================
 # INSTALL DEPS
@@ -90,7 +90,7 @@ port=$(ynh_find_port 53)
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 
-ynh_app_setting_set $app final_path $final_path
+ynh_app_setting_set "$app" final_path "$final_path"
 # Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source "$final_path"
 
@@ -107,7 +107,7 @@ ynh_replace_string "__PWD__" "$ad_password" "../conf/AdGuardHome.yaml"
 #=================================================
 
 ynh_add_systemd_config
-systemctl enable $app.service
+systemctl enable "$app".service
 
 #==============================================
 # INSTALL ADGUARD
@@ -133,7 +133,7 @@ ynh_add_nginx_config
 # MODIFY A CONFIG FILE
 #=================================================
 
-cp -a ../conf/AdGuardHome.yaml $final_path/AdGuardHome.yaml
+cp -a ../conf/AdGuardHome.yaml "$final_path"/AdGuardHome.yaml
 
 #=================================================
 # STORE THE CONFIG FILE CHECKSUM
@@ -164,7 +164,7 @@ ynh_store_file_checksum "$final_path/AdGuardHome.yaml"
 #=================================================
 
 # If app is public, add url to SSOWat conf as skipped_uris
-if [ $is_public -eq 1 ]; then
+if [ "$is_public" -eq 1 ]; then
   # unprotected_uris allows SSO credentials to be passed anyway.
   ynh_app_setting_set "$app" unprotected_uris "/"
 fi
@@ -173,4 +173,4 @@ fi
 systemctl reload nginx
 systemctl stop dnsmasq.service
 systemctl disable dnsmasq.service
-systemctl start $app.service
+systemctl start "$app".service
