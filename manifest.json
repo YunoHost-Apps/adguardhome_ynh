@@ -6,7 +6,7 @@
         "en": "AdGuard Home package for YunoHost.",
         "fr": "AdGuard Home pour YunoHost."
     },
-    "version": "0.97.1",
+    "version": "0.99.3",
     "url": "https://github.com/AdguardTeam/AdGuardHome",
     "license": "free",
     "maintainer": {
