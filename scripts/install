@@ -112,6 +112,7 @@ fi
 # MODIFY A CONFIG FILE
 #=================================================
 
+chmod +x ../conf/htpasswd
 ynh_replace_string "__FINALPATH__" "$final_path" "../conf/systemd.service"
 ynh_replace_string "__USER__" "$ad_user" "../conf/AdGuardHome.yaml"
 ynh_replace_string "__PWD__" "$password_gen" "../conf/AdGuardHome.yaml"
