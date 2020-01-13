@@ -130,7 +130,6 @@ ynh_add_nginx_config
 #=================================================
 
 #cp -a ../conf/AdGuardHome.yaml "$final_path"/AdGuardHome.yaml
-#sed -i "s@bind_port: *.*@bind_port: 3000@g" "$final_path"/AdGuardHome.yaml
 
 #=================================================
 # STORE THE CONFIG FILE CHECKSUM
