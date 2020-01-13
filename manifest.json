@@ -50,24 +50,6 @@
                     "fr": "Est-ce un site public ?"
                 },
                 "default": "true"
-            },
-            {
-                "name": "ad_user",
-                "type": "ad_user",
-                "ask": {
-                    "en": "Enter your admin username ?",
-                    "fr": "Entrez votre nom d'utilisateur ?"
-                },
-                "example": "liberodark"
-            },
-            {
-                "name": "ad_password",
-                "type": "ad_password",
-                "ask": {
-                    "en": "Enter your password !",
-                    "fr": "Entrez votre mot de passe !"
-                },
-                "example": "mypassword"
             }
         ]
     }
