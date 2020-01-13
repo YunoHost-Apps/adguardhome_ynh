@@ -59,7 +59,6 @@ path_url=$(ynh_normalize_url_path "$path_url")
 ynh_webpath_available "$domain" "$path_url"
 # Register (book) web path
 ynh_webpath_register "$app" "$domain" "$path_url"
-password_gen=$(../conf/htpasswd -B -n -b "$ad_user" "$ad_password" | sed 's/["$ad_user":]//g')
 
 #=================================================
 # STORE SETTINGS FROM MANIFEST
@@ -111,8 +110,8 @@ ynh_setup_source "$final_path"
 #=================================================
 # MODIFY A CONFIG FILE
 #=================================================
-
 chmod +x ../conf/htpasswd
+password_gen=$(../conf/htpasswd -B -n -b "$ad_user" "$ad_password" | sed 's/["$ad_user":]//g')
 ynh_replace_string "__FINALPATH__" "$final_path" "../conf/systemd.service"
 ynh_replace_string "__USER__" "$ad_user" "../conf/AdGuardHome.yaml"
 ynh_replace_string "__PWD__" "$password_gen" "../conf/AdGuardHome.yaml"
