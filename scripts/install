@@ -98,21 +98,13 @@ ynh_setup_source "$final_path"
 # GENERATE PASSWORD
 #=================================================
 
-# Check SHA1
-#if ! sha1sum -c ../conf/htpasswd.checksum &> /dev/null
-# then
-#      echo "htpasswd Integrity Error"
-#      exit
-#  else
-#      echo "htpasswd Integrity Success"
-#fi
+chmod +x ../conf/htpasswd
+password_gen=$(../conf/htpasswd -B -n -b "$ad_user" "$ad_password" | sed "s/"$ad_user"://")
 
 #=================================================
 # MODIFY A CONFIG FILE
 #=================================================
 
-chmod +x ../conf/htpasswd
-password_gen=$(../conf/htpasswd -B -n -b "$ad_user" "$ad_password" | sed "s/"$ad_user"://")
 ynh_replace_string "__FINALPATH__" "$final_path" "../conf/systemd.service"
 ynh_replace_string "__USER__" "$ad_user" "../conf/AdGuardHome.yaml"
 ynh_replace_string "__PWD__" "$password_gen" "../conf/AdGuardHome.yaml"
