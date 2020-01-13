@@ -73,7 +73,7 @@ ynh_app_setting_set "$app" is_public "$is_public"
 # INSTALL DEPS
 #==============================================
 
-ynh_install_app_dependencies libcap2-bin
+ynh_install_app_dependencies libcap2-bin libaprutil1
 
 #=================================================
 # FIND AND OPEN A PORT
