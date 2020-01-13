@@ -1,8 +1,8 @@
 bind_host: 0.0.0.0
 bind_port: 3000
 users:
-- name: admin
-  password: $2a$10$VHXZZD0fHjJfu.UCfhSoVesbYYuyCs/pFyYlbwZmP4./o.fdV5cGy
+- name: __USER__
+  password: __PWD__
 language: ""
 rlimit_nofile: 0
 web_session_ttl: 720
