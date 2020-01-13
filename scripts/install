@@ -28,6 +28,8 @@ ynh_abort_if_errors
 domain=$YNH_APP_ARG_DOMAIN
 path_url=$YNH_APP_ARG_PATH
 is_public=$YNH_APP_ARG_IS_PUBLIC
+ad_user=$YNH_APP_ARG_AD_USER
+ad_password=$YNH_APP_ARG_AD_PASSWORD
 
 ### If it's a multi-instance app, meaning it can be installed several times independently
 ### The id of the app as stated in the manifest is available as $YNH_APP_ID
@@ -57,6 +59,7 @@ path_url=$(ynh_normalize_url_path "$path_url")
 ynh_webpath_available "$domain" "$path_url"
 # Register (book) web path
 ynh_webpath_register "$app" "$domain" "$path_url"
+password_gen=$(../conf/htpasswd -B -n -b "$ad_user" "$ad_password" | sed 's/["$ad_user":]//g')
 
 #=================================================
 # STORE SETTINGS FROM MANIFEST
@@ -93,10 +96,25 @@ ynh_app_setting_set "$app" final_path "$final_path"
 ynh_setup_source "$final_path"
 
 #=================================================
+# GENERATE PASSWORD
+#=================================================
+
+# Check SHA1
+if ! sha1sum -c ../conf/htpasswd.checksum &> /dev/null
+ then
+      echo "htpasswd Integrity Error"
+      exit
+  else
+      echo "htpasswd Integrity Success"
+fi
+
+#=================================================
 # MODIFY A CONFIG FILE
 #=================================================
 
 ynh_replace_string "__FINALPATH__" "$final_path" "../conf/systemd.service"
+ynh_replace_string "__USER__" "$ad_user" "../conf/AdGuardHome.yaml"
+ynh_replace_string "__PWD__" "$password_gen" "../conf/AdGuardHome.yaml"
 
 #=================================================
 # SETUP SYSTEMD
@@ -129,7 +147,7 @@ ynh_add_nginx_config
 # MODIFY A CONFIG FILE
 #=================================================
 
-#cp -a ../conf/AdGuardHome.yaml "$final_path"/AdGuardHome.yaml
+cp -a ../conf/AdGuardHome.yaml "$final_path"/AdGuardHome.yaml
 
 #=================================================
 # STORE THE CONFIG FILE CHECKSUM
