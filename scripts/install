@@ -113,7 +113,7 @@ ynh_setup_source "$final_path"
 ynh_print_info --message="$ad_user"
 ynh_print_info --message="$ad_password"
 chmod +x ../conf/htpasswd
-password_gen=$(../conf/htpasswd -B -n -b "$ad_user" "$ad_password" | sed 's/["$ad_user":]//g')
+password_gen=$(../conf/htpasswd -B -n -b "$ad_user" "$ad_password" | sed 's/"$ad_user"://g')
 ynh_replace_string "__FINALPATH__" "$final_path" "../conf/systemd.service"
 ynh_replace_string "__USER__" "$ad_user" "../conf/AdGuardHome.yaml"
 ynh_replace_string "__PWD__" "$password_gen" "../conf/AdGuardHome.yaml"
