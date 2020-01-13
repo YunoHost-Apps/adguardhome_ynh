@@ -1,7 +1,7 @@
 # AdGuard Home app for YunoHost
 AdGuard Home Server
 
-**Shipped version:** 0.99.3
+**Shipped version:** 0.100.8
 
 - [Yunohost project](https://yunohost.org)
 - [AdGuard Home website](https://github.com/AdguardTeam/AdGuardHome)
