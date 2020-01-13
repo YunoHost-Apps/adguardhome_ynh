@@ -99,8 +99,6 @@ ynh_setup_source "$final_path"
 #=================================================
 
 ynh_replace_string "__FINALPATH__" "$final_path" "../conf/systemd.service"
-ynh_replace_string "__USER__" "$ad_user" "../conf/AdGuardHome.yaml"
-ynh_replace_string "__PWD__" "$ad_password" "../conf/AdGuardHome.yaml"
 
 #=================================================
 # SETUP SYSTEMD
@@ -133,7 +131,7 @@ ynh_add_nginx_config
 # MODIFY A CONFIG FILE
 #=================================================
 
-cp -a ../conf/AdGuardHome.yaml "$final_path"/AdGuardHome.yaml
+#cp -a ../conf/AdGuardHome.yaml "$final_path"/AdGuardHome.yaml
 
 #=================================================
 # STORE THE CONFIG FILE CHECKSUM
@@ -144,7 +142,7 @@ cp -a ../conf/AdGuardHome.yaml "$final_path"/AdGuardHome.yaml
 ### you can make a backup of this file before modifying it again if the admin had modified it.
 
 # Calculate and store the config file checksum into the app settings
-ynh_store_file_checksum "$final_path/AdGuardHome.yaml"
+#ynh_store_file_checksum "$final_path/AdGuardHome.yaml"
 
 #=================================================
 # GENERIC FINALIZATION
@@ -157,7 +155,7 @@ ynh_store_file_checksum "$final_path/AdGuardHome.yaml"
 ### that really need such authorization.
 
 # Set permissions to app files
-#chown -R root: /etc/loolwsd
+chown -R root: "$final_path"
 
 #=================================================
 # SETUP SSOWAT
