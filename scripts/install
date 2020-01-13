@@ -129,7 +129,7 @@ ynh_add_nginx_config
 # MODIFY A CONFIG FILE
 #=================================================
 
-#cp -a ../conf/AdGuardHome.yaml "$final_path"/AdGuardHome.yaml
+cp -a ../conf/AdGuardHome.yaml "$final_path"/AdGuardHome.yaml
 
 #=================================================
 # STORE THE CONFIG FILE CHECKSUM
