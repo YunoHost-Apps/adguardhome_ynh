@@ -103,8 +103,14 @@ esac
 # GENERATE PASSWORD
 #=================================================
 
-chmod +x ../conf/htpasswd
-password_gen=$(../conf/htpasswd -B -n -b "$ad_user" "$ad_password" | sed "s/"$ad_user"://")
+case `uname -m` in
+    x86_64) htpasswd_arch=htpasswd-amd64 ;;
+    aarch64) htpasswd_arch=htpasswd-arm64 ;;
+    *) ynh_die "Unknown arch" ;;
+esac
+
+chmod +x ../conf/$htpasswd_arch
+password_gen=$(../conf/$htpasswd_arch -B -n -b "$ad_user" "$ad_password" | sed "s/"$ad_user"://")
 
 #=================================================
 # MODIFY A CONFIG FILE
