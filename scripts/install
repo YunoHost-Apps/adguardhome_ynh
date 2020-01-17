@@ -92,7 +92,7 @@ port=$(ynh_find_port 53)
 
 ynh_app_setting_set $app final_path $final_path
 
-# Download, check integrity, uncompress and patch the source from jellyfin-[arch].src
+# Download, check integrity, uncompress and patch the source from app-[arch].src
 case `uname -m` in
     x86_64) ynh_setup_source "$final_path" "app-amd64" ;;
     aarch64) ynh_setup_source "$final_path" "app-arm64" ;;
