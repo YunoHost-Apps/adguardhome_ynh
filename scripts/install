@@ -90,10 +90,10 @@ port=$(ynh_find_port 53)
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 
-ynh_app_setting_set $app final_path $final_path
+ynh_app_setting_set "$app" final_path "$final_path"
 
 # Download, check integrity, uncompress and patch the source from app-[arch].src
-case `uname -m` in
+case $(uname -m) in
     x86_64) ynh_setup_source "$final_path" "app-amd64" ;;
     aarch64) ynh_setup_source "$final_path" "app-arm64" ;;
     armv7l) ynh_setup_source "$final_path" "app-arm" ;;
@@ -104,7 +104,7 @@ esac
 # GENERATE PASSWORD
 #=================================================
 
-case `uname -m` in
+case $(uname -m) in
     x86_64) htpasswd_arch=htpasswd-amd64 ;;
     aarch64) htpasswd_arch=htpasswd-arm64 ;;
     armv7l) htpasswd_arch=htpasswd-armhf ;;
@@ -112,7 +112,7 @@ case `uname -m` in
 esac
 
 chmod +x ../conf/$htpasswd_arch
-password_gen=$(../conf/$htpasswd_arch -B -n -b "$ad_user" "$ad_password" | sed "s/"$ad_user"://")
+password_gen=$(../conf/$htpasswd_arch -B -n -b "$ad_user" "$ad_password" | sed "s/""$ad_user""://")
 
 #=================================================
 # MODIFY A CONFIG FILE
