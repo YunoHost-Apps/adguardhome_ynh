@@ -96,7 +96,7 @@ ynh_app_setting_set $app final_path $final_path
 case `uname -m` in
     x86_64) ynh_setup_source "$final_path" "app-amd64" ;;
     aarch64) ynh_setup_source "$final_path" "app-arm64" ;;
-    armv7l) ynh_setup_source "$final_path" "app-armhl" ;;
+    armv7l) ynh_setup_source "$final_path" "app-arm" ;;
     *) ynh_die "Unknown arch" ;;
 esac
 
