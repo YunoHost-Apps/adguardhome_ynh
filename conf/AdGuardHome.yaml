@@ -13,6 +13,7 @@ dns:
   port: 53
   statistics_interval: 1
   querylog_enabled: true
+  querylog_file_enabled: true
   querylog_interval: 90
   querylog_size_memory: 1000
   anonymize_client_ip: false
@@ -71,10 +72,10 @@ tls:
 filters:
 - enabled: true
   url: https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt
-  name: AdGuard Simplified Domain Names filter
+  name: AdGuard DNS filter
   id: 1
 - enabled: false
-  url: https://adaway.org/hosts.txt
+  url: https://github.com/AdAway/adaway.github.io/blob/master/hosts.txt
   name: AdAway
   id: 2
 - enabled: false
@@ -93,6 +94,11 @@ dhcp:
   lease_duration: 86400
   icmp_timeout_msec: 1000
 clients: []
+log_compress: false
+log_localtime: false
+log_max_backups: 0
+log_max_size: 100
+log_max_age: 3
 log_file: ""
 verbose: false
 schema_version: 6
