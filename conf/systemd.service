@@ -1,16 +1,18 @@
 [Unit]
-Description=adguard
-After=network.target
+Description=AdGuardHome DNS
+#ConditionFileIsExecutable=/etc/AdGuardHome/AduGuardHome
 
 [Service]
-WorkingDirectory=__FINALPATH__
-User=root
-Group=users
-Type=simple
-UMask=000
-ExecStart=__FINALPATH__/AdGuardHome
-RestartSec=15
-Restart=always
+User=__APP__
+Group=__APP__
+StartLimitInterval=5
+StartLimitBurst=10
+ExecStart=__FINALPATH__/AdGuardHome -c __FINALPATH__/AdGuardHome.yaml -p __PORT__
+
+WorkingDirectory=/etc/AdGuardHome
+#Restart=always
+#RestartSec=120
+#EnvironmentFile=-/etc/sysconfig/dnscrypt-proxy
 
 [Install]
 WantedBy=multi-user.target
