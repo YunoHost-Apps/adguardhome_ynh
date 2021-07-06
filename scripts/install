@@ -113,7 +113,8 @@ chown -R $app "$final_path/AdGuardHome.yaml"
 ynh_script_progression --message="Configuring a systemd service..." --weight=1
 
 # Create a dedicated systemd config
-ynh_add_systemd_config
+#ynh_add_systemd_config
+$final_path/AdGuardHome --service install -c $final_path/AdGuardHome.yaml -p $port
 
 #=================================================
 # GENERIC FINALIZATION
@@ -130,7 +131,7 @@ yunohost service add $app --description="Web-based music collection server and s
 ynh_script_progression --message="Starting a systemd service..." --weight=2
 
 # Start a systemd service
-ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="Version:"
+ynh_systemd_action --service_name=$app --action="restart" --log_path=systemd --line_match="Version:"
 
 #=================================================
 # SETUP SSOWAT
