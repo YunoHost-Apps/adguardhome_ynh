@@ -66,8 +66,12 @@ ynh_install_app_dependencies libcap2-bin libaprutil1
 ynh_script_progression --message="Finding an available port..." --time --weight=1
 
 # Find an available port
-port=$(ynh_find_port --port=8095)
+port=$(ynh_find_port --port=3000)
 ynh_app_setting_set --app=$app --key=port --value=$port
+
+# Disable the port 53 for upnp
+ynh_exec_fully_quiet yunohost firewall disallow Both 53 --no-reload
+ynh_exec_fully_quiet yunohost firewall allow Both 53 --no-upnp
 
 #=================================================
 # CREATE DEDICATED USER
@@ -103,14 +107,11 @@ ynh_add_nginx_config
 #=================================================
 ynh_script_progression --message="Modifying a config file..." --weight=1
 
-config_path="/var/lib/$app"
-mkdir -p "$config_path"
-
 # Main config File
 ynh_add_config --template="../conf/AdGuardHome.yaml" --destination="$final_path/AdGuardHome.yaml"
 
-chmod 600 "$config_path/navidrome.toml"
-chown -R $app "$config_path"
+chmod 600 "$final_path/AdGuardHome.yaml"
+chown -R $app "$final_path/AdGuardHome.yaml"
 
 #=================================================
 # SETUP SYSTEMD
