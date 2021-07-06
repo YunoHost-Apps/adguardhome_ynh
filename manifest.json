@@ -1,6 +1,6 @@
 {
     "name": "AdGuard Home",
-    "id": "adguard",
+    "id": "adguardhome",
     "packaging_format": 1,
     "description": {
         "en": "AdGuard Home package for YunoHost.",
@@ -18,8 +18,7 @@
     },
     "multi_instance": false,
     "services": [
-        "nginx",
-        "mysql"
+        "nginx"
     ],
     "arguments": {
         "install": [{
