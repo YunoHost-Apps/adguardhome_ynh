@@ -1,18 +1,20 @@
 [Unit]
-Description=AdGuardHome DNS
-#ConditionFileIsExecutable=/etc/AdGuardHome/AduGuardHome
+Description=AdGuard Home: Network-level blocker
+ConditionFileIsExecutable=__FINALPATH__/AdGuardHome
+After=syslog.target network-online.target
 
 [Service]
 User=__APP__
 Group=__APP__
 StartLimitInterval=5
 StartLimitBurst=10
+ExecStart=__FINALPATH__/AdGuardHome "-s" "run" -c __FINALPATH__/AdGuardHome.yaml -p __PORT__
 WorkingDirectory=__FINALPATH__
-ExecStart=__FINALPATH__/AdGuardHome -c __FINALPATH__/AdGuardHome.yaml -p __PORT__
-
-#Restart=always
-#RestartSec=120
-#EnvironmentFile=-/etc/sysconfig/dnscrypt-proxy
+#StandardOutput=file:/var/log/__APP__.out
+#StandardError=file:/var/log/__APP__.err
+Restart=always
+RestartSec=10
+#EnvironmentFile=-/etc/sysconfig/AdGuardHome
 
 [Install]
 WantedBy=multi-user.target
