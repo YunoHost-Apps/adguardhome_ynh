@@ -86,7 +86,7 @@ ynh_setup_source --dest_dir=$final_path --source_id="$architecture"
 
 chmod 750 "$final_path"
 chmod -R o-rwx "$final_path"
-chown -R $app:www-data "$final_path"
+chown -R $app:$app "$final_path"
 
 #=================================================
 # NGINX CONFIGURATION
@@ -105,7 +105,7 @@ ynh_script_progression --message="Modifying a config file..." --weight=1
 ynh_add_config --template="../conf/AdGuardHome.yaml" --destination="$final_path/AdGuardHome.yaml"
 
 chmod 600 "$final_path/AdGuardHome.yaml"
-chown -R $app "$final_path/AdGuardHome.yaml"
+chown -R $app:$app "$final_path/AdGuardHome.yaml"
 
 #=================================================
 # SETUP SYSTEMD
@@ -123,7 +123,7 @@ ynh_add_systemd_config
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
 
-yunohost service add $app --description="Web-based music collection server and streamer"
+yunohost service add $app --description=""
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -141,8 +141,6 @@ ynh_script_progression --message="Configuring permissions..." --weight=1
 # Make app public if necessary
 if [ $is_public -eq 1 ]
 then
-    # Everyone can access the app.
-    # The "main" permission is automatically created before the install script.
     ynh_permission_update --permission="main" --add="visitors"
 fi
 
