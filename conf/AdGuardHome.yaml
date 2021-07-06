@@ -1,8 +1,8 @@
 bind_host: 0.0.0.0
 bind_port: 3000
 users:
-- name: __USER__
-  password: __PWD__
+- name: __ADMIN__
+  password: __PASSWORD__
 http_proxy: ""
 language: ""
 rlimit_nofile: 0

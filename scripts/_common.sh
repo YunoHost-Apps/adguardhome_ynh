@@ -5,7 +5,7 @@
 #=================================================
 
 # dependencies used by the app
-pkg_dependencies=""
+pkg_dependencies="libcap2-bin libaprutil1"
 
 #=================================================
 # PERSONAL HELPERS
