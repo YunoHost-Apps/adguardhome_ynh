@@ -1,5 +1,5 @@
-bind_host: 0.0.0.0
-bind_port: 3000
+bind_host: 127.0.0.1
+bind_port: __PORT__
 users:
 - name: __ADMIN__
   password: __PASSWORD__

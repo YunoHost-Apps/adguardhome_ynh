@@ -3,12 +3,20 @@
     "id": "adguardhome",
     "packaging_format": 1,
     "description": {
-        "en": "AdGuard Home package for YunoHost.",
+        "en": "Network-wide ads & trackers blocking DNS server",
         "fr": "AdGuard Home pour YunoHost."
     },
     "version": "0.106.3~ynh1",
-    "url": "https://github.com/AdguardTeam/AdGuardHome",
-    "license": "free",
+    "url": "https://adguard.com/adguard-home.html",
+    "upstream": {
+        "license": "GPL-3.0",
+        "website": "https://adguard.com/adguard-home.html",
+        "demo": "https://demo.example.com",
+        "admindoc": "https://yunohost.org/packaging_apps",
+        "userdoc": "https://yunohost.org/apps",
+        "code": "https://github.com/AdguardTeam/AdGuardHome"
+    },
+    "license": "GPL-3.0",
     "maintainer": {
         "name": "liberodark",
         "email": "liberodark@gmail.com"
