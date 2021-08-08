@@ -117,7 +117,7 @@ ynh_script_progression --message="Configuring a systemd service..." --weight=1
 
 # Create a dedicated systemd config
 #ynh_add_systemd_config
-$final_path/AdGuardHome --service install -c __FINALPATH__/AdGuardHome.yaml -w __FINALPATH__ -h 127.0.0.1 -p __PORT__
+$final_path/AdGuardHome --service install -c $final_path/AdGuardHome.yaml -w $final_path -h 127.0.0.1 -p $port
 
 #=================================================
 # GENERIC FINALIZATION
