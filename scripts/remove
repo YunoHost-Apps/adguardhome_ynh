@@ -19,6 +19,7 @@ app=$YNH_APP_INSTANCE_NAME
 domain=$(ynh_app_setting_get --app=$app --key=domain)
 port=$(ynh_app_setting_get --app=$app --key=port)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+adguard_port=$(ynh_app_setting_get --app=$app --key=adguard_port)
 
 #=================================================
 # STANDARD REMOVE
@@ -61,10 +62,10 @@ ynh_remove_nginx_config
 # CLOSE A PORT
 #=================================================
 
-if yunohost firewall list | grep -q "\- $port$"
+if yunohost firewall list | grep -q "\- $adguard_port$"
 then
-	ynh_script_progression --message="Closing port 53..." --weight=1
-	ynh_exec_warn_less yunohost firewall disallow TCP 53
+	ynh_script_progression --message="Closing port $adguard_port..." --weight=1
+	ynh_exec_warn_less yunohost firewall disallow TCP $adguard_port
 fi
 
 #=================================================
