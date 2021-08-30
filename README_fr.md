@@ -11,7 +11,7 @@ Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour
 
 ## Vue d'ensemble
 
-AdGuard Home pour YunoHost.
+Serveur DNS, bloqueur de publicités et trackers
 
 **Version incluse :** 0.106.3~ynh1
 
