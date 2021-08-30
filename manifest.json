@@ -35,12 +35,6 @@
                 "example": "example.com"
             },
             {
-                "name": "path",
-                "type": "path",
-                "example": "/",
-                "default": "/"
-            },
-            {
                 "name": "is_public",
                 "type": "boolean",
                 "default": true
