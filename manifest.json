@@ -4,7 +4,7 @@
     "packaging_format": 1,
     "description": {
         "en": "Network-wide ads & trackers blocking DNS server",
-        "fr": "AdGuard Home pour YunoHost."
+        "fr": "Serveur DNS, bloqueur de publicités et trackers"
     },
     "version": "0.106.3~ynh1",
     "url": "https://adguard.com/adguard-home.html",
