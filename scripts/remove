@@ -69,8 +69,6 @@ then
 fi
 
 #=================================================
-# GENERIC FINALIZATION
-#=================================================
 # REMOVE DEDICATED USER
 #=================================================
 ynh_script_progression --message="Removing the dedicated system user..." --weight=1
