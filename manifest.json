@@ -11,9 +11,8 @@
     "upstream": {
         "license": "GPL-3.0",
         "website": "https://adguard.com/adguard-home.html",
-        "demo": "https://demo.example.com",
-        "admindoc": "https://yunohost.org/packaging_apps",
-        "userdoc": "https://yunohost.org/apps",
+        "admindoc": "https://github.com/AdguardTeam/AdGuardHome/wiki",
+        "userdoc": "https://kb.adguard.com/en",
         "code": "https://github.com/AdguardTeam/AdGuardHome"
     },
     "license": "GPL-3.0",
@@ -31,8 +30,7 @@
     "arguments": {
         "install": [{
                 "name": "domain",
-                "type": "domain",
-                "example": "example.com"
+                "type": "domain"
             },
             {
                 "name": "is_public",
@@ -41,13 +39,11 @@
             },
             {
                 "name": "admin",
-                "type": "user",
-                "example": "johndoe"
+                "type": "user"
             },
             {
                 "name": "password",
-                "type": "password",
-                "example": "Choose a password"
+                "type": "password"
             }
         ]
     }
