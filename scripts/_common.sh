@@ -5,7 +5,7 @@
 #=================================================
 
 # dependencies used by the app
-pkg_dependencies="bind9-host"
+pkg_dependencies="python3-bcrypt"
 
 #=================================================
 # PERSONAL HELPERS

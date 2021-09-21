@@ -49,6 +49,7 @@ ynh_script_progression --message="Storing installation settings..." --weight=2
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
 ynh_app_setting_set --app=$app --key=is_public --value=$is_public
+ynh_app_setting_set --app=$app --key=admin --value=$admin
 
 #=================================================
 # FIND AND OPEN A PORT
@@ -61,10 +62,24 @@ ynh_app_setting_set --app=$app --key=port --value=$port
 
 # Find an available port
 adguard_port=$(ynh_find_port --port=53)
-ynh_app_setting_set --app=$app --key=port --value=$adguard_port
+ynh_app_setting_set --app=$app --key=adguard_port --value=$adguard_port
 
 # Disable the port 53 for upnp
 ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $adguard_port
+
+#=================================================
+# INSTALL DEPENDENCIES
+#=================================================
+ynh_script_progression --message="Installing dependencies..." --weight=1
+
+# Define and install dependencies
+ynh_install_app_dependencies $pkg_dependencies
+
+#=================================================
+# CRYPT PASSWORD
+#=================================================
+password=$(python3 -c "import bcrypt; print(bcrypt.hashpw(b\"$password\", bcrypt.gensalt(rounds=10)).decode())")
+ynh_app_setting_set --app=$app --key=password --value=$password
 
 #=================================================
 # CREATE DEDICATED USER
@@ -84,8 +99,10 @@ ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 ynh_setup_source --dest_dir=$final_path --source_id="$architecture"
 
 chmod 750 "$final_path"
-#chmod -R o-rwx "$final_path"
-chown -R root: "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app: "$final_path"
+
+setcap 'CAP_NET_BIND_SERVICE=+eip CAP_NET_RAW=+eip' $final_path/AdGuardHome
 
 #=================================================
 # NGINX CONFIGURATION
@@ -101,10 +118,10 @@ ynh_add_nginx_config
 ynh_script_progression --message="Modifying a config file..." --weight=1
 
 # Main config File
-ynh_add_config --template="../conf/AdGuardHome.yaml" --destination="$final_path/AdGuardHome/AdGuardHome.yaml"
+ynh_add_config --template="../conf/AdGuardHome.yaml" --destination="$final_path/AdGuardHome.yaml"
 
-chmod 600 "$final_path/AdGuardHome/AdGuardHome.yaml"
-chown -R root: "$final_path/AdGuardHome/AdGuardHome.yaml"
+chmod 600 "$final_path/AdGuardHome.yaml"
+chown -R $app: "$final_path/AdGuardHome.yaml"
 
 #=================================================
 # SETUP SYSTEMD

@@ -19,9 +19,11 @@ app=$YNH_APP_INSTANCE_NAME
 domain=$(ynh_app_setting_get --app=$app --key=domain)
 path_url=$(ynh_app_setting_get --app=$app --key=path)
 admin=$(ynh_app_setting_get --app=$app --key=admin)
+password=$(ynh_app_setting_get --app=$app --key=password)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-language=$(ynh_app_setting_get --app=$app --key=language)
-db_name=$(ynh_app_setting_get --app=$app --key=db_name)
+port=$(ynh_app_setting_get --app=$app --key=port)
+adguard_port=$(ynh_app_setting_get --app=$app --key=adguard_port)
+architecture=$(ynh_detect_arch)
 
 #=================================================
 # CHECK VERSION
@@ -50,7 +52,10 @@ ynh_abort_if_errors
 #=================================================
 ynh_script_progression --message="Stopping a systemd service..." --weight=1
 
-ynh_systemd_action --service_name=$app --action="stop" --log_path="/var/log/$app/$app.log"
+ynh_systemd_action --service_name=$app --action="stop"
+
+# Disable the port 53 for upnp
+ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $adguard_port
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
@@ -81,12 +86,14 @@ then
   ynh_script_progression --message="Upgrading source files..." --weight=1
 
   # Download, check integrity, uncompress and patch the source from app.src
-  ynh_setup_source --dest_dir="$final_path"
+  ynh_setup_source --dest_dir=$final_path --source_id="$architecture"
 fi
 
 chmod 750 "$final_path"
 chmod -R o-rwx "$final_path"
-chown -R $app:www-data "$final_path"
+chown -R $app: "$final_path"
+
+setcap 'CAP_NET_BIND_SERVICE=+eip CAP_NET_RAW=+eip' $final_path/AdGuardHome
 
 #=================================================
 # NGINX CONFIGURATION
@@ -95,6 +102,13 @@ ynh_script_progression --message="Upgrading NGINX web server configuration..." -
 
 # Create a dedicated NGINX config
 ynh_add_nginx_config
+
+#=================================================
+# UPGRADE DEPENDENCIES
+#=================================================
+ynh_script_progression --message="Upgrading dependencies..." --weight=1
+
+ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
 # UPDATE A CONFIG FILE
@@ -120,7 +134,7 @@ ynh_add_systemd_config
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
 
-yunohost service add $app --description="Ads & trackers blocking DNS server" --log="/var/log/$app/$app.log"
+yunohost service add $app --description="Ads & trackers blocking DNS server"
 
 #=================================================
 # START SYSTEMD SERVICE
