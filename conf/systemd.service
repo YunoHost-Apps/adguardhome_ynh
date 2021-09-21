@@ -1,16 +1,19 @@
 [Unit]
-Description=adguard
-After=network.target
+Description=AdGuard Home: Network-level blocker
+ConditionFileIsExecutable=__FINALPATH__/AdGuardHome
+After=syslog.target network-online.target
 
 [Service]
-WorkingDirectory=__FINALPATH__
-User=root
-Group=users
 Type=simple
-UMask=000
-ExecStart=__FINALPATH__/AdGuardHome
-RestartSec=15
+User=__APP__
+Group=__APP__
+StartLimitInterval=5
+StartLimitBurst=10
+WorkingDirectory=__FINALPATH__/
+ExecStart=__FINALPATH__/AdGuardHome 
 Restart=always
+RestartSec=10
+#EnvironmentFile=-/etc/sysconfig/AdGuardHome
 
 [Install]
 WantedBy=multi-user.target
