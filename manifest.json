@@ -1,73 +1,49 @@
 {
     "name": "AdGuard Home",
-    "id": "adguard",
+    "id": "adguardhome",
     "packaging_format": 1,
     "description": {
-        "en": "AdGuard Home package for YunoHost.",
-        "fr": "AdGuard Home pour YunoHost."
+        "en": "Network-wide ads & trackers blocking DNS server",
+        "fr": "Serveur DNS, bloqueur de publicités et trackers"
     },
-    "version": "0.103.3",
-    "url": "https://github.com/AdguardTeam/AdGuardHome",
-    "license": "free",
+    "version": "0.106.3~ynh1",
+    "url": "https://adguard.com/adguard-home.html",
+    "upstream": {
+        "license": "GPL-3.0",
+        "website": "https://adguard.com/adguard-home.html",
+        "admindoc": "https://github.com/AdguardTeam/AdGuardHome/wiki",
+        "userdoc": "https://kb.adguard.com/en",
+        "code": "https://github.com/AdguardTeam/AdGuardHome"
+    },
+    "license": "GPL-3.0",
     "maintainer": {
         "name": "liberodark",
         "email": "liberodark@gmail.com"
     },
     "requirements": {
-        "yunohost": ">= 2.7.2"
+        "yunohost": ">= 4.2.4"
     },
     "multi_instance": false,
     "services": [
-        "nginx",
-        "php5-fpm",
-        "mysql"
+        "nginx"
     ],
     "arguments": {
         "install": [{
                 "name": "domain",
-                "type": "domain",
-                "ask": {
-                    "en": "Choose a domain name for AdGuard Home",
-                    "fr": "Choisissez un nom de domaine pour AdGuard Home"
-                },
-                "example": "example.com"
-            },
-            {
-                "name": "path",
-                "type": "path",
-                "ask": {
-                    "en": "Choose a path for AdGuard Home / is accepted",
-                    "fr": "Choisissez un chemin pour AdGuard Home / est accepté"
-                },
-                "example": "/",
-                "default": "/"
+                "type": "domain"
             },
             {
                 "name": "is_public",
                 "type": "boolean",
-                "ask": {
-                    "en": "Is it a public site ?",
-                    "fr": "Est-ce un site public ?"
-                },
-                "default": "true"
+                "default": true
             },
             {
-                "name": "ad_user",
-                "type": "ad_user",
-                "ask": {
-                    "en": "Enter your admin username ?",
-                    "fr": "Entrez votre nom d'utilisateur ?"
-                },
-                "example": "liberodark"
+                "name": "admin",
+                "type": "user"
             },
             {
-                "name": "ad_password",
-                "type": "ad_password",
-                "ask": {
-                    "en": "Enter your password !",
-                    "fr": "Entrez votre mot de passe !"
-                },
-                "example": "mypassword"
+                "name": "password",
+                "type": "password"
             }
         ]
     }
