@@ -19,7 +19,7 @@ Network-wide ads & trackers blocking DNS server
 
 **Shipped version:** 0.106.3~ynh1
 
-**Demo:** https://demo.example.com
+
 
 ## Screenshots
 
@@ -28,8 +28,8 @@ Network-wide ads & trackers blocking DNS server
 ## Documentation and resources
 
 * Official app website: https://adguard.com/adguard-home.html
-* Official user documentation: https://yunohost.org/apps
-* Official admin documentation: https://yunohost.org/packaging_apps
+* Official user documentation: https://kb.adguard.com/en
+* Official admin documentation: https://github.com/AdguardTeam/AdGuardHome/wiki
 * Upstream app code repository: https://github.com/AdguardTeam/AdGuardHome
 * YunoHost documentation for this app: https://yunohost.org/app_adguardhome
 * Report a bug: https://github.com/YunoHost-Apps/adguardhome_ynh/issues

@@ -15,7 +15,7 @@ Serveur DNS, bloqueur de publicités et trackers
 
 **Version incluse :** 0.106.3~ynh1
 
-**Démo :** https://demo.example.com
+
 
 ## Captures d'écran
 
@@ -24,8 +24,8 @@ Serveur DNS, bloqueur de publicités et trackers
 ## Documentations et ressources
 
 * Site officiel de l'app : https://adguard.com/adguard-home.html
-* Documentation officielle utilisateur : https://yunohost.org/apps
-* Documentation officielle de l'admin : https://yunohost.org/packaging_apps
+* Documentation officielle utilisateur : https://kb.adguard.com/en
+* Documentation officielle de l'admin : https://github.com/AdguardTeam/AdGuardHome/wiki
 * Dépôt de code officiel de l'app : https://github.com/AdguardTeam/AdGuardHome
 * Documentation YunoHost pour cette app : https://yunohost.org/app_adguardhome
 * Signaler un bug : https://github.com/YunoHost-Apps/adguardhome_ynh/issues
