@@ -26,7 +26,7 @@ path_url="/"
 is_public=$YNH_APP_ARG_IS_PUBLIC
 admin=$YNH_APP_ARG_ADMIN
 password=$YNH_APP_ARG_PASSWORD
-architecture=$(ynh_detect_arch)
+architecture=$YNH_ARCH
 
 app=$YNH_APP_INSTANCE_NAME
 

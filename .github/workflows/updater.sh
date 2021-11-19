@@ -66,14 +66,11 @@ echo "Handling asset at $asset_url"
 # Here we base the source file name upon a unique keyword in the assets url (admin vs. update)
 # Leave $src empty to ignore the asset
 case $asset_url in
-  *"admin"*)
-    src="app"
+  *"AdGuardHome_linux_amd64.tar.gz")
+    src="amd64"
     ;;
-  *"update"*)
-    src="app-upgrade"
-    ;;
-  *)
-    src=""
+  *"AdGuardHome_linux_armv7.tar.gz")
+    src="armhf"
     ;;
 esac
 
@@ -103,9 +100,9 @@ cat <<EOT > conf/$src.src
 SOURCE_URL=$asset_url
 SOURCE_SUM=$checksum
 SOURCE_SUM_PRG=sha256sum
-SOURCE_FORMAT=$extension
-SOURCE_IN_SUBDIR=true
-SOURCE_FILENAME=
+SOURCE_FORMAT=tar.gz
+SOURCE_IN_SUBDIR=2
+SOURCE_EXTRACT=true
 EOT
 echo "... conf/$src.src updated"
 
