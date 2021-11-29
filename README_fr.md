@@ -11,9 +11,9 @@ Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour
 
 ## Vue d'ensemble
 
-AdGuard Home is a network-wide software for blocking ads & tracking. After you set it up, it'll cover ALL your home devices, and you don't need any client-side software for that.
+AdGuard Home est un logiciel à l'échelle du réseau pour bloquer les publicités et le pistage. Après l'avoir configuré, il couvrira TOUS vos appareils domestiques et vous n'avez besoin d'aucun logiciel côté client pour cela.
 
-It operates as a DNS server that re-routes tracking domains to a "black hole", thus preventing your devices from connecting to those servers. It's based on software we use for our public AdGuard DNS servers -- both share a lot of common code.
+Il fonctionne comme un serveur DNS qui redirige les domaines de pistage vers un "trou noir", empêchant ainsi vos appareils de se connecter à ces serveurs. Il est basé sur un logiciel que nous utilisons pour nos serveurs DNS publics AdGuard - les deux partagent beaucoup de code commun. 
 
 
 **Version incluse :** 0.106.3~ynh1
