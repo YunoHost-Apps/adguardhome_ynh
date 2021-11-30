@@ -11,9 +11,12 @@ Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour
 
 ## Vue d'ensemble
 
-Serveur DNS, bloqueur de publicités et trackers
+AdGuard Home est un logiciel à l'échelle du réseau pour bloquer les publicités et le pistage. Après l'avoir configuré, il couvrira TOUS vos appareils domestiques et vous n'avez besoin d'aucun logiciel côté client pour cela.
 
-**Version incluse :** 0.106.3~ynh1
+Il fonctionne comme un serveur DNS qui redirige les domaines de pistage vers un "trou noir", empêchant ainsi vos appareils de se connecter à ces serveurs. Il est basé sur un logiciel que nous utilisons pour nos serveurs DNS publics AdGuard - les deux partagent beaucoup de code commun. 
+
+
+**Version incluse :** 0.106.3~ynh2
 
 
 
