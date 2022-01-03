@@ -5,7 +5,7 @@
 #=================================================
 
 # dependencies used by the app
-pkg_dependencies="python3-bcrypt"
+pkg_dependencies="python3-bcrypt python3-yaml"
 
 #=================================================
 # PERSONAL HELPERS

@@ -117,6 +117,55 @@ ynh_script_progression --message="Upgrading dependencies..." --weight=1
 ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
+# UPDATE A CONFIG FILE
+#=================================================
+ynh_script_progression --message="Updating a configuration file..." --weight=1
+
+ipv4_route_output=$(ip -4 route get 1.2.3.4 | head -n1)
+ipv6_route_output=$(ip -6 route get ::1.2.3.4 | head -n1)
+
+ipv4_addr=""
+for i in $(seq "$(echo $ipv4_route_output | wc -w)" -1 1); do
+    ip=$(echo $ipv4_route_output | awk "{print \$$i}")
+    if ynh_validate_ip4 --ip_address=$ip; then
+        ipv4_addr="$ip"
+        break
+    fi
+done
+
+ipv6_addr=""
+for i in $(seq "$(echo $ipv6_route_output | wc -w)" -1 1); do
+    ip=$(echo $ipv6_route_output | awk "{print \$$i}")
+    if ynh_validate_ip6 --ip_address=$ip; then
+        ipv6_addr="$ip"
+        break
+    fi
+done
+
+# Reset the bind_hosts if the current ip is 0.0.0.0
+python3 -c "import yaml
+with open(\"$final_path/AdGuardHome.yaml\", 'r') as file:
+  conf_file = yaml.safe_load(file)
+
+need_file_update = False
+
+if \"0.0.0.0\" in conf_file[\"dns\"][\"bind_hosts\"]:
+  conf_file[\"dns\"][\"bind_hosts\"] = [\"$ipv4_addr\", \"$ipv6_addr\"]
+  need_file_update = True
+
+if conf_file[\"dns\"][\"port\"] != $adguard_port:
+  conf_file[\"dns\"][\"port\"] = $adguard_port
+  need_file_update = True
+  
+if need_file_update:
+  with open(\"$final_path/AdGuardHome.yaml\", 'w') as file:
+    yaml.dump(conf_file, file)
+"
+
+chmod 600 "$final_path/AdGuardHome.yaml"
+chown -R $app: "$final_path/AdGuardHome.yaml"
+
+#=================================================
 # SETUP SYSTEMD
 #=================================================
 ynh_script_progression --message="Upgrading systemd configuration..." --weight=1
