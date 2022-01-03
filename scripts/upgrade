@@ -31,6 +31,12 @@ architecture=$YNH_ARCH
 
 upgrade_type=$(ynh_check_app_version_changed)
 
+# The dns port should be 53
+if [ "$adguard_port" -ne "53" ]; then
+  adguard_port=53
+  ynh_app_setting_set --app=$app --key=adguard_port --value=$adguard_port
+fi
+
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
 #=================================================
@@ -109,17 +115,6 @@ ynh_add_nginx_config
 ynh_script_progression --message="Upgrading dependencies..." --weight=1
 
 ynh_install_app_dependencies $pkg_dependencies
-
-#=================================================
-# UPDATE A CONFIG FILE
-#=================================================
-ynh_script_progression --message="Updating a configuration file..." --weight=1
-
-# Main config File
-ynh_add_config --template="../conf/AdGuardHome.yaml" --destination="$final_path/AdGuardHome.yaml"
-
-chmod 600 "$final_path/AdGuardHome.yaml"
-chown -R $app: "$final_path/AdGuardHome.yaml"
 
 #=================================================
 # SETUP SYSTEMD
