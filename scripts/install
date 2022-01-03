@@ -60,7 +60,7 @@ port=$(ynh_find_port --port=3000)
 ynh_app_setting_set --app=$app --key=port --value=$port
 
 # Find an available port
-adguard_port=$(ynh_find_port --port=53)
+adguard_port=53
 ynh_app_setting_set --app=$app --key=adguard_port --value=$adguard_port
 
 # Disable the port 53 for upnp
@@ -115,6 +115,27 @@ ynh_add_nginx_config
 # MODIFY A CONFIG FILE
 #=================================================
 ynh_script_progression --message="Modifying a config file..." --weight=1
+
+ipv4_route_output=$(ip -4 route get 1.2.3.4 | head -n1)
+ipv6_route_output=$(ip -6 route get ::1.2.3.4 | head -n1)
+
+ipv4_addr=""
+for i in $(seq "$(echo $ipv4_route_output | wc -w)" -1 1); do
+    ip=$(echo $ipv4_route_output | awk "{print \$$i}")
+    if ynh_validate_ip4 --ip_address=$ip; then
+        ipv4_addr="- $ip"
+        break
+    fi
+done
+
+ipv6_addr=""
+for i in $(seq "$(echo $ipv6_route_output | wc -w)" -1 1); do
+    ip=$(echo $ipv6_route_output | awk "{print \$$i}")
+    if ynh_validate_ip6 --ip_address=$ip; then
+        ipv6_addr="- $ip"
+        break
+    fi
+done
 
 # Main config File
 ynh_add_config --template="../conf/AdGuardHome.yaml" --destination="$final_path/AdGuardHome.yaml"
