@@ -116,6 +116,21 @@ ynh_add_nginx_config
 #=================================================
 ynh_script_progression --message="Modifying a config file..." --weight=1
 
+ipv4_interface=$(ip route get 1.2.3.4 | grep -oP '(?<=dev )\w+')
+ipv6_interface=$(ip -6 route get ::1.2.3.4 | grep -oP '(?<=dev )\w+')
+
+if [ "$ipv4_interface" != "$ipv6_interface" ]; then
+    echo "bind-interfaces
+except-interface=$ipv4_interface, $ipv6_interface" > "/etc/dnsmasq.d/$app"
+else
+    echo "bind-interfaces
+except-interface=$ipv4_interface" > "/etc/dnsmasq.d/$app"
+fi
+
+systemctl restart dnsmasq
+
+ynh_store_file_checksum --file="/etc/dnsmasq.d/$app"
+
 ipv4_route_output=$(ip -4 route get 1.2.3.4 | head -n1)
 ipv6_route_output=$(ip -6 route get ::1.2.3.4 | head -n1)
 
