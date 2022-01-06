@@ -27,6 +27,16 @@ password=$(ynh_app_setting_get --app=$app --key=password)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 port=$(ynh_app_setting_get --app=$app --key=port)
 adguard_port=$(ynh_app_setting_get --app=$app --key=adguard_port)
+dns_over_https=$(ynh_app_setting_get --app=$app --key=dns_over_https)
+
+if [ -n "$dns_over_https" ] && [ "$dns_over_https" == "1" ];
+then
+  dns_over_https="true"
+  ynh_app_setting_set --app=$app --key=dns_over_https --value=$dns_over_https
+else
+  dns_over_https="false"
+  ynh_app_setting_set --app=$app --key=dns_over_https --value=$dns_over_https
+fi
 
 ipv4_route_output=$(echo "$(ip -4 route get 1.2.3.4 2> /dev/null)" | head -n1)
 ipv6_route_output=$(echo "$(ip -6 route get ::1.2.3.4 2> /dev/null)" | head -n1)

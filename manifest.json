@@ -45,6 +45,14 @@
             {
                 "name": "password",
                 "type": "password"
+            },
+            {
+                "name": "dns_over_https",
+                "type": "boolean",
+                "ask": {
+                    "en": "Should DNS-over-HTTPS be enabled? (If so, anyone who knows your adguard address can make a doh request to https://adguardomain.tld/dns-query)"
+                },
+                "default": true
             }
         ]
     }
