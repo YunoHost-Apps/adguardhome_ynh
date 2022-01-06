@@ -32,10 +32,8 @@ dns_over_https=$(ynh_app_setting_get --app=$app --key=dns_over_https)
 if [ -n "$dns_over_https" ] && [ "$dns_over_https" == "1" ];
 then
   dns_over_https="true"
-  ynh_app_setting_set --app=$app --key=dns_over_https --value=$dns_over_https
 else
   dns_over_https="false"
-  ynh_app_setting_set --app=$app --key=dns_over_https --value=$dns_over_https
 fi
 
 ipv4_route_output=$(echo "$(ip -4 route get 1.2.3.4 2> /dev/null)" | head -n1)

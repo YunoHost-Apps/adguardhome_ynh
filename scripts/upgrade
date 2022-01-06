@@ -43,12 +43,9 @@ if ! ynh_permission_exists --permission="api"; then
     ynh_permission_create --permission="api" --label="api" --url="re:$domain/dns-query" --allowed="visitors" --auth_header="false" --show_tile="false" --protected="true"
 fi
 
-if [ -n "$dns_over_https" ] && [ "$dns_over_https" == "1" ];
+if [ -z "$dns_over_https" ];
 then
-  dns_over_https="true"
-  ynh_app_setting_set --app=$app --key=dns_over_https --value=$dns_over_https
-else
-  dns_over_https="false"
+  dns_over_https="0"
   ynh_app_setting_set --app=$app --key=dns_over_https --value=$dns_over_https
 fi
 
