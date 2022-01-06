@@ -186,6 +186,13 @@ ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
 yunohost service add $app --description="Ads & trackers blocking DNS server"
 
 #=================================================
+# SETUP SSOWAT
+#=================================================
+ynh_script_progression --message="Configuring permissions..."
+
+ynh_permission_create --permission="api" --label="api" --url="re:$domain/dns-query" --allowed="visitors" --auth_header="false" --show_tile="false" --protected="true"
+
+#=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression --message="Starting a systemd service..." --weight=2
