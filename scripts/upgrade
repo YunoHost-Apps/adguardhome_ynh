@@ -121,12 +121,22 @@ ynh_install_app_dependencies $pkg_dependencies
 #=================================================
 ynh_script_progression --message="Updating a configuration file..." --weight=1
 
-ipv4_interface=$(ip route get 1.2.3.4 | grep -oP '(?<=dev )\w+')
-ipv6_interface=$(ip -6 route get ::1.2.3.4 | grep -oP '(?<=dev )\w+')
+ipv4_interface=$(ip route get 1.2.3.4 2> /dev/null || true | head -n1 | grep -oP '(?<=dev )\w+')
+ipv6_interface=$(ip -6 route get ::1.2.3.4 2> /dev/null || true | head -n1 | grep -oP '(?<=dev )\w+')
 
-if [ "$ipv4_interface" != "$ipv6_interface" ]; then
-    echo "bind-interfaces
+if [ -z "$ipv4_interface" ] && [ -z "$ipv6_interface" ]; then
+    ynh_die --message="Impossible to find the main network interface, please report this issue."
+elif [ "$ipv4_interface" != "$ipv6_interface" ]; then
+    if [ -z "$ipv4_interface" ]; then
+        echo "bind-interfaces
+except-interface=$ipv6_interface" > "/etc/dnsmasq.d/$app"
+    elif [ -z "$ipv6_interface" ]; then
+        echo "bind-interfaces
+except-interface=$ipv4_interface" > "/etc/dnsmasq.d/$app"
+    else
+        echo "bind-interfaces
 except-interface=$ipv4_interface, $ipv6_interface" > "/etc/dnsmasq.d/$app"
+    fi
 else
     echo "bind-interfaces
 except-interface=$ipv4_interface" > "/etc/dnsmasq.d/$app"
@@ -136,8 +146,8 @@ systemctl restart dnsmasq
 
 ynh_store_file_checksum --file="/etc/dnsmasq.d/$app"
 
-ipv4_route_output=$(ip -4 route get 1.2.3.4 | head -n1)
-ipv6_route_output=$(ip -6 route get ::1.2.3.4 | head -n1)
+ipv4_route_output=$(ip -4 route get 1.2.3.4 2> /dev/null || true | head -n1)
+ipv6_route_output=$(ip -6 route get ::1.2.3.4 2> /dev/null || true | head -n1)
 
 ipv4_addr=""
 for i in $(seq "$(echo $ipv4_route_output | wc -w)" -1 1); do
@@ -165,7 +175,11 @@ with open(\"$final_path/AdGuardHome.yaml\", 'r') as file:
 need_file_update = False
 
 if \"0.0.0.0\" in conf_file[\"dns\"][\"bind_hosts\"]:
-  conf_file[\"dns\"][\"bind_hosts\"] = [\"$ipv4_addr\", \"$ipv6_addr\"]
+  conf_file[\"dns\"][\"bind_hosts\"] = []
+  if \"$ipv4_addr\":
+    conf_file[\"dns\"][\"bind_hosts\"].append(\"$ipv4_addr\")
+  if \"$ipv6_addr\":
+    conf_file[\"dns\"][\"bind_hosts\"].append(\"$ipv6_addr\")
   need_file_update = True
 
 if conf_file[\"dns\"][\"port\"] != $adguard_port:
