@@ -9,4 +9,7 @@ name = "Adguard configuration"
         [main.options.dns_over_https]
         ask = "Enable DNS-over-HTTPS"
         type = "boolean"
+        yes = "true"
+        no = "false"
         bind = "allow_unencrypted_doh:__FINALPATH__/AdGuardHome.yaml"
+        services = [ '__APP__' ]

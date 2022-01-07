@@ -49,6 +49,13 @@ ynh_script_progression --message="Storing installation settings..." --weight=2
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
 ynh_app_setting_set --app=$app --key=admin --value=$admin
+
+if [ "$dns_over_https" == "1" ];
+then
+    dns_over_https="true"
+else
+    dns_over_https="false"
+fi
 ynh_app_setting_set --app=$app --key=dns_over_https --value=$dns_over_https
 
 #=================================================
@@ -163,14 +170,6 @@ for i in $(seq "$(echo $ipv6_route_output | wc -w)" -1 1); do
         break
     fi
 done
-
-
-if [ "$dns_over_https" == "1" ];
-then
-    dns_over_https="true"
-else
-    dns_over_https="false"
-fi
 
 # Main config File
 ynh_add_config --template="../conf/AdGuardHome.yaml" --destination="$final_path/AdGuardHome.yaml"
