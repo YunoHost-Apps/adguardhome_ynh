@@ -23,6 +23,7 @@ password=$(ynh_app_setting_get --app=$app --key=password)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 port=$(ynh_app_setting_get --app=$app --key=port)
 adguard_port=$(ynh_app_setting_get --app=$app --key=adguard_port)
+dns_over_https=$(ynh_app_setting_get --app=$app --key=dns_over_https)
 architecture=$YNH_ARCH
 
 #=================================================
@@ -35,6 +36,21 @@ upgrade_type=$(ynh_check_app_version_changed)
 if [ "$adguard_port" -ne "53" ]; then
   adguard_port=53
   ynh_app_setting_set --app=$app --key=adguard_port --value=$adguard_port
+fi
+
+# Create a permission if needed
+if ! ynh_permission_exists --permission="api"; then
+    ynh_permission_create --permission="api" --label="api" --url="re:$domain/dns-query" --allowed="visitors" --auth_header="false" --show_tile="false" --protected="true"
+fi
+
+if [ -n "$dns_over_https" ] && [ "$dns_over_https" == "1" ];
+then
+  dns_over_https="true"
+  ynh_app_setting_set --app=$app --key=dns_over_https --value=$dns_over_https
+elif [ -z "$dns_over_https" ] || [ "$dns_over_https" == "0" ];
+then
+  dns_over_https="false"
+  ynh_app_setting_set --app=$app --key=dns_over_https --value=$dns_over_https
 fi
 
 #=================================================
@@ -121,12 +137,22 @@ ynh_install_app_dependencies $pkg_dependencies
 #=================================================
 ynh_script_progression --message="Updating a configuration file..." --weight=1
 
-ipv4_interface=$(ip route get 1.2.3.4 | grep -oP '(?<=dev )\w+')
-ipv6_interface=$(ip -6 route get ::1.2.3.4 | grep -oP '(?<=dev )\w+')
+ipv4_interface=$(echo "$(ip -4 route get 1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+')
+ipv6_interface=$(echo "$(ip -6 route get ::1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+')
 
-if [ "$ipv4_interface" != "$ipv6_interface" ]; then
-    echo "bind-interfaces
+if [ -z "$ipv4_interface" ] && [ -z "$ipv6_interface" ]; then
+    ynh_die --message="Impossible to find the main network interface, please report this issue."
+elif [ "$ipv4_interface" != "$ipv6_interface" ]; then
+    if [ -z "$ipv4_interface" ]; then
+        echo "bind-interfaces
+except-interface=$ipv6_interface" > "/etc/dnsmasq.d/$app"
+    elif [ -z "$ipv6_interface" ]; then
+        echo "bind-interfaces
+except-interface=$ipv4_interface" > "/etc/dnsmasq.d/$app"
+    else
+        echo "bind-interfaces
 except-interface=$ipv4_interface, $ipv6_interface" > "/etc/dnsmasq.d/$app"
+    fi
 else
     echo "bind-interfaces
 except-interface=$ipv4_interface" > "/etc/dnsmasq.d/$app"
@@ -136,8 +162,8 @@ systemctl restart dnsmasq
 
 ynh_store_file_checksum --file="/etc/dnsmasq.d/$app"
 
-ipv4_route_output=$(ip -4 route get 1.2.3.4 | head -n1)
-ipv6_route_output=$(ip -6 route get ::1.2.3.4 | head -n1)
+ipv4_route_output=$(echo "$(ip -4 route get 1.2.3.4 2> /dev/null)" | head -n1)
+ipv6_route_output=$(echo "$(ip -6 route get ::1.2.3.4 2> /dev/null)" | head -n1)
 
 ipv4_addr=""
 for i in $(seq "$(echo $ipv4_route_output | wc -w)" -1 1); do
@@ -165,7 +191,11 @@ with open(\"$final_path/AdGuardHome.yaml\", 'r') as file:
 need_file_update = False
 
 if \"0.0.0.0\" in conf_file[\"dns\"][\"bind_hosts\"]:
-  conf_file[\"dns\"][\"bind_hosts\"] = [\"$ipv4_addr\", \"$ipv6_addr\"]
+  conf_file[\"dns\"][\"bind_hosts\"] = []
+  if \"$ipv4_addr\":
+    conf_file[\"dns\"][\"bind_hosts\"].append(\"$ipv4_addr\")
+  if \"$ipv6_addr\":
+    conf_file[\"dns\"][\"bind_hosts\"].append(\"$ipv6_addr\")
   need_file_update = True
 
 if conf_file[\"dns\"][\"port\"] != $adguard_port:

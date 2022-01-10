@@ -80,7 +80,7 @@ tls:
   port_dns_over_quic: 784
   port_dnscrypt: 0
   dnscrypt_config_file: ""
-  allow_unencrypted_doh: false
+  allow_unencrypted_doh: __DNS_OVER_HTTPS__
   strict_sni_check: false
   certificate_chain: ""
   private_key: ""

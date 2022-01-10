@@ -27,9 +27,10 @@ password=$(ynh_app_setting_get --app=$app --key=password)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 port=$(ynh_app_setting_get --app=$app --key=port)
 adguard_port=$(ynh_app_setting_get --app=$app --key=adguard_port)
+dns_over_https=$(ynh_app_setting_get --app=$app --key=dns_over_https)
 
-ipv4_route_output=$(ip -4 route get 1.2.3.4 | head -n1)
-ipv6_route_output=$(ip -6 route get ::1.2.3.4 | head -n1)
+ipv4_route_output=$(echo "$(ip -4 route get 1.2.3.4 2> /dev/null)" | head -n1)
+ipv6_route_output=$(echo "$(ip -6 route get ::1.2.3.4 2> /dev/null)" | head -n1)
 
 ipv4_addr=""
 for i in $(seq "$(echo $ipv4_route_output | wc -w)" -1 1); do

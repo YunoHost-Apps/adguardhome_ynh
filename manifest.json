@@ -6,7 +6,7 @@
         "en": "Network-wide ads & trackers blocking DNS server",
         "fr": "Serveur DNS, bloqueur de publicités et trackers"
     },
-    "version": "0.107.2~ynh1",
+    "version": "0.107.2~ynh2",
     "url": "https://adguard.com/adguard-home.html",
     "upstream": {
         "license": "GPL-3.0",
@@ -28,14 +28,15 @@
         "nginx"
     ],
     "arguments": {
-        "install": [{
+        "install": [
+            {
                 "name": "domain",
                 "type": "domain"
             },
             {
-                "name": "is_public",
-                "type": "boolean",
-                "default": true
+                "name": "path",
+                "type": "path",
+                "default": "/adguard"
             },
             {
                 "name": "admin",
@@ -44,6 +45,14 @@
             {
                 "name": "password",
                 "type": "password"
+            },
+            {
+                "name": "dns_over_https",
+                "type": "boolean",
+                "ask": {
+                    "en": "Should DNS-over-HTTPS be enabled? (If so, anyone who knows your adguard address can make a doh request to https://adguardomain.tld/dns-query)"
+                },
+                "default": true
             }
         ]
     }

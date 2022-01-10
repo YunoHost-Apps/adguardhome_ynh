@@ -22,10 +22,10 @@ ynh_abort_if_errors
 
 # Retrieve arguments
 domain=$YNH_APP_ARG_DOMAIN
-path_url="/"
-is_public=$YNH_APP_ARG_IS_PUBLIC
+path_url=$YNH_APP_ARG_PATH
 admin=$YNH_APP_ARG_ADMIN
 password=$YNH_APP_ARG_PASSWORD
+dns_over_https=$YNH_APP_ARG_DNS_OVER_HTTPS
 architecture=$YNH_ARCH
 
 app=$YNH_APP_INSTANCE_NAME
@@ -49,6 +49,14 @@ ynh_script_progression --message="Storing installation settings..." --weight=2
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
 ynh_app_setting_set --app=$app --key=admin --value=$admin
+
+if [ "$dns_over_https" == "1" ];
+then
+    dns_over_https="true"
+else
+    dns_over_https="false"
+fi
+ynh_app_setting_set --app=$app --key=dns_over_https --value=$dns_over_https
 
 #=================================================
 # FIND AND OPEN A PORT
@@ -116,12 +124,23 @@ ynh_add_nginx_config
 #=================================================
 ynh_script_progression --message="Modifying a config file..." --weight=1
 
-ipv4_interface=$(ip route get 1.2.3.4 | grep -oP '(?<=dev )\w+')
-ipv6_interface=$(ip -6 route get ::1.2.3.4 | grep -oP '(?<=dev )\w+')
+# echo the ip route command to prevent a crash if the server doesn't have any ipv4/6
+ipv4_interface=$(echo "$(ip -4 route get 1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+')
+ipv6_interface=$(echo "$(ip -6 route get ::1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+')
 
-if [ "$ipv4_interface" != "$ipv6_interface" ]; then
-    echo "bind-interfaces
+if [ -z "$ipv4_interface" ] && [ -z "$ipv6_interface" ]; then
+    ynh_die --message="Impossible to find the main network interface, please report this issue."
+elif [ "$ipv4_interface" != "$ipv6_interface" ]; then
+    if [ -z "$ipv4_interface" ]; then
+        echo "bind-interfaces
+except-interface=$ipv6_interface" > "/etc/dnsmasq.d/$app"
+    elif [ -z "$ipv6_interface" ]; then
+        echo "bind-interfaces
+except-interface=$ipv4_interface" > "/etc/dnsmasq.d/$app"
+    else
+        echo "bind-interfaces
 except-interface=$ipv4_interface, $ipv6_interface" > "/etc/dnsmasq.d/$app"
+    fi
 else
     echo "bind-interfaces
 except-interface=$ipv4_interface" > "/etc/dnsmasq.d/$app"
@@ -131,8 +150,8 @@ systemctl restart dnsmasq
 
 ynh_store_file_checksum --file="/etc/dnsmasq.d/$app"
 
-ipv4_route_output=$(ip -4 route get 1.2.3.4 | head -n1)
-ipv6_route_output=$(ip -6 route get ::1.2.3.4 | head -n1)
+ipv4_route_output=$(echo "$(ip -4 route get 1.2.3.4 2> /dev/null)" | head -n1 | head -n1)
+ipv6_route_output=$(echo "$(ip -6 route get ::1.2.3.4 2> /dev/null)" | head -n1)
 
 ipv4_addr=""
 for i in $(seq "$(echo $ipv4_route_output | wc -w)" -1 1); do
@@ -176,23 +195,19 @@ ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
 yunohost service add $app --description="Ads & trackers blocking DNS server"
 
 #=================================================
+# SETUP SSOWAT
+#=================================================
+ynh_script_progression --message="Configuring permissions..."
+
+ynh_permission_create --permission="api" --label="api" --url="re:$domain/dns-query" --allowed="visitors" --auth_header="false" --show_tile="false" --protected="true"
+
+#=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression --message="Starting a systemd service..." --weight=2
 
 # Start a systemd service
 ynh_systemd_action --service_name=$app --action="restart" --log_path=systemd
-
-#=================================================
-# SETUP SSOWAT
-#=================================================
-ynh_script_progression --message="Configuring permissions..." --weight=1
-
-# Make app public if necessary
-if [ $is_public -eq 1 ]
-then
-    ynh_permission_update --permission="main" --add="visitors"
-fi
 
 #=================================================
 # RELOAD NGINX
