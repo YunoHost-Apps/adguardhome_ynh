@@ -137,8 +137,8 @@ ynh_install_app_dependencies $pkg_dependencies
 #=================================================
 ynh_script_progression --message="Updating a configuration file..." --weight=1
 
-ipv4_interface=$(echo "$(ip -4 route get 1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+')
-ipv6_interface=$(echo "$(ip -6 route get ::1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+')
+ipv4_interface=$(echo "$(ip -4 route get 1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+' || true)
+ipv6_interface=$(echo "$(ip -6 route get ::1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+' || true)
 
 if [ -z "$ipv4_interface" ] && [ -z "$ipv6_interface" ]; then
     ynh_die --message="Impossible to find the main network interface, please report this issue."
