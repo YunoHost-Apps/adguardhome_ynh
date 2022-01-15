@@ -6,7 +6,7 @@
         "en": "Network-wide ads & trackers blocking DNS server",
         "fr": "Serveur DNS, bloqueur de publicités et trackers"
     },
-    "version": "0.107.2~ynh2",
+    "version": "0.107.2~ynh3",
     "url": "https://adguard.com/adguard-home.html",
     "upstream": {
         "license": "GPL-3.0",
