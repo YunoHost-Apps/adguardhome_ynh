@@ -9,9 +9,6 @@
 # Since each app is different, maintainers can adapt its contents so as to perform
 # automatic actions when a new upstream release is detected.
 
-# Remove this exit command when you are ready to run this Action
-exit 1
-
 #=================================================
 # FETCHING LATEST RELEASE AND ITS ASSETS
 #=================================================
@@ -58,7 +55,7 @@ echo "${#assets[@]} available asset(s)"
 # Here is an example for Grav, it has to be adapted in accordance with how the upstream releases look like.
 
 # Let's loop over the array of assets URLs
-for asset_url in ${assets[@]}; do
+for asset_url in "${assets[@]}"; do
 
 echo "Handling asset at $asset_url"
 
@@ -71,6 +68,12 @@ case $asset_url in
     ;;
   *"AdGuardHome_linux_armv7.tar.gz")
     src="armhf"
+    ;;
+  *"AdGuardHome_linux_arm64.tar.gz")
+    src="arm64"
+    ;;
+  *)
+    src=""
     ;;
 esac
 
