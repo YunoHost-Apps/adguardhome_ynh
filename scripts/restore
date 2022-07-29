@@ -97,7 +97,7 @@ systemctl enable $app.service --quiet
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
 
-yunohost service add $app --description="Ads & trackers blocking DNS server"
+yunohost service add $app --description="Ads & trackers blocking DNS server" --needs_exposed_ports $adguard_port
 
 #=================================================
 # START SYSTEMD SERVICE
