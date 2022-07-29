@@ -31,8 +31,6 @@ dns_over_https=$YNH_APP_ARG_DNS_OVER_HTTPS
 
 app=$YNH_APP_INSTANCE_NAME
 
-password=$(python3 -c "import bcrypt; print(bcrypt.hashpw(b\"$password\", bcrypt.gensalt(rounds=10)).decode())")
-
 #=================================================
 # CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
 #=================================================
@@ -52,7 +50,6 @@ ynh_script_progression --message="Storing installation settings..." --weight=2
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
 ynh_app_setting_set --app=$app --key=admin --value=$admin
-ynh_app_setting_set --app=$app --key=password --value=$password
 
 if [ "$dns_over_https" == "1" ];
 then
@@ -171,6 +168,9 @@ for i in $(seq "$(echo $ipv6_route_output | wc -w)" -1 1); do
         break
     fi
 done
+
+password=$(python3 -c "import bcrypt; print(bcrypt.hashpw(b\"$password\", bcrypt.gensalt(rounds=10)).decode())")
+ynh_app_setting_set --app=$app --key=password --value=$password
 
 # Main config File
 ynh_add_config --template="../conf/AdGuardHome.yaml" --destination="$final_path/AdGuardHome.yaml"
