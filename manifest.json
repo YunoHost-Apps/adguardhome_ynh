@@ -6,7 +6,7 @@
         "en": "Network-wide ads & trackers blocking DNS server",
         "fr": "Serveur DNS, bloqueur de publicités et trackers"
     },
-    "version": "0.107.8~ynh1",
+    "version": "0.107.8~ynh2",
     "url": "https://adguard.com/adguard-home.html",
     "upstream": {
         "license": "GPL-3.0",
@@ -17,8 +17,8 @@
     },
     "license": "GPL-3.0",
     "maintainer": {
-        "name": "liberodark",
-        "email": "liberodark@gmail.com"
+        "name": "",
+        "email": ""
     },
     "requirements": {
         "yunohost": ">= 4.3.0"

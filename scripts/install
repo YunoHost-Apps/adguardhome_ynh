@@ -13,6 +13,9 @@ source /usr/share/yunohost/helpers
 # MANAGE SCRIPT FAILURE
 #=================================================
 
+ynh_clean_setup () {
+	ynh_clean_check_starting
+}
 # Exit if an error occurs during the execution of the script
 ynh_abort_if_errors
 
@@ -20,13 +23,11 @@ ynh_abort_if_errors
 # RETRIEVE ARGUMENTS FROM THE MANIFEST
 #=================================================
 
-# Retrieve arguments
 domain=$YNH_APP_ARG_DOMAIN
 path_url=$YNH_APP_ARG_PATH
 admin=$YNH_APP_ARG_ADMIN
 password=$YNH_APP_ARG_PASSWORD
 dns_over_https=$YNH_APP_ARG_DNS_OVER_HTTPS
-architecture=$YNH_ARCH
 
 app=$YNH_APP_INSTANCE_NAME
 
@@ -59,6 +60,8 @@ fi
 ynh_app_setting_set --app=$app --key=dns_over_https --value=$dns_over_https
 
 #=================================================
+# STANDARD MODIFICATIONS
+#=================================================
 # FIND AND OPEN A PORT
 #=================================================
 ynh_script_progression --message="Finding an available port..." --weight=1
@@ -79,14 +82,7 @@ ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $adguard_port
 #=================================================
 ynh_script_progression --message="Installing dependencies..." --weight=1
 
-# Define and install dependencies
 ynh_install_app_dependencies $pkg_dependencies
-
-#=================================================
-# CRYPT PASSWORD
-#=================================================
-password=$(python3 -c "import bcrypt; print(bcrypt.hashpw(b\"$password\", bcrypt.gensalt(rounds=10)).decode())")
-ynh_app_setting_set --app=$app --key=password --value=$password
 
 #=================================================
 # CREATE DEDICATED USER
@@ -94,7 +90,7 @@ ynh_app_setting_set --app=$app --key=password --value=$password
 ynh_script_progression --message="Configuring system user..." --weight=1
 
 # Create a system user
-ynh_system_user_create --username=$app --home_dir=$final_path
+ynh_system_user_create --username=$app --home_dir="$final_path"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -103,11 +99,11 @@ ynh_script_progression --message="Setting up source files..." --weight=4
 
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 # Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir=$final_path --source_id="$architecture"
+ynh_setup_source --dest_dir=$final_path --source_id="$YNH_ARCH"
 
 chmod 750 "$final_path"
 chmod -R o-rwx "$final_path"
-chown -R $app: "$final_path"
+chown -R $app:$app "$final_path"
 
 setcap 'CAP_NET_BIND_SERVICE=+eip CAP_NET_RAW=+eip' $final_path/AdGuardHome
 
@@ -120,9 +116,11 @@ ynh_script_progression --message="Configuring NGINX web server..." --weight=3
 ynh_add_nginx_config
 
 #=================================================
-# MODIFY A CONFIG FILE
+# SPECIFIC SETUP
 #=================================================
-ynh_script_progression --message="Modifying a config file..." --weight=1
+# ADD A CONFIGURATION
+#=================================================
+ynh_script_progression --message="Adding a configuration file..." --weight=1
 
 # echo the ip route command to prevent a crash if the server doesn't have any ipv4/6
 ipv4_interface=$(echo "$(ip -4 route get 1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+' || true)
@@ -171,11 +169,14 @@ for i in $(seq "$(echo $ipv6_route_output | wc -w)" -1 1); do
     fi
 done
 
+password=$(python3 -c "import bcrypt; print(bcrypt.hashpw(b\"$password\", bcrypt.gensalt(rounds=10)).decode())")
+ynh_app_setting_set --app=$app --key=password --value=$password
+
 # Main config File
 ynh_add_config --template="../conf/AdGuardHome.yaml" --destination="$final_path/AdGuardHome.yaml"
 
 chmod 600 "$final_path/AdGuardHome.yaml"
-chown -R $app: "$final_path/AdGuardHome.yaml"
+chown -R $app:$app "$final_path/AdGuardHome.yaml"
 
 #=================================================
 # SETUP SYSTEMD
@@ -192,14 +193,7 @@ ynh_add_systemd_config
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
 
-yunohost service add $app --description="Ads & trackers blocking DNS server"
-
-#=================================================
-# SETUP SSOWAT
-#=================================================
-ynh_script_progression --message="Configuring permissions..."
-
-ynh_permission_create --permission="api" --label="api" --url="re:$domain/dns-query" --allowed="visitors" --auth_header="false" --show_tile="false" --protected="true"
+yunohost service add $app --description="Ads & trackers blocking DNS server" --needs_exposed_ports $adguard_port
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -208,6 +202,13 @@ ynh_script_progression --message="Starting a systemd service..." --weight=2
 
 # Start a systemd service
 ynh_systemd_action --service_name=$app --action="restart" --log_path=systemd
+
+#=================================================
+# SETUP SSOWAT
+#=================================================
+ynh_script_progression --message="Configuring permissions..."
+
+ynh_permission_create --permission="api" --label="api" --url="re:$domain/dns-query" --allowed="visitors" --auth_header="false" --show_tile="false" --protected="true"
 
 #=================================================
 # RELOAD NGINX
