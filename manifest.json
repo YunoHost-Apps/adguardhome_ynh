@@ -13,7 +13,8 @@
         "website": "https://adguard.com/adguard-home.html",
         "admindoc": "https://github.com/AdguardTeam/AdGuardHome/wiki",
         "userdoc": "https://kb.adguard.com/en",
-        "code": "https://github.com/AdguardTeam/AdGuardHome"
+        "code": "https://github.com/AdguardTeam/AdGuardHome",
+        "cpe": "cpe:2.3:a:adguard:adguardhome"
     },
     "license": "GPL-3.0",
     "maintainer": {
