@@ -23,7 +23,6 @@ It operates as a DNS server that re-routes tracking domains to a "black hole", t
 **Shipped version:** 0.107.9~ynh1
 
 
-
 ## Screenshots
 
 ![Screenshot of AdGuard Home](./doc/screenshots/68747470733a2f2f63646e2e616467756172642e636f6d2f7075626c69632f416467756172642f436f6d6d6f6e2f616467756172645f686f6d652e676966.gif)
