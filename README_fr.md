@@ -22,7 +22,6 @@ Il fonctionne comme un serveur DNS qui redirige les domaines de pistage vers un 
 
 **Version incluse :** 0.107.16~ynh1
 
-
 ## Captures d'écran
 
 ![Capture d'écran de AdGuard Home](./doc/screenshots/68747470733a2f2f63646e2e616467756172642e636f6d2f7075626c69632f416467756172642f436f6d6d6f6e2f616467756172645f686f6d652e676966.gif)
