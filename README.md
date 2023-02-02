@@ -5,7 +5,7 @@ It shall NOT be edited by hand.
 
 # AdGuard Home for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/adguardhome.svg)](https://dash.yunohost.org/appci/app/adguardhome) ![Working status](https://ci-apps.yunohost.org/ci/badges/adguardhome.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/adguardhome.maintain.svg)  
+[![Integration level](https://dash.yunohost.org/integration/adguardhome.svg)](https://dash.yunohost.org/appci/app/adguardhome) ![Working status](https://ci-apps.yunohost.org/ci/badges/adguardhome.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/adguardhome.maintain.svg)
 [![Install AdGuard Home with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=adguardhome)
 
 *[Lire ce readme en français.](./README_fr.md)*
@@ -20,7 +20,7 @@ AdGuard Home is a network-wide software for blocking ads & tracking. After you s
 It operates as a DNS server that re-routes tracking domains to a "black hole", thus preventing your devices from connecting to those servers. It's based on software we use for our public AdGuard DNS servers -- both share a lot of common code.
 
 
-**Shipped version:** 0.107.22~ynh1
+**Shipped version:** 0.107.23~ynh1
 
 ## Screenshots
 
