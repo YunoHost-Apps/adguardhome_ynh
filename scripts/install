@@ -90,7 +90,7 @@ ynh_install_app_dependencies $pkg_dependencies
 ynh_script_progression --message="Configuring system user..." --weight=1
 
 # Create a system user
-ynh_system_user_create --username=$app --home_dir="$final_path"
+ynh_system_user_create --username=$app --home_dir="$final_path" --groups="ssl-cert"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
