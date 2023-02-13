@@ -6,6 +6,7 @@ It shall NOT be edited by hand.
 # AdGuard Home pour YunoHost
 
 [![Niveau d’intégration](https://dash.yunohost.org/integration/adguardhome.svg)](https://dash.yunohost.org/appci/app/adguardhome) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/adguardhome.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/adguardhome.maintain.svg)
+
 [![Installer AdGuard Home avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=adguardhome)
 
 *[Read this readme in english.](./README.md)*
