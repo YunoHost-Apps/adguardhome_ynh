@@ -130,18 +130,14 @@ if [ -z "$ipv4_interface" ] && [ -z "$ipv6_interface" ]; then
     ynh_die --message="Impossible to find the main network interface, please report this issue."
 elif [ "$ipv4_interface" != "$ipv6_interface" ]; then
     if [ -z "$ipv4_interface" ]; then
-        echo "bind-interfaces
-except-interface=$ipv6_interface" > "/etc/dnsmasq.d/$app"
+        echo -e "bind-interface\nexcept-interface=$ipv6_interface" > "/etc/dnsmasq.d/$app"
     elif [ -z "$ipv6_interface" ]; then
-        echo "bind-interfaces
-except-interface=$ipv4_interface" > "/etc/dnsmasq.d/$app"
+        echo -e "bind-interfaces\nexcept-interface=$ipv4_interface" > "/etc/dnsmasq.d/$app"
     else
-        echo "bind-interfaces
-except-interface=$ipv4_interface, $ipv6_interface" > "/etc/dnsmasq.d/$app"
+        echo -e "bind-interfaces\nexcept-interface=$ipv4_interface, $ipv6_interface" > "/etc/dnsmasq.d/$app"
     fi
 else
-    echo "bind-interfaces
-except-interface=$ipv4_interface" > "/etc/dnsmasq.d/$app"
+    echo -e "bind-interfaces\nexcept-interface=$ipv4_interface" > "/etc/dnsmasq.d/$app"
 fi
 
 systemctl restart dnsmasq
