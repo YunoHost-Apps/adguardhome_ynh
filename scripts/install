@@ -54,6 +54,10 @@ ynh_app_setting_set --app=$app --key=admin --value=$admin
 if [ "$dns_over_https" == "1" ];
 then
     dns_over_https="true"
+    adguard_DoT_port=853
+    ynh_app_setting_set --app=$app --key=adguard_DoT_port --value=$adguard_DoT_port
+    adguard_DoQ_port=784
+    ynh_app_setting_set --app=$app --key=adguard_DoQ_port --value=$adguard_DoQ_port
 else
     dns_over_https="false"
 fi
