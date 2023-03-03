@@ -58,6 +58,7 @@ ynh_systemd_action --service_name=$app --action="stop"
 
 # Disable the port 53 for upnp
 ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $adguard_port
+ynh_exec_warn_less yunohost firewall allow --no-upnp UDP $adguard_port
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
