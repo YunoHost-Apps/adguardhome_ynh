@@ -86,6 +86,11 @@ if [ -n "$dns_over_https" ] && [ "$dns_over_https" == "1" ];
 then
 	dns_over_https="true"
 	ynh_app_setting_set --app=$app --key=dns_over_https --value=$dns_over_https
+	dns_over_https="true"
+    	adguard_DoT_port=853
+    	ynh_app_setting_set --app=$app --key=adguard_DoT_port --value=$adguard_DoT_port
+    	adguard_DoQ_port=784
+	ynh_app_setting_set --app=$app --key=adguard_DoQ_port --value=$adguard_DoQ_port
 elif [ -z "$dns_over_https" ] || [ "$dns_over_https" == "0" ];
 then
 	dns_over_https="false"
