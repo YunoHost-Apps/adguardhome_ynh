@@ -58,6 +58,7 @@ ynh_systemd_action --service_name=$app --action="stop"
 
 # Disable the port 53 for upnp
 ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $adguard_port
+ynh_exec_warn_less yunohost firewall allow --no-upnp UDP $adguard_port
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
@@ -86,6 +87,15 @@ if [ -n "$dns_over_https" ] && [ "$dns_over_https" == "1" ];
 then
 	dns_over_https="true"
 	ynh_app_setting_set --app=$app --key=dns_over_https --value=$dns_over_https
+	# DNS over TLS
+    	adguard_DoT_port=853
+    	ynh_app_setting_set --app=$app --key=adguard_DoT_port --value=$adguard_DoT_port
+	ynh_exec_warn_less yunohost firewall allow --no-upnp UDP $adguard_DoT_port
+	ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $adguard_DoT_port
+	# DNS over QUIC
+    	adguard_DoQ_port=784
+	ynh_app_setting_set --app=$app --key=adguard_DoQ_port --value=$adguard_DoQ_port
+	ynh_exec_warn_less yunohost firewall allow --no-upnp UDP $adguard_DoQ_port
 elif [ -z "$dns_over_https" ] || [ "$dns_over_https" == "0" ];
 then
 	dns_over_https="false"
@@ -147,18 +157,14 @@ if [ -z "$ipv4_interface" ] && [ -z "$ipv6_interface" ]; then
 		ynh_die --message="Impossible to find the main network interface, please report this issue."
 elif [ "$ipv4_interface" != "$ipv6_interface" ]; then
 		if [ -z "$ipv4_interface" ]; then
-				echo "bind-interfaces
-except-interface=$ipv6_interface" > "/etc/dnsmasq.d/$app"
+				echo -e "bind-interfaces\nexcept-interface=$ipv6_interface" > "/etc/dnsmasq.d/$app"
 		elif [ -z "$ipv6_interface" ]; then
-				echo "bind-interfaces
-except-interface=$ipv4_interface" > "/etc/dnsmasq.d/$app"
+				echo -e "bind-interfaces\nexcept-interface=$ipv4_interface" > "/etc/dnsmasq.d/$app"
 		else
-				echo "bind-interfaces
-except-interface=$ipv4_interface, $ipv6_interface" > "/etc/dnsmasq.d/$app"
+				echo -e "bind-interfaces\nexcept-interface=$ipv4_interface, $ipv6_interface" > "/etc/dnsmasq.d/$app"
 		fi
 else
-		echo "bind-interfaces
-except-interface=$ipv4_interface" > "/etc/dnsmasq.d/$app"
+		echo -e "bind-interfaces\nexcept-interface=$ipv4_interface" > "/etc/dnsmasq.d/$app"
 fi
 
 systemctl restart dnsmasq
