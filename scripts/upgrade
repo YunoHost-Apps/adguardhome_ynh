@@ -10,42 +10,10 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# LOAD SETTINGS
-#=================================================
-#REMOVEME? ynh_script_progression --message="Loading installation settings..." --weight=1
-
-#REMOVEME? app=$YNH_APP_INSTANCE_NAME
-
-#REMOVEME? domain=$(ynh_app_setting_get --app=$app --key=domain)
-#REMOVEME? path=$(ynh_app_setting_get --app=$app --key=path)
-#REMOVEME? admin=$(ynh_app_setting_get --app=$app --key=admin)
-#REMOVEME? password=$(ynh_app_setting_get --app=$app --key=password)
-#REMOVEME? #REMOVEME? install_dir=$(ynh_app_setting_get --app=$app --key=install_dir)
-#REMOVEME? port=$(ynh_app_setting_get --app=$app --key=port)
-#REMOVEME? adguard_port=$(ynh_app_setting_get --app=$app --key=adguard_port)
-#REMOVEME? dns_over_https=$(ynh_app_setting_get --app=$app --key=dns_over_https)
-
-#=================================================
 # CHECK VERSION
 #=================================================
-ynh_script_progression --message="Checking version..."
 
 upgrade_type=$(ynh_check_app_version_changed)
-
-#=================================================
-# BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
-#=================================================
-#REMOVEME? ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=1
-
-# Backup the current version of the app
-#REMOVEME? ynh_backup_before_upgrade
-#REMOVEME? ynh_clean_setup () {
-	ynh_clean_check_starting
-	# Restore it if the upgrade fails
-#REMOVEME? 	ynh_restore_upgradebackup
-}
-# Exit if an error occurs during the execution of the script
-#REMOVEME? ynh_abort_if_errors
 
 #=================================================
 # STANDARD UPGRADE STEPS
@@ -65,50 +33,24 @@ ynh_exec_warn_less yunohost firewall allow --no-upnp UDP $adguard_port
 #=================================================
 ynh_script_progression --message="Ensuring downward compatibility..." --weight=1
 
-# Cleaning legacy permissions
-#REMOVEME? if ynh_legacy_permissions_exists; then
-#REMOVEME? 	ynh_legacy_permissions_delete_all
-
-	ynh_app_setting_delete --app=$app --key=is_public
-fi
-
-# The dns port should be 53
-if [ "$adguard_port" -ne "53" ]; then
-	adguard_port=53
-#REMOVEME? 	ynh_app_setting_set --app=$app --key=adguard_port --value=$adguard_port
-fi
-
-# Create a permission if needed
-#REMOVEME? if ! ynh_permission_exists --permission="api"; then
-#REMOVEME? 	ynh_permission_create --permission="api" --label="api" --url="re:$domain/dns-query" --allowed="visitors" --auth_header="false" --show_tile="false" --protected="true"
-fi
-
 if [ -n "$dns_over_https" ] && [ "$dns_over_https" == "1" ];
 then
 	dns_over_https="true"
 	ynh_app_setting_set --app=$app --key=dns_over_https --value=$dns_over_https
 	# DNS over TLS
     	adguard_DoT_port=853
-#REMOVEME?     	ynh_app_setting_set --app=$app --key=adguard_DoT_port --value=$adguard_DoT_port
+	ynh_app_setting_set --app=$app --key=adguard_DoT_port --value=$adguard_DoT_port
 	ynh_exec_warn_less yunohost firewall allow --no-upnp UDP $adguard_DoT_port
 	ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $adguard_DoT_port
 	# DNS over QUIC
     	adguard_DoQ_port=784
-#REMOVEME? 	ynh_app_setting_set --app=$app --key=adguard_DoQ_port --value=$adguard_DoQ_port
+	ynh_app_setting_set --app=$app --key=adguard_DoQ_port --value=$adguard_DoQ_port
 	ynh_exec_warn_less yunohost firewall allow --no-upnp UDP $adguard_DoQ_port
 elif [ -z "$dns_over_https" ] || [ "$dns_over_https" == "0" ];
 then
 	dns_over_https="false"
 	ynh_app_setting_set --app=$app --key=dns_over_https --value=$dns_over_https
 fi
-
-#=================================================
-# CREATE DEDICATED USER
-#=================================================
-#REMOVEME? ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
-
-# Create a dedicated user (if not existing)
-#REMOVEME? ynh_system_user_create --username=$app --home_dir="$install_dir" --groups="ssl-cert"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -127,13 +69,6 @@ chmod -R o-rwx "$install_dir"
 chown -R $app:$app "$install_dir"
 
 setcap 'CAP_NET_BIND_SERVICE=+eip CAP_NET_RAW=+eip' $install_dir/AdGuardHome
-
-#=================================================
-# UPGRADE DEPENDENCIES
-#=================================================
-#REMOVEME? ynh_script_progression --message="Upgrading dependencies..." --weight=1
-
-#REMOVEME? ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
 # NGINX CONFIGURATION
@@ -240,13 +175,6 @@ yunohost service add $app --description="Ads & trackers blocking DNS server" --n
 ynh_script_progression --message="Starting a systemd service..." --weight=1
 
 ynh_systemd_action --service_name=$app --action="restart" --log_path="systemd"
-
-#=================================================
-# RELOAD NGINX
-#=================================================
-#REMOVEME? ynh_script_progression --message="Reloading NGINX web server..." --weight=1
-
-#REMOVEME? ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
 # END OF SCRIPT

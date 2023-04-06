@@ -1,5 +1,5 @@
 [Unit]
-Description=AdGuard Home: Network-level blocker
+Description=AdGuardHome: Network-level blocker
 ConditionFileIsExecutable=__INSTALL_DIR__/AdGuardHome
 After=syslog.target network-online.target
 
