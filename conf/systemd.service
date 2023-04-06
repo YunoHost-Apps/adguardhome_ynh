@@ -1,6 +1,6 @@
 [Unit]
 Description=AdGuard Home: Network-level blocker
-ConditionFileIsExecutable=__FINALPATH__/AdGuardHome
+ConditionFileIsExecutable=__INSTALL_DIR__/AdGuardHome
 After=syslog.target network-online.target
 
 [Service]
@@ -9,8 +9,8 @@ User=__APP__
 Group=__APP__
 StartLimitInterval=5
 StartLimitBurst=10
-WorkingDirectory=__FINALPATH__/
-ExecStart=__FINALPATH__/AdGuardHome 
+WorkingDirectory=__INSTALL_DIR__/
+ExecStart=__INSTALL_DIR__/AdGuardHome 
 Restart=always
 RestartSec=10
 #EnvironmentFile=-/etc/sysconfig/AdGuardHome
