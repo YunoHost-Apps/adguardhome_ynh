@@ -1,5 +1,5 @@
-SOURCE_URL=https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.33/AdGuardHome_linux_arm64.tar.gz
-SOURCE_SUM=7c75975f8e2c0de41b7d603a27134a39362f4b4f0bbbe96c7d30b0f3434345af
+SOURCE_URL=https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.34/AdGuardHome_linux_arm64.tar.gz
+SOURCE_SUM=62379c66257068adffd489f9b8a484e69176d58409369c44a4f2b469b35fde24
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=2
