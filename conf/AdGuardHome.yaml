@@ -118,11 +118,12 @@ dhcp:
     ra_slaac_only: false
     ra_allow_slaac: false
 clients: []
-log_compress: false
-log_localtime: false
-log_max_backups: 0
-log_max_size: 100
-log_max_age: 3
-log_file: ""
+log:
+  compress: false
+  localtime: false
+  max_backups: 0
+  max_size: 100
+  max_age: 3
+  file: ""
 verbose: false
 schema_version: 10
