@@ -14,11 +14,11 @@
 #=================================================
 
 # Fetching information
-current_version=$(cat manifest.json | jq -j '.version|split("~")[0]')
-repo=$(cat manifest.json | jq -j '.upstream.code|split("https://github.com/")[1]')
+current_version=$(jq -j '.version|split("~")[0]' manifest.json)
+repo=$(jq -j '.upstream.code|split("https://github.com/")[1]' manifest.json)
 # Some jq magic is needed, because the latest upstream release is not always the latest version (e.g. security patches for older versions)
 version=$(curl --silent "https://api.github.com/repos/$repo/releases" | jq -r '.[] | select( .prerelease != true ) | .tag_name' | sort -V | tail -1)
-assets=($(curl --silent "https://api.github.com/repos/$repo/releases" | jq -r '[ .[] | select(.tag_name=="'$version'").assets[].browser_download_url ] | join(" ") | @sh' | tr -d "'"))
+assets=($(curl --silent "https://api.github.com/repos/$repo/releases" | jq -r '[ .[] | select(.tag_name=="'"$version"'").assets[].browser_download_url ] | join(" ") | @sh' | tr -d "'"))
 
 # Later down the script, we assume the version has only digits and dots
 # Sometimes the release name starts with a "v", so let's filter it out.
@@ -30,16 +30,16 @@ fi
 # Setting up the environment variables
 echo "Current version: $current_version"
 echo "Latest release from upstream: $version"
-echo "VERSION=$version" >> $GITHUB_ENV
+{ echo "VERSION=$version"; echo "REPO=$repo"; } >> "$GITHUB_ENV"
 # For the time being, let's assume the script will fail
-echo "PROCEED=false" >> $GITHUB_ENV
+echo "PROCEED=false" >> "$GITHUB_ENV"
 
 # Proceed only if the retrieved version is greater than the current one
 if ! dpkg --compare-versions "$current_version" "lt" "$version" ; then
     echo "::warning ::No new version available"
     exit 0
 # Proceed only if a PR for this new version does not already exist
-elif git ls-remote -q --exit-code --heads https://github.com/$GITHUB_REPOSITORY.git ci-auto-update-v$version ; then
+elif git ls-remote -q --exit-code --heads https://github.com/"$GITHUB_REPOSITORY".git ci-auto-update-v"$version" ; then
     echo "::warning ::A branch already exists for this update"
     exit 0
 fi
@@ -78,18 +78,18 @@ case $asset_url in
 esac
 
 # If $src is not empty, let's process the asset
-if [ ! -z "$src" ]; then
+if [ -n "$src" ]; then
 
 # Create the temporary directory
 tempdir="$(mktemp -d)"
 
 # Download sources and calculate checksum
 filename=${asset_url##*/}
-curl --silent -4 -L $asset_url -o "$tempdir/$filename"
+curl --silent -4 -L "$asset_url" -o "$tempdir/$filename"
 checksum=$(sha256sum "$tempdir/$filename" | head -c 64)
 
 # Delete temporary directory
-rm -rf $tempdir
+rm -rf "$tempdir"
 
 # Get extension
 if [[ $filename == *.tar.gz ]]; then
@@ -132,5 +132,5 @@ echo "$(jq -s --indent 4 ".[] | .version = \"$version~ynh1\"" manifest.json)" > 
 # No need to update the README, yunohost-bot takes care of it
 
 # The Action will proceed only if the PROCEED environment variable is set to true
-echo "PROCEED=true" >> $GITHUB_ENV
+echo "PROCEED=true" >> "$GITHUB_ENV"
 exit 0
