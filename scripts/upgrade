@@ -16,14 +16,14 @@ ynh_script_progression --message="Loading installation settings..." --weight=1
 
 app=$YNH_APP_INSTANCE_NAME
 
-domain=$(ynh_app_setting_get --app=$app --key=domain)
-path_url=$(ynh_app_setting_get --app=$app --key=path)
-admin=$(ynh_app_setting_get --app=$app --key=admin)
-password=$(ynh_app_setting_get --app=$app --key=password)
-final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-port=$(ynh_app_setting_get --app=$app --key=port)
-adguard_port=$(ynh_app_setting_get --app=$app --key=adguard_port)
-dns_over_https=$(ynh_app_setting_get --app=$app --key=dns_over_https)
+domain=$(ynh_app_setting_get --app="$app" --key=domain)
+path_url=$(ynh_app_setting_get --app="$app" --key=path)
+admin=$(ynh_app_setting_get --app="$app" --key=admin)
+password=$(ynh_app_setting_get --app="$app" --key=password)
+final_path=$(ynh_app_setting_get --app="$app" --key=final_path)
+port=$(ynh_app_setting_get --app="$app" --key=port)
+adguard_port=$(ynh_app_setting_get --app="$app" --key=adguard_port)
+dns_over_https=$(ynh_app_setting_get --app="$app" --key=dns_over_https)
 
 #=================================================
 # CHECK VERSION
@@ -54,11 +54,11 @@ ynh_abort_if_errors
 #=================================================
 ynh_script_progression --message="Stopping a systemd service..." --weight=1
 
-ynh_systemd_action --service_name=$app --action="stop"
+ynh_systemd_action --service_name="$app" --action="stop"
 
 # Disable the port 53 for upnp
-ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $adguard_port
-ynh_exec_warn_less yunohost firewall allow --no-upnp UDP $adguard_port
+ynh_exec_warn_less yunohost firewall allow --no-upnp TCP "$adguard_port"
+ynh_exec_warn_less yunohost firewall allow --no-upnp UDP "$adguard_port"
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
@@ -69,13 +69,13 @@ ynh_script_progression --message="Ensuring downward compatibility..." --weight=1
 if ynh_legacy_permissions_exists; then
 	ynh_legacy_permissions_delete_all
 
-	ynh_app_setting_delete --app=$app --key=is_public
+	ynh_app_setting_delete --app="$app" --key=is_public
 fi
 
 # The dns port should be 53
 if [ "$adguard_port" -ne "53" ]; then
 	adguard_port=53
-	ynh_app_setting_set --app=$app --key=adguard_port --value=$adguard_port
+	ynh_app_setting_set --app="$app" --key=adguard_port --value="$adguard_port"
 fi
 
 # Create a permission if needed
@@ -86,20 +86,20 @@ fi
 if [ -n "$dns_over_https" ] && [ "$dns_over_https" == "1" ];
 then
 	dns_over_https="true"
-	ynh_app_setting_set --app=$app --key=dns_over_https --value=$dns_over_https
+	ynh_app_setting_set --app="$app" --key=dns_over_https --value=$dns_over_https
 	# DNS over TLS
     	adguard_DoT_port=853
-    	ynh_app_setting_set --app=$app --key=adguard_DoT_port --value=$adguard_DoT_port
+    	ynh_app_setting_set --app="$app" --key=adguard_DoT_port --value=$adguard_DoT_port
 	ynh_exec_warn_less yunohost firewall allow --no-upnp UDP $adguard_DoT_port
 	ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $adguard_DoT_port
 	# DNS over QUIC
     	adguard_DoQ_port=784
-	ynh_app_setting_set --app=$app --key=adguard_DoQ_port --value=$adguard_DoQ_port
+	ynh_app_setting_set --app="$app" --key=adguard_DoQ_port --value=$adguard_DoQ_port
 	ynh_exec_warn_less yunohost firewall allow --no-upnp UDP $adguard_DoQ_port
 elif [ -z "$dns_over_https" ] || [ "$dns_over_https" == "0" ];
 then
 	dns_over_https="false"
-	ynh_app_setting_set --app=$app --key=dns_over_https --value=$dns_over_https
+	ynh_app_setting_set --app="$app" --key=dns_over_https --value=$dns_over_https
 fi
 
 #=================================================
@@ -108,7 +108,7 @@ fi
 ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
 
 # Create a dedicated user (if not existing)
-ynh_system_user_create --username=$app --home_dir="$final_path" --groups="ssl-cert"
+ynh_system_user_create --username="$app" --home_dir="$final_path" --groups="ssl-cert"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -119,21 +119,21 @@ then
 	ynh_script_progression --message="Upgrading source files..." --weight=1
 
 	# Download, check integrity, uncompress and patch the source from app.src
-	ynh_setup_source --dest_dir=$final_path --source_id="$YNH_ARCH"
+	ynh_setup_source --dest_dir="$final_path" --source_id="$YNH_ARCH"
 fi
 
 chmod 750 "$final_path"
 chmod -R o-rwx "$final_path"
-chown -R $app:$app "$final_path"
+chown -R "$app":"$app" "$final_path"
 
-setcap 'CAP_NET_BIND_SERVICE=+eip CAP_NET_RAW=+eip' $final_path/AdGuardHome
+setcap 'CAP_NET_BIND_SERVICE=+eip CAP_NET_RAW=+eip' "$final_path"/AdGuardHome
 
 #=================================================
 # UPGRADE DEPENDENCIES
 #=================================================
 ynh_script_progression --message="Upgrading dependencies..." --weight=1
 
-ynh_install_app_dependencies $pkg_dependencies
+ynh_install_app_dependencies "$pkg_dependencies"
 
 #=================================================
 # NGINX CONFIGURATION
@@ -175,18 +175,18 @@ ipv4_route_output=$(echo "$(ip -4 route get 1.2.3.4 2> /dev/null)" | head -n1)
 ipv6_route_output=$(echo "$(ip -6 route get ::1.2.3.4 2> /dev/null)" | head -n1)
 
 ipv4_addr=""
-for i in $(seq "$(echo $ipv4_route_output | wc -w)" -1 1); do
-		ip=$(echo $ipv4_route_output | awk "{print \$$i}")
-		if ynh_validate_ip4 --ip_address=$ip; then
+for i in $(seq "$(echo "$ipv4_route_output" | wc -w)" -1 1); do
+		ip=$(echo "$ipv4_route_output" | awk "{print \$$i}")
+		if ynh_validate_ip4 --ip_address="$ip"; then
 				ipv4_addr="$ip"
 				break
 		fi
 done
 
 ipv6_addr=""
-for i in $(seq "$(echo $ipv6_route_output | wc -w)" -1 1); do
-		ip=$(echo $ipv6_route_output | awk "{print \$$i}")
-		if ynh_validate_ip6 --ip_address=$ip; then
+for i in $(seq "$(echo "$ipv6_route_output" | wc -w)" -1 1); do
+		ip=$(echo "$ipv6_route_output" | awk "{print \$$i}")
+		if ynh_validate_ip6 --ip_address="$ip"; then
 				ipv6_addr="$ip"
 				break
 		fi
@@ -217,7 +217,7 @@ if need_file_update:
 "
 
 chmod 600 "$final_path/AdGuardHome.yaml"
-chown -R $app:$app "$final_path/AdGuardHome.yaml"
+chown -R "$app":"$app" "$final_path/AdGuardHome.yaml"
 
 #=================================================
 # SETUP SYSTEMD
@@ -232,14 +232,14 @@ ynh_add_systemd_config
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
 
-yunohost service add $app --description="Ads & trackers blocking DNS server" --needs_exposed_ports $adguard_port
+yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "$adguard_port"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression --message="Starting a systemd service..." --weight=1
 
-ynh_systemd_action --service_name=$app --action="restart" --log_path="systemd"
+ynh_systemd_action --service_name="$app" --action="restart" --log_path="systemd"
 
 #=================================================
 # RELOAD NGINX

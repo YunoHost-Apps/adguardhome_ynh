@@ -27,17 +27,17 @@ ynh_script_progression --message="Loading installation settings..." --weight=1
 
 app=$YNH_APP_INSTANCE_NAME
 
-domain=$(ynh_app_setting_get --app=$app --key=domain)
-path_url=$(ynh_app_setting_get --app=$app --key=path)
-final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-adguard_port=$(ynh_app_setting_get --app=$app --key=adguard_port)
+domain=$(ynh_app_setting_get --app="$app" --key=domain)
+path_url=$(ynh_app_setting_get --app="$app" --key=path)
+final_path=$(ynh_app_setting_get --app="$app" --key=final_path)
+adguard_port=$(ynh_app_setting_get --app="$app" --key=adguard_port)
 
 #=================================================
 # CHECK IF THE APP CAN BE RESTORED
 #=================================================
 ynh_script_progression --message="Validating restoration parameters..." --weight=1
 
-test ! -d $final_path \
+test ! -d "$final_path" \
 	|| ynh_die --message="There is already a directory: $final_path "
 
 #=================================================
@@ -48,7 +48,7 @@ test ! -d $final_path \
 ynh_script_progression --message="Recreating the dedicated system user..." --weight=1
 
 # Create the dedicated user (if not existing)
-ynh_system_user_create --username=$app --home_dir="$final_path"
+ynh_system_user_create --username="$app" --home_dir="$final_path"
 
 #=================================================
 # RESTORE THE APP MAIN DIR
@@ -60,13 +60,33 @@ ynh_restore_file --origin_path="$final_path"
 # this will be treated as a security issue.
 chmod 750 "$final_path"
 chmod -R o-rwx "$final_path"
-chown -R $app:$app "$final_path"
+chown -R "$app":"$app" "$final_path"
 
-setcap 'CAP_NET_BIND_SERVICE=+eip CAP_NET_RAW=+eip' $final_path/AdGuardHome
+setcap 'CAP_NET_BIND_SERVICE=+eip CAP_NET_RAW=+eip' "$final_path"/AdGuardHome
 
 ynh_restore_file --origin_path="/etc/dnsmasq.d/$app"
 
 systemctl restart dnsmasq
+
+#=================================================
+# DOWNLOAD, CHECK AND UNPACK SOURCE
+#=================================================
+
+# compare if the system arch is different from the binary arch
+# if so, download the correct binary
+if [ "$(uname -m)" != "$(file "$final_path"/AdGuardHome | cut -d ',' -f 2 | tr -d ' ')" ]
+then
+	ynh_script_progression --message="Upgrading source files..." --weight=1
+
+	# Download, check integrity, uncompress and patch the source from app.src
+	ynh_setup_source --dest_dir="$final_path" --source_id="$YNH_ARCH"
+fi
+
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R "$app":"$app" "$final_path"
+
+setcap 'CAP_NET_BIND_SERVICE=+eip CAP_NET_RAW=+eip' "$final_path"/AdGuardHome
 
 #=================================================
 # SPECIFIC RESTORATION
@@ -76,7 +96,7 @@ systemctl restart dnsmasq
 ynh_script_progression --message="Reinstalling dependencies..." --weight=1
 
 # Define and install dependencies
-ynh_install_app_dependencies $pkg_dependencies
+ynh_install_app_dependencies "$pkg_dependencies"
 
 #=================================================
 # RESTORE THE NGINX CONFIGURATION
@@ -91,21 +111,21 @@ ynh_restore_file --origin_path="/etc/nginx/conf.d/$domain.d/$app.conf"
 ynh_script_progression --message="Restoring the systemd configuration..." --weight=1
 
 ynh_restore_file --origin_path="/etc/systemd/system/$app.service"
-systemctl enable $app.service --quiet
+systemctl enable "$app.service" --quiet
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
 
-yunohost service add $app --description="Ads & trackers blocking DNS server" --needs_exposed_ports $adguard_port
+yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "$adguard_port"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression --message="Starting a systemd service..." --weight=1
 
-ynh_systemd_action --service_name=$app --action="restart" --log_path="systemd"
+ynh_systemd_action --service_name="$app" --action="restart" --log_path="systemd"
 
 #=================================================
 # GENERIC FINALIZATION
