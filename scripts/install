@@ -36,37 +36,37 @@ app=$YNH_APP_INSTANCE_NAME
 #=================================================
 ynh_script_progression --message="Validating installation parameters..." --weight=1
 
-final_path=/var/www/$app
+final_path="/var/www/$app"
 test ! -e "$final_path" || ynh_die --message="This path already contains a folder"
 
 # Register (book) web path
-ynh_webpath_register --app=$app --domain=$domain --path_url=$path_url
+ynh_webpath_register --app="$app" --domain="$domain" --path_url="$path_url"
 
 #=================================================
 # STORE SETTINGS FROM MANIFEST
 #=================================================
 ynh_script_progression --message="Storing installation settings..." --weight=2
 
-ynh_app_setting_set --app=$app --key=domain --value=$domain
-ynh_app_setting_set --app=$app --key=path --value=$path_url
-ynh_app_setting_set --app=$app --key=admin --value=$admin
+ynh_app_setting_set --app="$app" --key=domain --value="$domain"
+ynh_app_setting_set --app="$app" --key=path --value="$path_url"
+ynh_app_setting_set --app="$app" --key=admin --value="$admin"
 
 if [ "$dns_over_https" == "1" ];
 then
     dns_over_https="true"
     # DNS over TLS
     adguard_DoT_port=853
-    ynh_app_setting_set --app=$app --key=adguard_DoT_port --value=$adguard_DoT_port
+    ynh_app_setting_set --app="$app" --key=adguard_DoT_port --value=$adguard_DoT_port
     ynh_exec_warn_less yunohost firewall allow --no-upnp UDP $adguard_DoT_port
     ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $adguard_DoT_port
     # DNS over QUIC
     adguard_DoQ_port=784
-    ynh_app_setting_set --app=$app --key=adguard_DoQ_port --value=$adguard_DoQ_port
+    ynh_app_setting_set --app="$app" --key=adguard_DoQ_port --value=$adguard_DoQ_port
     ynh_exec_warn_less yunohost firewall allow --no-upnp UDP $adguard_DoQ_port
 else
     dns_over_https="false"
 fi
-ynh_app_setting_set --app=$app --key=dns_over_https --value=$dns_over_https
+ynh_app_setting_set --app="$app" --key=dns_over_https --value=$dns_over_https
 
 #=================================================
 # STANDARD MODIFICATIONS
@@ -77,11 +77,11 @@ ynh_script_progression --message="Finding an available port..." --weight=1
 
 # Find an available port
 port=$(ynh_find_port --port=3000)
-ynh_app_setting_set --app=$app --key=port --value=$port
+ynh_app_setting_set --app="$app" --key=port --value="$port"
 
 # Find an available port
 adguard_port=53
-ynh_app_setting_set --app=$app --key=adguard_port --value=$adguard_port
+ynh_app_setting_set --app="$app" --key=adguard_port --value=$adguard_port
 
 # Disable the port 53 for upnp
 ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $adguard_port
@@ -92,7 +92,7 @@ ynh_exec_warn_less yunohost firewall allow --no-upnp UDP $adguard_port
 #=================================================
 ynh_script_progression --message="Installing dependencies..." --weight=1
 
-ynh_install_app_dependencies $pkg_dependencies
+ynh_install_app_dependencies "$pkg_dependencies"
 
 #=================================================
 # CREATE DEDICATED USER
@@ -100,22 +100,22 @@ ynh_install_app_dependencies $pkg_dependencies
 ynh_script_progression --message="Configuring system user..." --weight=1
 
 # Create a system user
-ynh_system_user_create --username=$app --home_dir="$final_path" --groups="ssl-cert"
+ynh_system_user_create --username="$app" --home_dir="$final_path" --groups="ssl-cert"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression --message="Setting up source files..." --weight=4
 
-ynh_app_setting_set --app=$app --key=final_path --value=$final_path
+ynh_app_setting_set --app="$app" --key=final_path --value="$final_path"
 # Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir=$final_path --source_id="$YNH_ARCH"
+ynh_setup_source --dest_dir="$final_path" --source_id="$YNH_ARCH"
 
 chmod 750 "$final_path"
 chmod -R o-rwx "$final_path"
-chown -R $app:$app "$final_path"
+chown -R "$app":"$app" "$final_path"
 
-setcap 'CAP_NET_BIND_SERVICE=+eip CAP_NET_RAW=+eip' $final_path/AdGuardHome
+setcap 'CAP_NET_BIND_SERVICE=+eip CAP_NET_RAW=+eip' "$final_path"/AdGuardHome
 
 #=================================================
 # NGINX CONFIGURATION
@@ -158,31 +158,31 @@ ipv4_route_output=$(echo "$(ip -4 route get 1.2.3.4 2> /dev/null)" | head -n1 | 
 ipv6_route_output=$(echo "$(ip -6 route get ::1.2.3.4 2> /dev/null)" | head -n1)
 
 ipv4_addr=""
-for i in $(seq "$(echo $ipv4_route_output | wc -w)" -1 1); do
-    ip=$(echo $ipv4_route_output | awk "{print \$$i}")
-    if ynh_validate_ip4 --ip_address=$ip; then
+for i in $(seq "$(echo "$ipv4_route_output" | wc -w)" -1 1); do
+    ip=$(echo "$ipv4_route_output" | awk "{print \$$i}")
+    if ynh_validate_ip4 --ip_address="$ip"; then
         ipv4_addr="- $ip"
         break
     fi
 done
 
 ipv6_addr=""
-for i in $(seq "$(echo $ipv6_route_output | wc -w)" -1 1); do
-    ip=$(echo $ipv6_route_output | awk "{print \$$i}")
-    if ynh_validate_ip6 --ip_address=$ip; then
+for i in $(seq "$(echo "$ipv6_route_output" | wc -w)" -1 1); do
+    ip=$(echo "$ipv6_route_output" | awk "{print \$$i}")
+    if ynh_validate_ip6 --ip_address="$ip"; then
         ipv6_addr="- $ip"
         break
     fi
 done
 
 password=$(python3 -c "import bcrypt; print(bcrypt.hashpw(b\"$password\", bcrypt.gensalt(rounds=10)).decode())")
-ynh_app_setting_set --app=$app --key=password --value=$password
+ynh_app_setting_set --app="$app" --key=password --value="$password"
 
 # Main config File
 ynh_add_config --template="../conf/AdGuardHome.yaml" --destination="$final_path/AdGuardHome.yaml"
 
 chmod 600 "$final_path/AdGuardHome.yaml"
-chown -R $app:$app "$final_path/AdGuardHome.yaml"
+chown -R "$app":"$app" "$final_path/AdGuardHome.yaml"
 
 #=================================================
 # SETUP SYSTEMD
@@ -199,7 +199,7 @@ ynh_add_systemd_config
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
 
-yunohost service add $app --description="Ads & trackers blocking DNS server" --needs_exposed_ports $adguard_port
+yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports $adguard_port
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -207,7 +207,7 @@ yunohost service add $app --description="Ads & trackers blocking DNS server" --n
 ynh_script_progression --message="Starting a systemd service..." --weight=2
 
 # Start a systemd service
-ynh_systemd_action --service_name=$app --action="restart" --log_path=systemd
+ynh_systemd_action --service_name="$app" --action="restart" --log_path=systemd
 
 #=================================================
 # SETUP SSOWAT
