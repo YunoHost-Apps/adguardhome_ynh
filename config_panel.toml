@@ -1,7 +1,8 @@
 version = "1.0"
 
 [main]
-name = "Adguard configuration"
+name = "AdguardHome configuration"
+services = ["__APP__"]
 
     [main.options]
     name = "Enable some features"
@@ -11,5 +12,4 @@ name = "Adguard configuration"
         type = "boolean"
         yes = "true"
         no = "false"
-        bind = "allow_unencrypted_doh:__FINALPATH__/AdGuardHome.yaml"
-        services = [ '__APP__' ]
+        bind = "allow_unencrypted_doh:__INSTALL_DIR__/AdGuardHome.yaml"

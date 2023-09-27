@@ -17,7 +17,7 @@ userdoc = "https://kb.adguard.com/en"
 code = "https://github.com/AdguardTeam/AdGuardHome"
 
 [integration]
-yunohost = ">= 11.1.17"
+yunohost = ">= 11.2"
 architectures = "all"
 multi_instance = false
 ldap = false
@@ -33,6 +33,10 @@ ram.runtime = "50M"
     [install.path]
     type = "path"
     default = "/adguard"
+
+    [install.init_main_permission]
+    type = "group"
+    default = "visitors"
 
     [install.admin]
     type = "user"
@@ -77,4 +81,4 @@ ram.runtime = "50M"
     api.protected = true
 
     [resources.apt]
-    packages ="python3-bcrypt python3-yaml"
+    packages ="python3-bcrypt, python3-yaml"

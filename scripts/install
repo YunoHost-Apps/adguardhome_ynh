@@ -32,21 +32,6 @@ fi
 ynh_app_setting_set --app=$app --key=dns_over_https --value=$dns_over_https
 
 #=================================================
-# STANDARD MODIFICATIONS
-#=================================================
-# FIND AND OPEN A PORT
-#=================================================
-#REMOVEME? ynh_script_progression --message="Finding an available port..." --weight=1
-
-# Find an available port
-#REMOVEME? adguard_port=53
-#REMOVEME? ynh_app_setting_set --app=$app --key=adguard_port --value=$adguard_port
-
-# Disable the port 53 for upnp
-#REMOVEME? ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $adguard_port
-#REMOVEME? ynh_exec_warn_less yunohost firewall allow --no-upnp UDP $adguard_port
-
-#=================================================
 # CREATE DEDICATED USER
 #=================================================
 #REMOVEME? ynh_script_progression --message="Configuring system user..." --weight=1
@@ -62,7 +47,6 @@ ynh_script_progression --message="Setting up source files..." --weight=4
 # Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source --dest_dir=$install_dir 
 
-chmod 750 "$install_dir"
 chmod -R o-rwx "$install_dir"
 chown -R $app:$app "$install_dir"
 

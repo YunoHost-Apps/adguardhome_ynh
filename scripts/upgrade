@@ -24,10 +24,6 @@ ynh_script_progression --message="Stopping a systemd service..." --weight=1
 
 ynh_systemd_action --service_name=$app --action="stop"
 
-# Disable the port 53 for upnp
-ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $adguard_port
-ynh_exec_warn_less yunohost firewall allow --no-upnp UDP $adguard_port
-
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
@@ -64,7 +60,6 @@ then
 	ynh_setup_source --dest_dir=$install_dir 
 fi
 
-chmod 750 "$install_dir"
 chmod -R o-rwx "$install_dir"
 chown -R $app:$app "$install_dir"
 
@@ -77,6 +72,11 @@ ynh_script_progression --message="Upgrading NGINX web server configuration..." -
 
 # Create a dedicated NGINX config
 ynh_add_nginx_config
+
+# Create a dedicated systemd config
+ynh_add_systemd_config
+
+yunohost service add $app --description="Ads & trackers blocking DNS server" --needs_exposed_ports $adguard_port
 
 #=================================================
 # SPECIFIC UPGRADE
@@ -153,21 +153,6 @@ if need_file_update:
 
 chmod 600 "$install_dir/AdGuardHome.yaml"
 chown -R $app:$app "$install_dir/AdGuardHome.yaml"
-
-#=================================================
-# SETUP SYSTEMD
-#=================================================
-ynh_script_progression --message="Upgrading systemd configuration..." --weight=1
-
-# Create a dedicated systemd config
-ynh_add_systemd_config
-
-#=================================================
-# INTEGRATE SERVICE IN YUNOHOST
-#=================================================
-ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
-
-yunohost service add $app --description="Ads & trackers blocking DNS server" --needs_exposed_ports $adguard_port
 
 #=================================================
 # START SYSTEMD SERVICE
