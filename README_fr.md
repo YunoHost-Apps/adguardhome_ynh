@@ -21,7 +21,7 @@ AdGuard Home est un logiciel à l'échelle du réseau pour bloquer les publicit�
 Il fonctionne comme un serveur DNS qui redirige les domaines de pistage vers un "trou noir", empêchant ainsi vos appareils de se connecter à ces serveurs. Il est basé sur un logiciel que nous utilisons pour nos serveurs DNS publics AdGuard - les deux partagent beaucoup de code commun. 
 
 
-**Version incluse :** 0.107.27~ynh1
+**Version incluse :** 0.107.40~ynh1
 
 ## Captures d’écran
 
@@ -33,7 +33,6 @@ Il fonctionne comme un serveur DNS qui redirige les domaines de pistage vers un 
 * Documentation officielle utilisateur : <https://kb.adguard.com/en>
 * Documentation officielle de l’admin : <https://github.com/AdguardTeam/AdGuardHome/wiki>
 * Dépôt de code officiel de l’app : <https://github.com/AdguardTeam/AdGuardHome>
-* Documentation YunoHost pour cette app : <https://yunohost.org/app_adguardhome>
 * Signaler un bug : <https://github.com/YunoHost-Apps/adguardhome_ynh/issues>
 
 ## Informations pour les développeurs

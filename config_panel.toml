@@ -4,9 +4,6 @@ version = "1.0"
 name = "AdguardHome configuration"
 services = ["__APP__"]
 
-    [main.options]
-    name = "Enable some features"
-
         [main.options.dns_over_https]
         ask = "Enable DNS-over-HTTPS"
         type = "boolean"
