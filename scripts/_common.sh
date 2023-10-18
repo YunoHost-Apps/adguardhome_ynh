@@ -4,7 +4,7 @@
 # COMMON VARIABLES
 #=================================================
 
-# dependencies used by the app
+# dependencies used by the scripts (generating password and processing IPs)
 pkg_dependencies="python3-bcrypt python3-yaml"
 
 #=================================================
