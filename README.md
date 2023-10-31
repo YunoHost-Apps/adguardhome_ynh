@@ -33,6 +33,7 @@ It operates as a DNS server that re-routes tracking domains to a "black hole", t
 * Official user documentation: <https://kb.adguard.com/en>
 * Official admin documentation: <https://github.com/AdguardTeam/AdGuardHome/wiki>
 * Upstream app code repository: <https://github.com/AdguardTeam/AdGuardHome>
+* YunoHost Store: <https://apps.yunohost.org/app/adguardhome>
 * Report a bug: <https://github.com/YunoHost-Apps/adguardhome_ynh/issues>
 
 ## Developer info
