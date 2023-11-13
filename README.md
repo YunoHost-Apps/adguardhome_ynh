@@ -21,7 +21,7 @@ AdGuard Home is a network-wide software for blocking ads & tracking. After you s
 It operates as a DNS server that re-routes tracking domains to a "black hole", thus preventing your devices from connecting to those servers. It's based on software we use for our public AdGuard DNS servers -- both share a lot of common code.
 
 
-**Shipped version:** 0.107.40~ynh1
+**Shipped version:** 0.107.41~ynh1
 
 ## Screenshots
 
@@ -33,6 +33,7 @@ It operates as a DNS server that re-routes tracking domains to a "black hole", t
 * Official user documentation: <https://kb.adguard.com/en>
 * Official admin documentation: <https://github.com/AdguardTeam/AdGuardHome/wiki>
 * Upstream app code repository: <https://github.com/AdguardTeam/AdGuardHome>
+* YunoHost Store: <https://apps.yunohost.org/app/adguardhome>
 * Report a bug: <https://github.com/YunoHost-Apps/adguardhome_ynh/issues>
 
 ## Developer info
