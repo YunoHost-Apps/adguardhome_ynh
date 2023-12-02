@@ -142,8 +142,8 @@ if \"0.0.0.0\" in conf_file[\"dns\"][\"bind_hosts\"]:
 		conf_file[\"dns\"][\"bind_hosts\"].append(\"$ipv6_addr\")
 	need_file_update = True
 
-if conf_file[\"dns\"][\"port\"] != $adguard_port:
-	conf_file[\"dns\"][\"port\"] = $adguard_port
+if conf_file[\"dns\"][\"port\"] != $port_adguard:
+	conf_file[\"dns\"][\"port\"] = $port_adguard
 	need_file_update = True
 	
 if need_file_update:
