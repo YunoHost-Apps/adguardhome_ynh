@@ -51,7 +51,7 @@ ram.runtime = "50M"
 
 [resources]
         [resources.sources.main]
-        in_subdir = false
+        in_subdir = "2"
         arm64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.41/AdGuardHome_linux_arm64.tar.gz"
         arm64.sha256 = "e23f5164a832c8647e0035b03189dc9c72821e9216ee5a5f8057739b8d072539"
         amd64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.41/AdGuardHome_linux_amd64.tar.gz"
