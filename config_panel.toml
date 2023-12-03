@@ -1,16 +1,12 @@
 version = "1.0"
 
 [main]
-name = "Adguard configuration"
-
+name = "AdguardHome configuration"
 services = ["__APP__"]
 
-[main.options]
-name = "Enable some features"
-
-[main.options.dns_over_https]
-ask = "Enable DNS-over-HTTPS"
-bind = "allow_unencrypted_doh:__FINALPATH__/AdGuardHome.yaml"
-no = "false"
-type = "boolean"
-yes = "true"
+        [main.options.dns_over_https]
+        ask = "Enable DNS-over-HTTPS"
+        type = "boolean"
+        yes = "true"
+        no = "false"
+        bind = "allow_unencrypted_doh:__INSTALL_DIR__/AdGuardHome.yaml"
