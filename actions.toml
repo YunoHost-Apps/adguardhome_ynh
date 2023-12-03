@@ -1,8 +1,0 @@
-[reset_default_config]
-name = "Reset the AdguardHome config"
-command = "/bin/bash scripts/actions/reset_default_config"
-# user = "root"  # optional
-# cwd = "/" # optional
-# accepted_return_codes = [0, 1, 2, 3]  # optional
-accepted_return_codes = [0]
-description = "Reset the AdguardHome config for this app."
