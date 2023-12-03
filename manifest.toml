@@ -5,7 +5,7 @@ name = "AdGuard Home"
 description.en = "Network-wide ads & trackers blocking DNS server"
 description.fr = "Serveur DNS, bloqueur de publicités et trackers"
 
-version = "0.107.41~ynh1"
+version = "0.107.41~ynh2"
 
 maintainers = ["ddataa"]
 
