@@ -1,84 +1,84 @@
 packaging_format = 2
 
-id = "adguardhome"
-name = "AdGuard Home"
 description.en = "Network-wide ads & trackers blocking DNS server"
 description.fr = "Serveur DNS, bloqueur de publicités et trackers"
+id = "adguardhome"
+name = "AdGuard Home"
 
 version = "0.107.42~ynh1"
 
 maintainers = ["ddataa"]
 
 [upstream]
-license = "GPL-3.0"
-website = "https://adguard.com/adguard-home.html"
 admindoc = "https://github.com/AdguardTeam/AdGuardHome/wiki"
-userdoc = "https://kb.adguard.com/en"
 code = "https://github.com/AdguardTeam/AdGuardHome"
+license = "GPL-3.0"
+userdoc = "https://kb.adguard.com/en"
+website = "https://adguard.com/adguard-home.html"
 
 [integration]
-yunohost = ">= 11.2"
 architectures = "all"
-multi_instance = false
-ldap = false
-sso = false
 disk = "50M"
+ldap = false
+multi_instance = false
 ram.build = "50M"
 ram.runtime = "50M"
+sso = false
+yunohost = ">= 11.2"
 
 [install]
-    [install.domain]
-    type = "domain"
+[install.domain]
+type = "domain"
 
-    [install.path]
-    type = "path"
-    default = "/adguard"
+[install.path]
+default = "/adguard"
+type = "path"
 
-    [install.init_main_permission]
-    type = "group"
-    default = "visitors"
+[install.init_main_permission]
+default = "visitors"
+type = "group"
 
-    [install.admin]
-    type = "user"
+[install.admin]
+type = "user"
 
-    [install.password]
-    type = "password"
+[install.password]
+type = "password"
 
-    [install.dns_over_https]
-    ask.en = "Should DNS-over-HTTPS be enabled? (If so, anyone who knows your adguard address can make a doh request to https://adguardomain.tld/dns-query)"
-    type = "boolean"
-    default = true
+[install.dns_over_https]
+ask.en = "Should DNS-over-HTTPS be enabled? (If so, anyone who knows your adguard address can make a doh request to https://adguardomain.tld/dns-query)"
+default = true
+type = "boolean"
 
 [resources]
-        [resources.sources.main]
-        in_subdir = "2"
-        arm64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.42/AdGuardHome_linux_arm64.tar.gz"
-        arm64.sha256 = "48d1e518d1327e37bc542ca2b9242de91f0840bb4f4f37070f9d5990c9a90466"
-        amd64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.42/AdGuardHome_linux_amd64.tar.gz"
-        amd64.sha256 = "204d0476f9dedb7bc7186c87fbf271c8cf952372372c0e5966e6ea932efe6d9d"
-        armhf.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.42/AdGuardHome_linux_armv7.tar.gz"
-        armhf.sha256 = "8f088cde491e5b154105002655d29bf4afd2467c4449f3cead10391f4399608c"
+[resources.sources.main]
+amd64.sha256 = "204d0476f9dedb7bc7186c87fbf271c8cf952372372c0e5966e6ea932efe6d9d"
+amd64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.42/AdGuardHome_linux_amd64.tar.gz"
+arm64.sha256 = "48d1e518d1327e37bc542ca2b9242de91f0840bb4f4f37070f9d5990c9a90466"
+arm64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.42/AdGuardHome_linux_arm64.tar.gz"
+armhf.sha256 = "8f088cde491e5b154105002655d29bf4afd2467c4449f3cead10391f4399608c"
+armhf.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.42/AdGuardHome_linux_armv7.tar.gz"
+in_subdir = true
 
-        autoupdate.strategy = "latest_github_release"
-        autoupdate.asset.amd64 = "^AdGuardHome_linux_amd64.tar.gz$"
-        autoupdate.asset.arm64 = "^AdGuardHome_linux_arm64.tar.gz$"
-        autoupdate.asset.armhf = "^AdGuardHome_linux_armv7.tar.gz$"
+autoupdate.asset.amd64 = "^AdGuardHome_linux_amd64.tar.gz$"
+autoupdate.asset.arm64 = "^AdGuardHome_linux_arm64.tar.gz$"
+autoupdate.asset.armhf = "^AdGuardHome_linux_armv7.tar.gz$"
+autoupdate.strategy = "latest_github_release"
 
-    [resources.ports]
-    adguard.default = 53
-    adguard.exposed = "Both"
+[resources.ports]
+adguard.default = 53
+adguard.exposed = "Both"
 
-    [resources.system_user]
+[resources.system_user]
 
-    [resources.install_dir]
+[resources.install_dir]
 
-    [resources.permissions]
-    main.url = "/"
-    api.url = "re:__DOMAIN__/dns-query"
-    api.allowed = "visitors"
-    api.auth_header = false
-    api.show_tile = false
-    api.protected = true
+[resources.permissions]
+api.allowed = "visitors"
+api.auth_header = false
+api.protected = true
+api.show_tile = false
+api.url = "/dns-query"
+main.url = "/"
 
-    [resources.apt]
-    packages ="python3-bcrypt, python3-yaml"
+[resources.apt]
+packages = "python3-bcrypt, python3-yaml"
