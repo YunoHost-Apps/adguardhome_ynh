@@ -5,7 +5,7 @@ name = "AdGuard Home"
 description.en = "Network-wide ads & trackers blocking DNS server"
 description.fr = "Serveur DNS, bloqueur de publicités et trackers"
 
-version = "0.107.41~ynh2"
+version = "0.107.41~ynh3"
 
 maintainers = ["ddataa"]
 
@@ -74,7 +74,7 @@ ram.runtime = "50M"
 
     [resources.permissions]
     main.url = "/"
-    api.url = "/re:__DOMAIN__/dns-query"
+    api.url = "re:__DOMAIN__/dns-query"
     api.allowed = "visitors"
     api.auth_header = false
     api.show_tile = false
