@@ -74,7 +74,7 @@ ram.runtime = "50M"
 
     [resources.permissions]
     main.url = "/"
-    api.url = "/re:__DOMAIN__/dns-query"
+    api.url = "re:__DOMAIN__/dns-query"
     api.allowed = "visitors"
     api.auth_header = false
     api.show_tile = false
