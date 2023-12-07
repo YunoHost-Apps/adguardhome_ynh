@@ -57,7 +57,7 @@ arm64.sha256 = "48d1e518d1327e37bc542ca2b9242de91f0840bb4f4f37070f9d5990c9a90466
 arm64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.42/AdGuardHome_linux_arm64.tar.gz"
 armhf.sha256 = "8f088cde491e5b154105002655d29bf4afd2467c4449f3cead10391f4399608c"
 armhf.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.42/AdGuardHome_linux_armv7.tar.gz"
-in_subdir = true
+in_subdir = false
 
 autoupdate.asset.amd64 = "^AdGuardHome_linux_amd64.tar.gz$"
 autoupdate.asset.arm64 = "^AdGuardHome_linux_arm64.tar.gz$"
