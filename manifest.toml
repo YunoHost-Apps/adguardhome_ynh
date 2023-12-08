@@ -77,7 +77,7 @@ api.allowed = "visitors"
 api.auth_header = false
 api.protected = true
 api.show_tile = false
-api.url = "/dns-query"
+api.url = "re:__DOMAIN__/dns-query"
 main.url = "/"
 
 [resources.apt]
