@@ -5,7 +5,7 @@ description.fr = "Serveur DNS, bloqueur de publicités et trackers"
 id = "adguardhome"
 name = "AdGuard Home"
 
-version = "0.107.42~ynh1"
+version = "0.107.42~ynh2"
 
 maintainers = ["ddataa"]
 
@@ -77,7 +77,7 @@ api.allowed = "visitors"
 api.auth_header = false
 api.protected = true
 api.show_tile = false
-api.url = "/dns-query"
+api.url = "re:__DOMAIN__/dns-query"
 main.url = "/"
 
 [resources.apt]
