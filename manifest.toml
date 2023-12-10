@@ -74,7 +74,7 @@ adguard.exposed = "Both"
 
 [resources.permissions]
 api.allowed = "visitors"
-api.auth_header = false
+api.auth_header = true
 api.protected = true
 api.show_tile = false
 api.url = "re:__DOMAIN__/control"
