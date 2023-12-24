@@ -31,7 +31,7 @@ ProtectControlGroups=yes
 ProtectKernelModules=no
 ProtectKernelTunables=no
 LockPersonality=no
-#SystemCallFilter=
+SystemCallFilter=
 
 # Denying access to capabilities that should not be relevant for webapps
 # Doc: https://man7.org/linux/man-pages/man7/capabilities.7.html
