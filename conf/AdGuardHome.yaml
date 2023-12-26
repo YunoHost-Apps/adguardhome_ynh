@@ -76,8 +76,8 @@ tls:
   server_name: "__DOMAIN__"
   force_https: false
   port_https: 443
-  port_dns_over_tls: __ADGUARD_DOT_PORT__
-  port_dns_over_quic: __ADGUARD_DOQ_PORT__
+  port_dns_over_tls: __PORT_DNS_OVER_HTTP__
+  port_dns_over_quic: __PORT_DNS_OVER_QUIC__
   port_dnscrypt: 0
   dnscrypt_config_file: ""
   allow_unencrypted_doh: false

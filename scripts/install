@@ -14,19 +14,9 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression --message="Storing installation settings..." --weight=2
 
-# DNS over TLS
-adguard_dot_port=ynh_find_port --port=853
-ynh_app_setting_set --app="$app" --key=adguard_dot_port --value=$adguard_dot_port
-# DNS over QUIC
-adguard_doq_port=ynh_find_port --port=784
-ynh_app_setting_set --app="$app" --key=adguard_doq_port --value=$adguard_doq_port
-
 if [ "$dns_over_https" == "1" ];
 then
     dns_over_https="true"
-    ynh_exec_warn_less yunohost firewall allow --no-upnp UDP $adguard_dot_port
-    ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $adguard_dot_port
-    ynh_exec_warn_less yunohost firewall allow --no-upnp UDP $adguard_doq_port
 else
     dns_over_https="false"
 fi

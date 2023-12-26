@@ -29,23 +29,10 @@ ynh_systemd_action --service_name="$app" --action="stop"
 #=================================================
 ynh_script_progression --message="Ensuring downward compatibility..." --weight=1
 
-if [ -z "$adguard_dot_port" ] || [ -z "$adguard_doq_port" ];
-then
-	# DNS over TLS
-	adguard_dot_port=ynh_find_port --port=853
-	ynh_app_setting_set --app=$app --key=adguard_dot_port --value=$adguard_dot_port
-	# DNS over QUIC
-	adguard_doq_port=ynh_find_port --port=784
-	ynh_app_setting_set --app="$app" --key=adguard_doq_port --value=$adguard_doq_port
-fi
-
 if [ -n "$dns_over_https" ] && [ "$dns_over_https" == "1" ];
 then
 	dns_over_https="true"
 	ynh_app_setting_set --app="$app" --key=dns_over_https --value=$dns_over_https
-	ynh_exec_warn_less yunohost firewall allow --no-upnp UDP $adguard_dot_port
-	ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $adguard_dot_port
-	ynh_exec_warn_less yunohost firewall allow --no-upnp UDP $adguard_doq_port
 elif [ -z "$dns_over_https" ] || [ "$dns_over_https" == "0" ];
 then
 	dns_over_https="false"
