@@ -1,76 +1,78 @@
-bind_host: 0.0.0.0
-bind_port: __PORT__
-beta_bind_port: 0
+http:
+  pprof:
+    port: 6060
+    enabled: false
+  address: 0.0.0.0:__PORT__
+  session_ttl: 720h
 users:
-- name: __ADMIN__
-  password: __PASSWORD__
+  - name: __ADMIN__
+    password: __PASSWORD__
 auth_attempts: 5
 block_auth_min: 15
 http_proxy: ""
 language: ""
-rlimit_nofile: 0
-debug_pprof: false
-web_session_ttl: 720
+theme: auto
 dns:
   bind_hosts:
   __IPV4_ADDR__
   __IPV6_ADDR__
   port: __PORT_ADGUARD__
-  statistics_interval: 1
-  querylog_enabled: true
-  querylog_file_enabled: true
-  querylog_interval: 90
-  querylog_size_memory: 1000
   anonymize_client_ip: false
-  protection_enabled: true
-  blocking_mode: default
-  blocking_ipv4: ""
-  blocking_ipv6: ""
-  blocked_response_ttl: 10
-  parental_block_host: family-block.dns.adguard.com
-  safebrowsing_block_host: standard-block.dns.adguard.com
   ratelimit: 20
+  ratelimit_subnet_len_ipv4: 24
+  ratelimit_subnet_len_ipv6: 56
   ratelimit_whitelist: []
   refuse_any: true
   upstream_dns:
-  - https://dns10.quad9.net/dns-query
+    - https://dns10.quad9.net/dns-query
+    - https://dns.mullvad.net/dns-query
+    - https://dns-unfiltered.adguard.com/dns-query
   upstream_dns_file: ""
   bootstrap_dns:
   - 9.9.9.10
   - 149.112.112.10
+  - 194.242.2.2
   - 2620:fe::10
   - 2620:fe::fe:10
-  all_servers: false
+  - 2a07:e340::2
+  fallback_dns: []
+  all_servers: true
   fastest_addr: false
+  fastest_timeout: 1s
   allowed_clients: []
   disallowed_clients: []
   blocked_hosts:
-  - version.bind
-  - id.server
-  - hostname.bind
-  cache_size: 4194304
-  cache_ttl_min: 0
-  cache_ttl_max: 0
+    - version.bind
+    - id.server
+    - hostname.bind
+  trusted_proxies:
+    - 127.0.0.0/8
+    - ::1/128
+  cache_size: 41943040
+  cache_ttl_min: 10800
+  cache_ttl_max: 86400
+  cache_optimistic: true
   bogus_nxdomain: []
   aaaa_disabled: false
   enable_dnssec: false
-  edns_client_subnet: false
+  edns_client_subnet:
+    custom_ip: ""
+    enabled: false
+    use_custom: false
   max_goroutines: 300
+  handle_ddr: true
   ipset: []
-  filtering_enabled: true
-  filters_update_interval: 24
-  parental_enabled: false
-  safesearch_enabled: false
-  safebrowsing_enabled: false
-  safebrowsing_cache_size: 1048576
-  safesearch_cache_size: 1048576
-  parental_cache_size: 1048576
-  cache_time: 30
-  rewrites: []
-  blocked_services: []
-  local_domain_name: lan
-  resolve_clients: true
+  ipset_file: ""
+  bootstrap_prefer_ipv6: true
+  upstream_timeout: 10s
+  private_networks: []
+  use_private_ptr_resolvers: false
   local_ptr_upstreams: []
+  use_dns64: false
+  dns64_prefixes: []
+  serve_http3: true
+  use_http3_upstreams: true
+  serve_plain_dns: true
 tls:
   enabled: __DNS_OVER_HTTPS__
   server_name: "__DOMAIN__"
@@ -80,30 +82,41 @@ tls:
   port_dns_over_quic: __PORT_DNS_OVER_QUIC__
   port_dnscrypt: 0
   dnscrypt_config_file: ""
-  allow_unencrypted_doh: false
-  strict_sni_check: false
+  allow_unencrypted_doh: true
   certificate_chain: ""
   private_key: ""
   certificate_path: "/etc/yunohost/certs/__DOMAIN__/crt.pem"
   private_key_path: "/etc/yunohost/certs/__DOMAIN__/key.pem"
+  strict_sni_check: false
+querylog:
+  ignored: []
+  interval: 24h
+  size_memory: 1000
+  enabled: true
+  file_enabled: true
+statistics:
+  ignored: []
+  interval: 720h
+  enabled: true
 filters:
-- enabled: true
-  url: https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt
-  name: AdGuard DNS filter
-  id: 1
-- enabled: false
-  url: https://adaway.org/hosts.txt
-  name: AdAway Default Blocklist
-  id: 2
-- enabled: false
-  url: https://www.malwaredomainlist.com/hostslist/hosts.txt
-  name: MalwareDomainList.com Hosts List
-  id: 4
+  - enabled: true
+    url: https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt
+    name: AdGuard DNS filter
+    id: 1
+  - enabled: false
+    url: https://adaway.org/hosts.txt
+    name: AdAway Default Blocklist
+    id: 2
+  - enabled: false
+    url: https://www.malwaredomainlist.com/hostslist/hosts.txt
+    name: MalwareDomainList.com Hosts List
+    id: 3
 whitelist_filters: []
 user_rules: []
 dhcp:
   enabled: false
   interface_name: ""
+  local_domain_name: lan
   dhcpv4:
     gateway_ip: ""
     subnet_mask: ""
@@ -117,13 +130,54 @@ dhcp:
     lease_duration: 86400
     ra_slaac_only: false
     ra_allow_slaac: false
-clients: []
+filtering:
+  blocking_ipv4: ""
+  blocking_ipv6: ""
+  blocked_services:
+    schedule:
+      time_zone: Local
+    ids: []
+  protection_disabled_until: null
+  safe_search:
+    enabled: false
+    bing: false
+    duckduckgo: false
+    google: false
+    pixabay: false
+    yandex: false
+    youtube: false
+  blocking_mode: refused
+  parental_block_host: family-block.dns.adguard.com
+  safebrowsing_block_host: standard-block.dns.adguard.com
+  rewrites: []
+  safebrowsing_cache_size: 1048576
+  safesearch_cache_size: 1048576
+  parental_cache_size: 1048576
+  cache_time: 30
+  filters_update_interval: 12
+  blocked_response_ttl: 10
+  filtering_enabled: true
+  parental_enabled: false
+  safebrowsing_enabled: true
+  protection_enabled: true
+clients:
+  runtime_sources:
+    whois: true
+    arp: true
+    rdns: true
+    dhcp: true
+    hosts: true
+  persistent: []
 log:
-  compress: false
-  localtime: false
+  file: ""
   max_backups: 0
   max_size: 100
   max_age: 3
-  file: ""
-verbose: false
-schema_version: 10
+  compress: false
+  local_time: false
+  verbose: false
+os:
+  group: "__APP__"
+  user: "__APP__"
+  rlimit_nofile: 0
+schema_version: 27
