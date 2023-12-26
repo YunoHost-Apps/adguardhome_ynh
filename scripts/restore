@@ -11,6 +11,20 @@ source ../settings/scripts/_common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
+# CLOSE UNNECESSARY PORTS
+# no need to open the ports, as they were opened at the 'Provisioning ports' step
+#=================================================
+
+if [ "$dns_over_https" == "false" ]; then
+    # if dns_over_https is false, we need to close ports,
+    # as they were opened at the 'Provisioning ports' step
+    ynh_exec_warn_less yunohost firewall disallow --no-upnp TCP "$port_dns_over_http"
+    ynh_exec_warn_less yunohost firewall disallow --no-upnp UDP "$port_dns_over_http"
+    ynh_exec_warn_less yunohost firewall disallow --no-upnp UDP "$port_dns_over_quic"
+    ynh_exec_warn_less yunohost firewall reload
+fi
+
+#=================================================
 # RESTORE THE APP MAIN DIR
 #=================================================
 
