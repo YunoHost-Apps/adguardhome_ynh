@@ -40,3 +40,4 @@ set__dns_over_https() {
     ynh_app_setting_set "$app" dns_over_https "$dns_over_https"
 }
 
+ynh_app_config_run $1
