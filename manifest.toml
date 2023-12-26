@@ -70,7 +70,7 @@ adguard.exposed = "Both"
 dns_over_http.default = 853
 dns_over_http.exposed = "Both"
 dns_over_quic.default = 784
-dns_over_quic.exposed = "TCP"
+dns_over_quic.exposed = "UDP"
 
 [resources.system_user]
 
