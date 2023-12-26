@@ -1,0 +1,38 @@
+#!/bin/bash
+
+#=================================================
+# GENERIC STARTING
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
+source _common.sh
+source /usr/share/yunohost/helpers
+
+ynh_abort_if_errors
+
+#=================================================
+# CUSTOM THINGS
+#=================================================
+
+ynh_app_config_apply() {
+    _ynh_app_config_apply
+
+    if [ "$dns_over_https" == "true" ]; then
+        ynh_script_progression --message="Opening DoH and DoQ ports..."
+        # if DNS over HTTPS/QUIC is activated, open the associated ports
+        ynh_exec_warn_less yunohost firewall allow --no-upnp TCP "$port_dns_over_http"
+        ynh_exec_warn_less yunohost firewall allow --no-upnp TCP "$port_dns_over_quic"
+        yunohost firewall reload
+    elif [ "$dns_over_https" == "false" ]; then
+        # else if false, close them
+        ynh_script_progression --message="Closing DoH and DoQ ports..."
+        ynh_exec_warn_less yunohost firewall disallow --no-upnp TCP "$port_dns_over_http"
+        ynh_exec_warn_less yunohost firewall disallow --no-upnp TCP "$port_dns_over_quic"
+        yunohost firewall reload
+    else
+        # else, throw error
+        ynh_print_warn --message="The variable 'dns_over_https' should be 'true' or 'false' but isn't, please report this."
+    fi
+
+}
