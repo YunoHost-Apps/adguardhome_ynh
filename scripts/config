@@ -56,16 +56,11 @@ set__dns_over_https() {
     fi
 
     # save the new setting
-<<<<<<< HEAD
     ynh_app_setting_set "$app" --key=dns_over_https --value="$dns_over_https"
 }
-
+ 
 #=================================================
 # GENERIC FINALIZATION
 #=================================================
-=======
-    ynh_app_setting_set "$app" dns_over_https "$dns_over_https"
-}
 
->>>>>>> 74d16e44d368a2cacf43015938fb4ef72c66aafd
 ynh_app_config_run $1
