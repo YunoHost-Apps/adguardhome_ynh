@@ -45,7 +45,7 @@ type = "user"
 type = "password"
 
 [install.dns_over_https]
-ask.en = "Should DNS-over-HTTPS be enabled? (If so, anyone who knows your adguard address can make a doh request to https://adguardomain.tld/dns-query)"
+ask.en = "Should DNS-over-HTTPS/QUIC be enabled? (If so, anyone who knows your adguard address can make a doh request to https://adguardomain.tld/dns-query)"
 default = false
 type = "boolean"
 
