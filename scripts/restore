@@ -39,9 +39,9 @@ ynh_restore_file --origin_path="$install_dir"
 # this will be treated as a security issue.
 chmod 750 "$install_dir"
 chmod -R o-rwx "$install_dir"
-chown -R $app:$app "$install_dir"
+chown -R "$app:$app" "$install_dir"
 
-setcap 'CAP_NET_BIND_SERVICE=+eip CAP_NET_RAW=+eip' $install_dir/AdGuardHome
+setcap 'CAP_NET_BIND_SERVICE=+eip CAP_NET_RAW=+eip' "$install_dir/AdGuardHome"
 
 ynh_restore_file --origin_path="/etc/dnsmasq.d/$app"
 
@@ -57,7 +57,7 @@ ynh_restore_file --origin_path="/etc/nginx/conf.d/$domain.d/$app.conf"
 ynh_restore_file --origin_path="/etc/systemd/system/$app.service"
 systemctl enable "$app.service" --quiet
 
-yunohost service add $app --description="Ads & trackers blocking DNS server" --needs_exposed_ports $port_adguard $port_dns_over_http $port_dns_over_quic
+yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "$port_adguard" "$port_dns_over_http" "$port_dns_over_quic"
 
 #=================================================
 # START SYSTEMD SERVICE

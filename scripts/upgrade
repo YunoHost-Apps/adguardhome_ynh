@@ -55,13 +55,13 @@ then
 	ynh_script_progression --message="Upgrading source files..." --weight=1
 
 	# Download, check integrity, uncompress and patch the source from app.src
-	ynh_setup_source --dest_dir=$install_dir 
+	ynh_setup_source --dest_dir="$install_dir "
 fi
 
 chmod -R o-rwx "$install_dir"
-chown -R $app:$app "$install_dir"
+chown -R "$app:$app" "$install_dir"
 
-setcap 'CAP_NET_BIND_SERVICE=+eip CAP_NET_RAW=+eip' $install_dir/AdGuardHome
+setcap 'CAP_NET_BIND_SERVICE=+eip CAP_NET_RAW=+eip' "$install_dir/AdGuardHome"
 
 #=================================================
 # NGINX CONFIGURATION
@@ -74,7 +74,7 @@ ynh_add_nginx_config
 # Create a dedicated systemd config
 ynh_add_systemd_config
 
-yunohost service add $app --description="Ads & trackers blocking DNS server" --needs_exposed_ports $port_adguard $port_dns_over_http $port_dns_over_quic
+yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "$port_adguard" "$port_dns_over_http" "$port_dns_over_quic"
 
 #=================================================
 # SPECIFIC UPGRADE
@@ -156,7 +156,7 @@ if need_file_update:
 "
 
 chmod 600 "$install_dir/AdGuardHome.yaml"
-chown -R $app:$app "$install_dir/AdGuardHome.yaml"
+chown -R "$app:$app" "$install_dir/AdGuardHome.yaml"
 
 #=================================================
 # START SYSTEMD SERVICE
