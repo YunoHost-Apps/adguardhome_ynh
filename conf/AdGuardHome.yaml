@@ -72,20 +72,20 @@ dns:
   resolve_clients: true
   local_ptr_upstreams: []
 tls:
-  enabled: false
-  server_name: ""
+  enabled: __DNS_OVER_HTTPS__
+  server_name: "__DOMAIN__"
   force_https: false
   port_https: 443
-  port_dns_over_tls: 853
-  port_dns_over_quic: 784
+  port_dns_over_tls: __ADGUARD_DOT_PORT__
+  port_dns_over_quic: __ADGUARD_DOQ_PORT__
   port_dnscrypt: 0
   dnscrypt_config_file: ""
-  allow_unencrypted_doh: __DNS_OVER_HTTPS__
+  allow_unencrypted_doh: false
   strict_sni_check: false
   certificate_chain: ""
   private_key: ""
-  certificate_path: ""
-  private_key_path: ""
+  certificate_path: "/etc/yunohost/certs/__DOMAIN__/cert.pem"
+  private_key_path: "/etc/yunohost/certs/__DOMAIN__/key.pem"
 filters:
 - enabled: true
   url: https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt

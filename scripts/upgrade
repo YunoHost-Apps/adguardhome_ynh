@@ -81,6 +81,12 @@ yunohost service add $app --description="Ads & trackers blocking DNS server" --n
 #=================================================
 # SPECIFIC UPGRADE
 #=================================================
+
+# adding the adguardhome dedicated user to the 'ssl-cert' group to permit the
+# use of the Let's Encrypt certs for DOT/DOQ
+usermod -a -G "ssl-cert" "$app"
+
+#=================================================
 # UPDATE A CONFIG FILE
 #=================================================
 ynh_script_progression --message="Updating a configuration file..." --weight=1
