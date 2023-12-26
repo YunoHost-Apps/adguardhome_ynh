@@ -22,13 +22,15 @@ ynh_app_config_apply() {
         ynh_script_progression --message="Opening DoH and DoQ ports..."
         # if DNS over HTTPS/QUIC is activated, open the associated ports
         ynh_exec_warn_less yunohost firewall allow --no-upnp TCP "$port_dns_over_http"
-        ynh_exec_warn_less yunohost firewall allow --no-upnp TCP "$port_dns_over_quic"
+        ynh_exec_warn_less yunohost firewall allow --no-upnp UDP "$port_dns_over_http"
+        ynh_exec_warn_less yunohost firewall allow --no-upnp UDP "$port_dns_over_quic"
         yunohost firewall reload
     elif [ "$dns_over_https" == "false" ]; then
         # else if false, close them
         ynh_script_progression --message="Closing DoH and DoQ ports..."
         ynh_exec_warn_less yunohost firewall disallow --no-upnp TCP "$port_dns_over_http"
-        ynh_exec_warn_less yunohost firewall disallow --no-upnp TCP "$port_dns_over_quic"
+        ynh_exec_warn_less yunohost firewall disallow --no-upnp UDP "$port_dns_over_http"
+        ynh_exec_warn_less yunohost firewall disallow --no-upnp UDP "$port_dns_over_quic"
         yunohost firewall reload
     else
         # else, throw error
