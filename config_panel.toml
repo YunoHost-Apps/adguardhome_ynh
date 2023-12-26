@@ -4,8 +4,14 @@ version = "1.0"
 name = "AdguardHome configuration"
 services = ["__APP__"]
 
+[main.options.open_port_53]
+ask = "Open port 53 to the Internet?"
+no = "false"
+type = "boolean"
+yes = "true"
+
 [main.options.dns_over_https]
-ask = "Enable DNS-over-HTTPS/QUIC"
+ask = "Enable DNS-over-HTTPS/QUIC?"
 no = "false"
 type = "boolean"
 yes = "true"

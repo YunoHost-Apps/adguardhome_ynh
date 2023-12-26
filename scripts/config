@@ -15,21 +15,40 @@ ynh_abort_if_errors
 # SPECIFIC SETTERS
 #=================================================
 
+set__open_port_53() {
+
+    if [ "$open_port_53" == "true" ]; then
+        ynh_script_progression --message="Opening port 53..."
+        # if the user would expose port 53 to the Internet, open it
+        ynh_exec_warn_less yunohost firewall allow Both "$port_adguard"
+        yunohost firewall reload
+    elif [ "$open_port_53" == "false" ]; then
+        # else if false, close it
+        ynh_script_progression --message="Closing port 53..."
+        ynh_exec_warn_less yunohost firewall disallow Both "$port_adguard"
+        yunohost firewall reload
+    else
+        # else, throw error
+        ynh_print_warn --message="The variable 'open_port_53' should be 'true' or 'false' but isn't, please report this."
+    fi
+
+    # save the new setting
+    ynh_app_setting_set "$app" --key=open_port_53 --value="$open_port_53"
+}
+
 set__dns_over_https() {
 
     if [ "$dns_over_https" == "true" ]; then
         ynh_script_progression --message="Opening DoH and DoQ ports..."
         # if DNS over HTTPS/QUIC is activated, open the associated ports
-        ynh_exec_warn_less yunohost firewall allow --no-upnp TCP "$port_dns_over_http"
-        ynh_exec_warn_less yunohost firewall allow --no-upnp UDP "$port_dns_over_http"
-        ynh_exec_warn_less yunohost firewall allow --no-upnp UDP "$port_dns_over_quic"
+        ynh_exec_warn_less yunohost firewall allow Both "$port_dns_over_http"
+        ynh_exec_warn_less yunohost firewall allow UDP "$port_dns_over_quic"
         yunohost firewall reload
     elif [ "$dns_over_https" == "false" ]; then
         # else if false, close them
         ynh_script_progression --message="Closing DoH and DoQ ports..."
-        ynh_exec_warn_less yunohost firewall disallow --no-upnp TCP "$port_dns_over_http"
-        ynh_exec_warn_less yunohost firewall disallow --no-upnp UDP "$port_dns_over_http"
-        ynh_exec_warn_less yunohost firewall disallow --no-upnp UDP "$port_dns_over_quic"
+        ynh_exec_warn_less yunohost firewall disallow Both "$port_dns_over_http"
+        ynh_exec_warn_less yunohost firewall disallow UDP "$port_dns_over_quic"
         yunohost firewall reload
     else
         # else, throw error
@@ -37,6 +56,10 @@ set__dns_over_https() {
     fi
 
     # save the new setting
-    ynh_app_setting_set "$app" prices "$dns_over_https"
+    ynh_app_setting_set "$app" --key=dns_over_https --value="$dns_over_https"
 }
 
+#=================================================
+# GENERIC FINALIZATION
+#=================================================
+ynh_app_config_run $1

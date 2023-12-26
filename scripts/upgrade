@@ -29,22 +29,32 @@ ynh_systemd_action --service_name="$app" --action="stop"
 #=================================================
 ynh_script_progression --message="Ensuring downward compatibility..." --weight=1
 
-if [ -n "$dns_over_https" ] && [ "$dns_over_https" == "1" ];
-then
+if [ -n "$dns_over_https" ] && [ "$dns_over_https" == "1" ]; then
 	dns_over_https="true"
 	ynh_app_setting_set --app="$app" --key=dns_over_https --value=$dns_over_https
 	# no need to open the ports, as they were opened at the 'Provisioning ports' step
-elif [ -z "$dns_over_https" ] || [ "$dns_over_https" == "0" ];
-then
+elif [ -z "$dns_over_https" ] || [ "$dns_over_https" == "0" ]; then
 	dns_over_https="false"
 	ynh_app_setting_set --app="$app" --key=dns_over_https --value=$dns_over_https
 	# if dns_over_https is false, we need to close ports,
     # as they were opened at the 'Provisioning ports' step
-    ynh_exec_warn_less yunohost firewall disallow --no-upnp TCP "$port_dns_over_http"
-    ynh_exec_warn_less yunohost firewall disallow --no-upnp UDP "$port_dns_over_http"
-    ynh_exec_warn_less yunohost firewall disallow --no-upnp UDP "$port_dns_over_quic"
+    ynh_exec_warn_less yunohost firewall disallow Both "$port_dns_over_http"
+    ynh_exec_warn_less yunohost firewall disallow UDP "$port_dns_over_quic"
     ynh_exec_warn_less yunohost firewall reload
 fi
+
+if [ -n "$open_port_53" ] && [ "$open_port_53" == "1" ]; then
+    open_port_53="true"
+    # no need to open th port, as it were opened at the 'Provisioning ports' step
+elif [ -z "$open_port_53" ] || [ "$open_port_53" == "0" ]; then
+    open_port_53="false"
+    # if open_port_53 is false, we need to close port,
+    # as it were opened at the 'Provisioning ports' step
+    ynh_exec_warn_less yunohost firewall disallow Both "$port_dns_over_http"
+    ynh_exec_warn_less yunohost firewall reload
+fi
+
+ynh_app_setting_set --app="$app" --key=open_port_53 --value="$open_port_53"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
