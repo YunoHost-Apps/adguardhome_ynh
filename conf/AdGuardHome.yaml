@@ -84,7 +84,7 @@ tls:
   strict_sni_check: false
   certificate_chain: ""
   private_key: ""
-  certificate_path: "/etc/yunohost/certs/__DOMAIN__/cert.pem"
+  certificate_path: "/etc/yunohost/certs/__DOMAIN__/crt.pem"
   private_key_path: "/etc/yunohost/certs/__DOMAIN__/key.pem"
 filters:
 - enabled: true
