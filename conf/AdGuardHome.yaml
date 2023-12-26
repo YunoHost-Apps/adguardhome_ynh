@@ -75,7 +75,7 @@ tls:
   enabled: __DNS_OVER_HTTPS__
   server_name: "__DOMAIN__"
   force_https: false
-  port_https: __PORT__
+  port_https: __PORT_INTERNAL_HTTPS__
   port_dns_over_tls: __PORT_DNS_OVER_HTTP__
   port_dns_over_quic: __PORT_DNS_OVER_QUIC__
   port_dnscrypt: 0

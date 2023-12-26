@@ -71,7 +71,7 @@ dns_over_http.default = 853
 dns_over_http.exposed = "Both"
 dns_over_quic.default = 784
 dns_over_quic.exposed = "UDP"
-main.default = 13120
+internal_https.default = 13120
 
 [resources.system_user]
 
