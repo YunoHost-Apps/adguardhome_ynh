@@ -44,6 +44,11 @@ type = "user"
 [install.password]
 type = "password"
 
+[install.open_port_53]
+ask.en = "Expose port 53 to the Internet? (If so, anyone who knows your server's IP can make a DNS request to it)"
+default = false
+type = "boolean"
+
 [install.dns_over_https]
 ask.en = "Should DNS-over-HTTPS/QUIC be enabled? (If so, anyone who knows your adguard address can make a doh request to https://adguardomain.tld/dns-query)"
 default = false

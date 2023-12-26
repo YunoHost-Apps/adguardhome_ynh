@@ -5,7 +5,7 @@ name = "AdguardHome configuration"
 services = ["__APP__"]
 
 [main.options.open_port_53]
-ask = "Open port 53 to the Internet?"
+ask = "Expose port 53 to the Internet?"
 no = "false"
 type = "boolean"
 yes = "true"
