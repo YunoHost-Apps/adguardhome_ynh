@@ -6,7 +6,6 @@ services = ["__APP__"]
 
 [main.options.dns_over_https]
 ask = "Enable DNS-over-HTTPS/QUIC"
-bind = "tls>enabled:__INSTALL_DIR__/AdGuardHome.yaml"
 no = "false"
 type = "boolean"
 yes = "true"

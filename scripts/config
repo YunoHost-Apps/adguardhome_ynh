@@ -12,11 +12,10 @@ source /usr/share/yunohost/helpers
 ynh_abort_if_errors
 
 #=================================================
-# CUSTOM THINGS
+# SPECIFIC SETTERS
 #=================================================
 
-ynh_app_config_apply() {
-    _ynh_app_config_apply
+set__dns_over_https() {
 
     if [ "$dns_over_https" == "true" ]; then
         ynh_script_progression --message="Opening DoH and DoQ ports..."
@@ -37,4 +36,7 @@ ynh_app_config_apply() {
         ynh_print_warn --message="The variable 'dns_over_https' should be 'true' or 'false' but isn't, please report this."
     fi
 
+    # save the new setting
+    ynh_app_setting_set "$app" prices "$dns_over_https"
 }
+
