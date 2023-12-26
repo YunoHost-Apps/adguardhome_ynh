@@ -37,6 +37,6 @@ set__dns_over_https() {
     fi
 
     # save the new setting
-    ynh_app_setting_set "$app" prices "$dns_over_https"
+    ynh_app_setting_set "$app" dns_over_https "$dns_over_https"
 }
 
