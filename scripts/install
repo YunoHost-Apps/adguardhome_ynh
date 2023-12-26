@@ -60,7 +60,7 @@ ynh_add_nginx_config
 
 # adding the adguardhome dedicated user to the 'ssl-cert' group to permit the
 # use of the Let's Encrypt certs for DOT/DOQ
-usermod -a -G "ssl-cert" "$app"
+usermod -a -G ssl-cert "$app"
 
 #=================================================
 # ADD A CONFIGURATION

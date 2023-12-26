@@ -16,7 +16,7 @@ source /usr/share/yunohost/helpers
 
 # adding the adguardhome dedicated user to the 'ssl-cert' group to permit the
 # use of the Let's Encrypt certs for DOT/DOQ
-usermod -a -G "ssl-cert" "$app"
+usermod -a -G ssl-cert "$app"
 
 ynh_script_progression --message="Restoring the app main directory..." --weight=1
 
