@@ -63,4 +63,4 @@ set__dns_over_https() {
 # GENERIC FINALIZATION
 #=================================================
 
-ynh_app_config_run $1
+ynh_app_config_run "$1"
