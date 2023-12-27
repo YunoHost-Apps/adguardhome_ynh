@@ -49,7 +49,6 @@ process_ips(){
 update_config(){
 # used to update the IP adresses in the AGHconfig file
 
-# Reset the bind_hosts if the current ip is 0.0.0.0
 python3 -c "import yaml
 with open(\"$install_dir/AdGuardHome.yaml\", 'r') as file:
 	conf_file = yaml.safe_load(file)
