@@ -14,7 +14,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression --message="Storing installation settings..." --weight=2
 
-if "$dns_over_https"; then
+if $dns_over_https; then
     dns_over_https="true"
     # no need to open the ports, as they were opened at the 'Provisioning ports' step
     ynh_print_info --message="DoH and DoQ ports are already closed."
@@ -30,7 +30,7 @@ fi
 
 ynh_app_setting_set --app="$app" --key=dns_over_https --value="$dns_over_https"
 
-if "$open_port_53"; then
+if $open_port_53; then
     open_port_53="true"
     # if open_port_53 is true, we need to open port 53
     ynh_print_info --message="Opening port 53..."
@@ -80,11 +80,11 @@ ynh_script_progression --message="Adding a configuration file..." --weight=1
 # put the network interface in a dedicated dnsmasq config
 configure_network_interface_dnsmasq
 
-# get IPv4 for the AGH config file
-ipv4_addr=$(process_ips "$(ip -4 route get 1.2.3.4 2> /dev/null | head -n1 | head -n1)")
+# get IPv4 for the AGH config file (with a starting "- ")
+ipv4_addr=$(echo "- " "$(process_ips "$(ip -4 route get 1.2.3.4 2> /dev/null | head -n1 | head -n1)")")
 
-# get IPv6 for the AGH config file
-ipv6_addr=$(process_ips "$(ip -6 route get ::1.2.3.4 2> /dev/null | head -n1)")
+# get IPv6 for the AGH config file (with a starting "- ")
+ipv6_addr=$(echo "- " "$(process_ips "$(ip -6 route get ::1.2.3.4 2> /dev/null | head -n1)")")
 
 password=$(python3 -c "import bcrypt; print(bcrypt.hashpw(b\"$password\", bcrypt.gensalt(rounds=10)).decode())")
 ynh_app_setting_set --app="$app" --key=password --value="$password"
