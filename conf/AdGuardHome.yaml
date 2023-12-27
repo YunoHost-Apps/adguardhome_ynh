@@ -14,8 +14,8 @@ language: ""
 theme: auto
 dns:
   bind_hosts:
-  __IPV4_ADDR__
-  __IPV6_ADDR__
+    __IPV4_ADDR__
+    __IPV6_ADDR__
   port: 53
   anonymize_client_ip: false
   ratelimit: 20
