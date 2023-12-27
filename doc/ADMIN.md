@@ -9,10 +9,11 @@ This setting is **disabled** by default.
 You need to know that anyone who knows your server's IP can make a DNS request to it. It may be used to perform [amplification attacks](https://en.wikipedia.org/wiki/Denial-of-service_attack#Amplification)!
 
 To use AdGuard Home in your domestic network, you don't need to activate this.  
-You simply have to use your local IP adress (like `192.168.0.1` or so) as DNS IP for your IT hardware at home
+You simply have to use your local IP adress (like `192.168.0.1` or so) as DNS IP for your IT hardware at home.
 
 Warning: you should not have public IPs of the config file if the port 53 is not exposed on Internet (else: AGH crashes)  
-You can remove them in your config file `/var/www/adguardhome/AdGuardHome.yaml` in the `dns: bind_hosts:` section
+They should be automatically removed when upgrading this package or when modifiying this port 53 exposure setting, but it's in the docs just in case.
+You can remove them in your config file `/var/www/adguardhome/AdGuardHome.yaml` in the `dns: bind_hosts:` section.
 Any IP that doesn't start with the folowing are public ones:
 
 - `10.`
