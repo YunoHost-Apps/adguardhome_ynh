@@ -1,7 +1,7 @@
 version = "1.0"
 
 [main]
-name = "AdguardHome configuration"
+name = "AdGuard Home configuration"
 services = ["__APP__"]
 
 [main.options.open_port_53]
