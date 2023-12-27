@@ -6,3 +6,8 @@ To activate either of these features, please use the config panel:
 Applications → AdGuard Home → AdGuard Home configuration  
 - Expose port 53 to the Internet?  
 - Enable DNS-over-HTTPS/QUIC?
+
+This update is at risk of crashing AdGuard Home
+
+If any trouble or question, please refer to [the package's admin docs](https://github.com/YunoHost-Apps/adguardhome_ynh/blob/master/doc/ADMIN.md)! ^w^  
+If needed and a similar issue does not already exist, please [open an issue on the GitHub's package page](https://github.com/YunoHost-Apps/adguardhome_ynh/issues)!
