@@ -14,7 +14,7 @@ is_public_ip(){
 	if [[ "$IP" =~ ^10.*|^169.*|^172.*|^192.168.* ]] ; then
 		# private ipv4
         returns false
-	elif [[ "$IP" =~ ^fd*|^fe80:* ]] ; then
+	elif [[ "$IP" =~ ^fc*|^fd*|^fe80:* ]] ; then
 		# private ipv6
         returns false
 	else
