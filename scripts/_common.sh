@@ -10,17 +10,19 @@
 
 is_public_ip(){
 # used to discriminate publics IPs over privates IPs
+# private IPv4 start with: 10.; 169.; 172. or 192.168.
+# private IPv6 start with: fc; fd or fe80:
 
 	local IP="$1"
 
 	if [[ "$IP" =~ ^10.*|^169.*|^172.*|^192.168.* ]] ; then
-		# private ipv4, so false
+		# private IPv4, so false
         return 1
 	elif [[ "$IP" =~ ^fc*|^fd*|^fe80:* ]] ; then
-		# private ipv6, so false
+		# private IPv6, so false
         return 1
 	else
-		# public ip, so true
+		# public IP, so true
         return 0
 	fi
 }
@@ -32,9 +34,10 @@ process_ips(){
 
     for i in $(seq "$(echo "$ips" | wc -w)" -1 1); do
             ip=$(echo "$ips" | awk "{print \$$i}")
+            # check if the so-called IP really is one
             if ynh_validate_ip4 --ip_address="$ip"; then
+                # if the IP is public and the user doesn't want to expose port 53, skip it
                 if is_public_ip "$ip" && [ "$open_port_53" == "false" ] ; then
-                    # if the IP is public and the user doesn't want to expose port 53, skip it
                     break
                 else
                     ips="$ip"
