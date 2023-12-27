@@ -37,7 +37,7 @@ process_ips(){
                     # if the IP is public and the user doesn't want to expose port 53, skip it
                     break
                 else
-                    ips="- $ip"
+                    ips="$ip"
                     break
                 fi
             fi
