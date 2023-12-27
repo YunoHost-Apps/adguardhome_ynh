@@ -63,10 +63,6 @@ if \"0.0.0.0\" in conf_file[\"dns\"][\"bind_hosts\"]:
 	if \"$ipv6_addr\":
 		conf_file[\"dns\"][\"bind_hosts\"].append(\"$ipv6_addr\")
 	need_file_update = True
-
-if conf_file[\"dns\"][\"port\"] != 53:
-	conf_file[\"dns\"][\"port\"] = 53
-	need_file_update = True
 	
 if need_file_update:
 	with open(\"$install_dir/AdGuardHome.yaml\", 'w') as file:
