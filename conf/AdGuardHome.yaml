@@ -16,7 +16,7 @@ dns:
   bind_hosts:
   __IPV4_ADDR__
   __IPV6_ADDR__
-  port: __PORT_ADGUARD__
+  port: 53
   anonymize_client_ip: false
   ratelimit: 20
   ratelimit_subnet_len_ipv4: 24
