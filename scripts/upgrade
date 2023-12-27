@@ -148,12 +148,10 @@ systemctl restart dnsmasq
 ynh_store_file_checksum --file="/etc/dnsmasq.d/$app"
 
 # get IPv4 for the AGH config file
-ipv4_route_output=$(echo "$(ip -4 route get 1.2.3.4 2> /dev/null)" | head -n1 | head -n1)
-ipv4_addr=$(process_ips "$ipv4_route_output")
+ipv4_addr=$(process_ips "$(ip -4 route get 1.2.3.4 2> /dev/null | head -n1 | head -n1)")
 
 # get IPv6 for the AGH config file
-ipv6_route_output=$(echo "$(ip -6 route get ::1.2.3.4 2> /dev/null)" | head -n1)
-ipv6_addr=$(process_ips "$ipv6_route_output")
+ipv6_addr=$(process_ips "$(ip -6 route get ::1.2.3.4 2> /dev/null | head -n1)")
 
 # update the IP adresses in the AGH config file
 update_config
