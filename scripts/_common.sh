@@ -25,6 +25,27 @@ is_public_ip(){
 	fi
 }
 
+process_ips(){
+# used to process the IPs to put them in the AGH's config file
+
+    local ips="$1"
+
+    for i in $(seq "$(echo "$ips" | wc -w)" -1 1); do
+            ip=$(echo "$ips" | awk "{print \$$i}")
+            if ynh_validate_ip4 --ip_address="$ip"; then
+                if is_public_ip "$ip" && [ "$open_port_53" == "false" ] ; then
+                    # if the IP is public and the user doesn't want to expose port 53, skip it
+                    break
+                else
+                    ips="- $ip"
+                    break
+                fi
+            fi
+    done
+
+    return "$ips"
+}
+
 #=================================================
 # EXPERIMENTAL HELPERS
 #=================================================

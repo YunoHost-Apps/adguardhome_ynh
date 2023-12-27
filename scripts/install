@@ -97,35 +97,10 @@ systemctl restart dnsmasq
 ynh_store_file_checksum --file="/etc/dnsmasq.d/$app"
 
 ipv4_route_output=$(echo "$(ip -4 route get 1.2.3.4 2> /dev/null)" | head -n1 | head -n1)
+ipv4_addr=$(process_ips "$ipv4_route_output")
+
 ipv6_route_output=$(echo "$(ip -6 route get ::1.2.3.4 2> /dev/null)" | head -n1)
-
-ipv4_addr=""
-for i in $(seq "$(echo "$ipv4_route_output" | wc -w)" -1 1); do
-    ip=$(echo "$ipv4_route_output" | awk "{print \$$i}")
-    if ynh_validate_ip4 --ip_address="$ip"; then
-        if is_public_ip "$ip" && [ "$open_port_53" == "false" ] ; then
-            # if the IP is public and the user doesn't want to expose port 53, skip it
-            break
-        else
-            ipv4_addr="- $ip"
-            break
-        fi
-    fi
-done
-
-ipv6_addr=""
-for i in $(seq "$(echo "$ipv6_route_output" | wc -w)" -1 1); do
-    ip=$(echo "$ipv6_route_output" | awk "{print \$$i}")
-    if ynh_validate_ip6 --ip_address="$ip"; then
-        if is_public_ip "$ip" && [ "$open_port_53" == "false" ] ; then
-            # if the IP is public and the user doesn't want to expose port 53, skip it
-            break
-        else
-            ipv6_addr="- $ip"
-            break
-        fi
-    fi
-done
+ipv6_addr=$(process_ips "$ipv6_route_output")
 
 password=$(python3 -c "import bcrypt; print(bcrypt.hashpw(b\"$password\", bcrypt.gensalt(rounds=10)).decode())")
 ynh_app_setting_set --app="$app" --key=password --value="$password"
