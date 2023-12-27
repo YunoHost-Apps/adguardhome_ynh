@@ -120,4 +120,4 @@ ynh_systemd_action --service_name="$app" --action="restart" --log_path=systemd
 ynh_script_progression --message="Installation of $app completed" --last
 
 # temporarily cat the AGH config for debug purposes
-cat "$install_dir/AdGuardHome.yaml"
+ynh_print_info --message="$(head -n 30 /var/www/adguardhome/AdGuardHome.yaml)"
