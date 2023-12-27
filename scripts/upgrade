@@ -29,6 +29,17 @@ ynh_systemd_action --service_name="$app" --action="stop"
 #=================================================
 ynh_script_progression --message="Ensuring downward compatibility..." --weight=1
 
+if [ -n "${open_port_53:-}" ] && [ "${open_port_53:-}" == "1" ]; then
+    open_port_53="true"
+	ynh_app_setting_set --app="$app" --key=open_port_53 --value="$open_port_53"
+	# if open_port_53 is true, we need to open port 53
+    ynh_exec_warn_less yunohost firewall allow Both 53
+    ynh_exec_warn_less yunohost firewall reload
+elif [ -z "${open_port_53:-}" ] || [ "${open_port_53:-}" == "0" ]; then
+    open_port_53="false"
+	ynh_app_setting_set --app="$app" --key=open_port_53 --value="$open_port_53"
+fi
+
 if [ -n "${dns_over_https:-}" ] && [ "${dns_over_https:-}" == "1" ]; then
 	dns_over_https="true"
 	ynh_app_setting_set --app="$app" --key=dns_over_https --value=$dns_over_https
@@ -67,17 +78,6 @@ if grep -q "port_https: 443" "$install_dir/AdGuardHome.yaml" || grep -q "port_dn
 	ynh_replace_string --match_string="port_https: 443" --replace_string="port_https: $port_internal_https" --target_file="$install_dir/AdGuardHome.yaml"
 	ynh_replace_string --match_string="port_dns_over_tls: 853" --replace_string="port_dns_over_tls: $port_dns_over_http" --target_file="$install_dir/AdGuardHome.yaml"
 	ynh_replace_string --match_string="port_dns_over_quic: 784" --replace_string="port_dns_over_quic: $port_dns_over_quic" --target_file="$install_dir/AdGuardHome.yaml"
-fi
-
-if [ -n "${open_port_53:-}" ] && [ "${open_port_53:-}" == "1" ]; then
-    open_port_53="true"
-	ynh_app_setting_set --app="$app" --key=open_port_53 --value="$open_port_53"
-	# if open_port_53 is true, we need to open port 53
-    ynh_exec_warn_less yunohost firewall allow Both 53
-    ynh_exec_warn_less yunohost firewall reload
-elif [ -z "${open_port_53:-}" ] || [ "${open_port_53:-}" == "0" ]; then
-    open_port_53="false"
-	ynh_app_setting_set --app="$app" --key=open_port_53 --value="$open_port_53"
 fi
 
 # remove setting no longer required
