@@ -11,6 +11,8 @@
 configure_network_interface_dnsmasq(){
 # used to put the network interface in a dedicated dnsmasq config
 
+    # get the network interface name for IPv4 and IPv6
+    # note: echo the IP route command to prevent a crash if the server doesn't have any IPv4/6
     ipv4_interface=$(echo "$(ip -4 route get 1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+' || true)
     ipv6_interface=$(echo "$(ip -6 route get ::1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+' || true)
 
