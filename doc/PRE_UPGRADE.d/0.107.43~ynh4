@@ -1,0 +1,8 @@
+From this 0.107.43~ynh4 version, some things have changed:  
+- port 53 is no longer exposed on the Internet by default, it's now a deliberate choice  
+- it is now possible to use DoH and DoQ with Let's Encrypt certificates out of the box, but this is also disabled by default for the same reason.
+
+To activate either of these features, please use the config panel:  
+Applications → AdGuard Home → AdGuard Home configuration  
+- Expose port 53 to the Internet?  
+- Enable DNS-over-HTTPS/QUIC?
