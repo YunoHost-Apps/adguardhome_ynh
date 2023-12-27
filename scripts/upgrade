@@ -43,6 +43,11 @@ elif [ -z "${dns_over_https:-}" ] || [ "${dns_over_https:-}" == "0" ]; then
     ynh_exec_warn_less yunohost firewall reload
 fi
 
+# about all those 'ynh_replace_string':
+# AGH modifies by itself the config file when an user modifies it using the front-end
+# so if we're using 'ynh_add_config' to process the config file, each
+# regeneration of the config would break the user's changes :/ (yeah ik...)
+
 # fill the 'tls:' section of the AGH configuration if necessary
 if grep -q "certificate_path: \"\"" "$install_dir/AdGuardHome.yaml" || grep -q "private_key_path: \"\"" "$install_dir/AdGuardHome.yaml" || grep -q "server_name: \"\"" "$install_dir/AdGuardHome.yaml"; then
 	ynh_replace_string --match_string="enabled: \"\"" --replace_string="enabled: \"$dns_over_https\"" --target_file="$install_dir/AdGuardHome.yaml"
