@@ -74,6 +74,7 @@ autoupdate.strategy = "latest_github_release"
 [resources.ports]
 adguard.default = 53
 adguard.exposed = "Both"
+adguard.fixed = true
 dns_over_http.default = 853
 dns_over_http.exposed = "Both"
 dns_over_quic.default = 784
