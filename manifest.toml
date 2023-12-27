@@ -7,7 +7,7 @@ name = "AdGuard Home"
 
 version = "0.107.43~ynh4"
 
-maintainers = ["ddataa"]
+maintainers = ["ddataa", "OniriCorpe"]
 
 [upstream]
 admindoc = "https://github.com/AdguardTeam/AdGuardHome/wiki"
