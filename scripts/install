@@ -123,7 +123,7 @@ password=$(python3 -c "import bcrypt; print(bcrypt.hashpw(b\"$password\", bcrypt
 ynh_app_setting_set --app="$app" --key=password --value="$password"
 
 # Main config File
-ynh_add_config --template="../conf/AdGuardHome.yaml" --destination="$install_dir/AdGuardHome.yaml"
+ynh_add_config --template="AdGuardHome.yaml" --destination="$install_dir/AdGuardHome.yaml"
 
 chmod 600 "$install_dir/AdGuardHome.yaml"
 chown -R "$app:$app" "$install_dir/AdGuardHome.yaml"
