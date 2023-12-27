@@ -18,15 +18,15 @@ ynh_abort_if_errors
 set__open_port_53() {
 
     if [ "$open_port_53" == "true" ]; then
-        ynh_script_progression --message="Opening port 53..."
+        ynh_print_info --message="Opening port 53..."
         # if the user would expose port 53 to the Internet, open it
         ynh_exec_warn_less yunohost firewall allow Both 53
-        yunohost firewall reload
+        ynh_exec_warn_less yunohost firewall reload
     elif [ "$open_port_53" == "false" ]; then
         # else if false, close it
-        ynh_script_progression --message="Closing port 53..."
+        ynh_print_info --message="Closing port 53..."
         ynh_exec_warn_less yunohost firewall disallow Both 53
-        yunohost firewall reload
+        ynh_exec_warn_less yunohost firewall reload
     else
         # else, throw error
         ynh_print_warn --message="The variable 'open_port_53' should be 'true' or 'false' but isn't, please report this."
@@ -49,17 +49,17 @@ set__open_port_53() {
 set__dns_over_https() {
 
     if [ "$dns_over_https" == "true" ]; then
-        ynh_script_progression --message="Opening DoH and DoQ ports..."
+        ynh_print_info --message="Opening DoH and DoQ ports..."
         # if DNS over HTTPS/QUIC is activated, open the associated ports
         ynh_exec_warn_less yunohost firewall allow Both "$port_dns_over_http"
         ynh_exec_warn_less yunohost firewall allow UDP "$port_dns_over_quic"
-        yunohost firewall reload
+        ynh_exec_warn_less yunohost firewall reload
     elif [ "$dns_over_https" == "false" ]; then
         # else if false, close them
-        ynh_script_progression --message="Closing DoH and DoQ ports..."
+        ynh_print_info --message="Closing DoH and DoQ ports..."
         ynh_exec_warn_less yunohost firewall disallow Both "$port_dns_over_http"
         ynh_exec_warn_less yunohost firewall disallow UDP "$port_dns_over_quic"
-        yunohost firewall reload
+        ynh_exec_warn_less yunohost firewall reload
     else
         # else, throw error
         ynh_print_warn --message="The variable 'dns_over_https' should be 'true' or 'false' but isn't, please report this."
