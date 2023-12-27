@@ -103,8 +103,13 @@ ipv4_addr=""
 for i in $(seq "$(echo "$ipv4_route_output" | wc -w)" -1 1); do
     ip=$(echo "$ipv4_route_output" | awk "{print \$$i}")
     if ynh_validate_ip4 --ip_address="$ip"; then
-        ipv4_addr="- $ip"
-        break
+        if is_public_ip "$ip" && [ "$open_port_53" == "false" ] ; then
+            # if the IP is public and the user doesn't want to expose port 53, skip it
+            break
+        else
+            ipv4_addr="- $ip"
+            break
+        fi
     fi
 done
 
@@ -112,8 +117,13 @@ ipv6_addr=""
 for i in $(seq "$(echo "$ipv6_route_output" | wc -w)" -1 1); do
     ip=$(echo "$ipv6_route_output" | awk "{print \$$i}")
     if ynh_validate_ip6 --ip_address="$ip"; then
-        ipv6_addr="- $ip"
-        break
+        if is_public_ip "$ip" && [ "$open_port_53" == "false" ] ; then
+            # if the IP is public and the user doesn't want to expose port 53, skip it
+            break
+        else
+            ipv6_addr="- $ip"
+            break
+        fi
     fi
 done
 
