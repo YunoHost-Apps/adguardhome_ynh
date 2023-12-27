@@ -9,8 +9,7 @@
 #=================================================
 
 is_public_ip(){
-	local IP
-    IP="$1"
+	local IP="$1"
 	if [[ "$IP" =~ ^10.*|^169.*|^172.*|^192.168.* ]] ; then
 		# private ipv4, so false
         return 1
