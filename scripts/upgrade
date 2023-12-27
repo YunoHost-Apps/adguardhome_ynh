@@ -47,7 +47,7 @@ fi
 # AGH modifies by itself the config file when an user modifies it using the front-end
 # so if we're using 'ynh_add_config' to process the config file, each
 # regeneration of the config would break the user's changes :/ (yeah ik...)
-# maybe one day use python3 -c "import yaml" in placeof this shit, but not today
+# maybe one day we'll use python3 -c "import yaml" in place of this shit, but not today
 
 # fill the 'tls:' section of the AGH configuration if necessary
 if grep -q "certificate_path: \"\"" "$install_dir/AdGuardHome.yaml" || grep -q "private_key_path: \"\"" "$install_dir/AdGuardHome.yaml" || grep -q "server_name: \"\"" "$install_dir/AdGuardHome.yaml"; then
