@@ -136,7 +136,7 @@ ipv4_addr=$(process_ips "$(ip -4 route get 1.2.3.4 2> /dev/null | head -n1 | hea
 ipv6_addr=$(process_ips "$(ip -6 route get ::1.2.3.4 2> /dev/null | head -n1)")
 
 # update the IP adresses in the AGH config file
-update_config
+update_agh_config
 
 chmod 600 "$install_dir/AdGuardHome.yaml"
 chown -R "$app:$app" "$install_dir/AdGuardHome.yaml"

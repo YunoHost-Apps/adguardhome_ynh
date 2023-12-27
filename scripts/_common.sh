@@ -76,7 +76,7 @@ process_ips(){
     echo "$ips"
 }
 
-update_config(){
+update_agh_config(){
 # used to update the IP adresses in the AGHconfig file
 
 python3 -c "import yaml
