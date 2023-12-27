@@ -12,14 +12,14 @@ is_public_ip(){
 	local IP
     IP="$1"
 	if [[ "$IP" =~ ^10.*|^169.*|^172.*|^192.168.* ]] ; then
-		# private ipv4
-        returns false
+		# private ipv4, so false
+        return 1
 	elif [[ "$IP" =~ ^fc*|^fd*|^fe80:* ]] ; then
-		# private ipv6
-        returns false
+		# private ipv6, so false
+        return 1
 	else
-		# public ip
-        returns true
+		# public ip, so true
+        return 0
 	fi
 }
 
