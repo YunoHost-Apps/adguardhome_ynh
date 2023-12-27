@@ -80,7 +80,7 @@ elif [ -z "${open_port_53:-}" ] || [ "${open_port_53:-}" == "0" ]; then
 fi
 
 # remove setting no longer required
-ynh_app_setting_delete --app="$app" --key="$port_adguard"
+ynh_app_setting_delete --app="$app" --key=port_adguard
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
