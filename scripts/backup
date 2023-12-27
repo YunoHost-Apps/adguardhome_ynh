@@ -38,7 +38,6 @@ ynh_backup --src_path="/etc/systemd/system/$app.service"
 # BACKUP VARIOUS FILES
 #=================================================
 
-ynh_backup --src_path="/etc/dnsmasq.d/$app"
 
 #=================================================
 # END OF SCRIPT
