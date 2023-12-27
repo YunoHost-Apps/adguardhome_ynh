@@ -70,6 +70,7 @@ process_ips(){
                 if is_public_ip "$ip" && [ "$open_port_53" == "false" ] ; then
                     break
                 else
+                    # special case for installation, as a dash is required before an IP
                     if $install; then
                         ips="- $ip"
                         break
