@@ -8,6 +8,31 @@
 # PERSONAL HELPERS
 #=================================================
 
+configure_network_interface_dnsmasq(){
+# used to put the network interface in a dedicated dnsmasq config
+
+    ipv4_interface=$(echo "$(ip -4 route get 1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+' || true)
+    ipv6_interface=$(echo "$(ip -6 route get ::1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+' || true)
+
+    if [ -z "$ipv4_interface" ] && [ -z "$ipv6_interface" ]; then
+            ynh_die --message="Impossible to find the main network interface, please report this issue."
+    elif [ "$ipv4_interface" != "$ipv6_interface" ]; then
+            if [ -z "$ipv4_interface" ]; then
+                    echo -e "bind-interfaces\nexcept-interface=$ipv6_interface" > "/etc/dnsmasq.d/$app"
+            elif [ -z "$ipv6_interface" ]; then
+                    echo -e "bind-interfaces\nexcept-interface=$ipv4_interface" > "/etc/dnsmasq.d/$app"
+            else
+                    echo -e "bind-interfaces\nexcept-interface=$ipv4_interface, $ipv6_interface" > "/etc/dnsmasq.d/$app"
+            fi
+    else
+            echo -e "bind-interfaces\nexcept-interface=$ipv4_interface" > "/etc/dnsmasq.d/$app"
+    fi
+
+    systemctl restart dnsmasq
+
+    ynh_store_file_checksum --file="/etc/dnsmasq.d/$app"
+}
+
 is_public_ip(){
 # used to discriminate publics IPs over privates IPs
 # private IPv4 start with: 10.; 169.; 172. or 192.168.

@@ -41,8 +41,11 @@ ynh_script_progression --message="Restoring the app main directory..." --weight=
 
 ynh_restore_file --origin_path="$install_dir"
 
-# we need to update IP adresses in case the backup is restored in a different
+# we need to refresh IP adresses in case the backup is restored in a different
 # environment, else AGH will try to bind port 53 on non-existent IPs and crash
+
+# put the network interface in a dedicated dnsmasq config
+configure_network_interface_dnsmasq
 
 # get IPv4 for the AGH config file
 ipv4_addr=$(process_ips "$(ip -4 route get 1.2.3.4 2> /dev/null | head -n1 | head -n1)")
