@@ -56,13 +56,13 @@ with open(\"$install_dir/AdGuardHome.yaml\", 'r') as file:
 
 need_file_update = False
 
-if \"0.0.0.0\" in conf_file[\"dns\"][\"bind_hosts\"]:
-	conf_file[\"dns\"][\"bind_hosts\"] = []
-	if \"$ipv4_addr\":
-		conf_file[\"dns\"][\"bind_hosts\"].append(\"$ipv4_addr\")
-	if \"$ipv6_addr\":
-		conf_file[\"dns\"][\"bind_hosts\"].append(\"$ipv6_addr\")
-	need_file_update = True
+conf_file[\"dns\"][\"bind_hosts\"] = []
+if \"$ipv4_addr\":
+    conf_file[\"dns\"][\"bind_hosts\"].append(\"$ipv4_addr\")
+    need_file_update = True
+if \"$ipv6_addr\":
+    conf_file[\"dns\"][\"bind_hosts\"].append(\"$ipv6_addr\")
+    need_file_update = True
 	
 if need_file_update:
 	with open(\"$install_dir/AdGuardHome.yaml\", 'w') as file:
