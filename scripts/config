@@ -32,6 +32,39 @@ set__open_port_53() {
         ynh_print_warn --message="The variable 'open_port_53' should be 'true' or 'false' but isn't, please report this."
     fi
 
+    # regenerate config, needed to add or delete public IPs following the user's choice
+    # get IPv4 for the AGH config file
+    ipv4_route_output=$(echo "$(ip -4 route get 1.2.3.4 2> /dev/null)" | head -n1 | head -n1)
+    ipv4_addr=$(process_ips "$ipv4_route_output")
+
+    # get IPv6 for the AGH config file
+    ipv6_route_output=$(echo "$(ip -6 route get ::1.2.3.4 2> /dev/null)" | head -n1)
+    ipv6_addr=$(process_ips "$ipv6_route_output")
+
+    # Reset the bind_hosts if the current ip is 0.0.0.0
+python3 -c "import yaml
+with open(\"$install_dir/AdGuardHome.yaml\", 'r') as file:
+	conf_file = yaml.safe_load(file)
+
+need_file_update = False
+
+if \"0.0.0.0\" in conf_file[\"dns\"][\"bind_hosts\"]:
+	conf_file[\"dns\"][\"bind_hosts\"] = []
+	if \"$ipv4_addr\":
+		conf_file[\"dns\"][\"bind_hosts\"].append(\"$ipv4_addr\")
+	if \"$ipv6_addr\":
+		conf_file[\"dns\"][\"bind_hosts\"].append(\"$ipv6_addr\")
+	need_file_update = True
+
+if conf_file[\"dns\"][\"port\"] != 53:
+	conf_file[\"dns\"][\"port\"] = 53
+	need_file_update = True
+	
+if need_file_update:
+	with open(\"$install_dir/AdGuardHome.yaml\", 'w') as file:
+		yaml.dump(conf_file, file)
+"
+
     # save the new setting
     ynh_app_setting_set "$app" --key=open_port_53 --value="$open_port_53"
 }
