@@ -57,7 +57,7 @@ is_public_ip(){
 }
 
 process_ips(){
-# used to process the IPs to put them in the AGH's config file
+# used to process the IPs to put in the AGH's config file
 
     local ips="$1"
     if [ "$2" == "install" ]; then local install=true; fi
