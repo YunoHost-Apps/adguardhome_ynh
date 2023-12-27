@@ -46,6 +46,34 @@ process_ips(){
     echo "$ips"
 }
 
+update_config(){
+# used to update the IP adresses in the AGHconfig file
+
+# Reset the bind_hosts if the current ip is 0.0.0.0
+python3 -c "import yaml
+with open(\"$install_dir/AdGuardHome.yaml\", 'r') as file:
+	conf_file = yaml.safe_load(file)
+
+need_file_update = False
+
+if \"0.0.0.0\" in conf_file[\"dns\"][\"bind_hosts\"]:
+	conf_file[\"dns\"][\"bind_hosts\"] = []
+	if \"$ipv4_addr\":
+		conf_file[\"dns\"][\"bind_hosts\"].append(\"$ipv4_addr\")
+	if \"$ipv6_addr\":
+		conf_file[\"dns\"][\"bind_hosts\"].append(\"$ipv6_addr\")
+	need_file_update = True
+
+if conf_file[\"dns\"][\"port\"] != 53:
+	conf_file[\"dns\"][\"port\"] = 53
+	need_file_update = True
+	
+if need_file_update:
+	with open(\"$install_dir/AdGuardHome.yaml\", 'w') as file:
+		yaml.dump(conf_file, file)
+"
+}
+
 #=================================================
 # EXPERIMENTAL HELPERS
 #=================================================

@@ -155,29 +155,8 @@ ipv4_addr=$(process_ips "$ipv4_route_output")
 ipv6_route_output=$(echo "$(ip -6 route get ::1.2.3.4 2> /dev/null)" | head -n1)
 ipv6_addr=$(process_ips "$ipv6_route_output")
 
-# Reset the bind_hosts if the current ip is 0.0.0.0
-python3 -c "import yaml
-with open(\"$install_dir/AdGuardHome.yaml\", 'r') as file:
-	conf_file = yaml.safe_load(file)
-
-need_file_update = False
-
-if \"0.0.0.0\" in conf_file[\"dns\"][\"bind_hosts\"]:
-	conf_file[\"dns\"][\"bind_hosts\"] = []
-	if \"$ipv4_addr\":
-		conf_file[\"dns\"][\"bind_hosts\"].append(\"$ipv4_addr\")
-	if \"$ipv6_addr\":
-		conf_file[\"dns\"][\"bind_hosts\"].append(\"$ipv6_addr\")
-	need_file_update = True
-
-if conf_file[\"dns\"][\"port\"] != 53:
-	conf_file[\"dns\"][\"port\"] = 53
-	need_file_update = True
-	
-if need_file_update:
-	with open(\"$install_dir/AdGuardHome.yaml\", 'w') as file:
-		yaml.dump(conf_file, file)
-"
+# update the IP adresses in the AGH config file
+update_config
 
 chmod 600 "$install_dir/AdGuardHome.yaml"
 chown -R "$app:$app" "$install_dir/AdGuardHome.yaml"
