@@ -110,7 +110,7 @@ ynh_add_nginx_config
 # Create a dedicated systemd config
 ynh_add_systemd_config
 
-yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "$port_adguard" "$port_dns_over_http" "$port_dns_over_quic"
+yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "$port_dns_over_http" "$port_dns_over_quic"
 
 #=================================================
 # SPECIFIC UPGRADE
@@ -182,8 +182,8 @@ if \"0.0.0.0\" in conf_file[\"dns\"][\"bind_hosts\"]:
 		conf_file[\"dns\"][\"bind_hosts\"].append(\"$ipv6_addr\")
 	need_file_update = True
 
-if conf_file[\"dns\"][\"port\"] != $port_adguard:
-	conf_file[\"dns\"][\"port\"] = $port_adguard
+if conf_file[\"dns\"][\"port\"] != 53:
+	conf_file[\"dns\"][\"port\"] = 53
 	need_file_update = True
 	
 if need_file_update:

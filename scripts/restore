@@ -62,7 +62,7 @@ ynh_restore_file --origin_path="/etc/nginx/conf.d/$domain.d/$app.conf"
 ynh_restore_file --origin_path="/etc/systemd/system/$app.service"
 systemctl enable "$app.service" --quiet
 
-yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "$port_adguard" "$port_dns_over_http" "$port_dns_over_quic"
+yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "$port_dns_over_http" "$port_dns_over_quic"
 
 #=================================================
 # START SYSTEMD SERVICE
