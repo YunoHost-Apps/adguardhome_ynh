@@ -9,7 +9,7 @@
 #=================================================
 
 is_public_ip(){
-# used to discriminate publics IPs over private IPs
+# used to discriminate publics IPs over privates IPs
 
 	local IP="$1"
 
