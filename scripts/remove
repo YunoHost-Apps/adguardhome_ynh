@@ -22,6 +22,9 @@ then
 	yunohost service remove "$app"
 fi
 
+# Remove the dedicated dnsmasq config for AdGuardHome
+ynh_secure_remove --file="/etc/dnsmasq.d/$app"
+
 # Remove the dedicated systemd config
 ynh_remove_systemd_config
 
