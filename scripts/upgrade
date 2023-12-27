@@ -61,7 +61,7 @@ if grep -q "certificate_path: \"\"" "$install_dir/AdGuardHome.yaml" || grep -q "
 fi
 
 # check if one of 'port_https:', 'port_dns_over_tls:' or 'port_dns_over_quic:' uses the default setting
-if grep -q "port_https: \"443\"" "$install_dir/AdGuardHome.yaml" || grep -q "port_dns_over_tls: \"853\"" "$install_dir/AdGuardHome.yaml" || grep -q "port_dns_over_quic: \"784\"" "$install_dir/AdGuardHome.yaml"; then
+if grep -q "port_https: 443" "$install_dir/AdGuardHome.yaml" || grep -q "port_dns_over_tls: 853" "$install_dir/AdGuardHome.yaml" || grep -q "port_dns_over_quic: 784" "$install_dir/AdGuardHome.yaml"; then
 	# if so: mandatory replacement for them
 	# (because the final user can't easily know the ports used by the package)
 	ynh_replace_string --match_string="port_https: 443" --replace_string="port_https: $port_internal_https" --target_file="$install_dir/AdGuardHome.yaml"
