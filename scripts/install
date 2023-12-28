@@ -14,7 +14,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression --message="Storing installation settings..." --weight=2
 
-if [ "$dns_over_https" == "0" ]; then
+if [ "$dns_over_https" = true ]; then
     dns_over_https="true"
     # no need to open the ports, as they were opened at the 'Provisioning ports' step
     ynh_print_info --message="DoH and DoQ ports are already closed."
@@ -30,7 +30,7 @@ fi
 
 ynh_app_setting_set --app="$app" --key=dns_over_https --value="$dns_over_https"
 
-if [ "$open_port_53" == "0" ]; then
+if [ "$open_port_53" = true ]; then
     open_port_53="true"
     # if open_port_53 is true, we need to open port 53
     ynh_print_info --message="Opening port 53..."
