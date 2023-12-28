@@ -76,7 +76,7 @@ process_ips(){
             fi
     done
 
-    echo "$processed_ips"
+    echo "${processed_ips:-}"
 }
 
 update_agh_config(){
