@@ -14,8 +14,13 @@ get_network_interface(){
     local IPvx="$1"
 
     # note: echo the IP route command to prevent a crash if the server doesn't have any IPv4/6
-    # shellcheck disable=SC2005
-    echo ipv4_interface="$(echo "$(ip -"$IPvx" route get 1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+' || true)"
+    if [[ "$IPvx" = "4" ]]; then
+        # shellcheck disable=SC2005
+        echo "$(echo "$(ip -4 route get 1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+' || true)"
+    else
+        # shellcheck disable=SC2005 
+        echo "$(echo "$(ip -6 route get ::1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+' || true)"
+    fi
 }
 
 configure_network_interface_dnsmasq(){
