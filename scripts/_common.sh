@@ -81,7 +81,7 @@ process_ips(){
                 if is_public_ip "$ip" && [ "$open_port_53" == "false" ] ; then
                     break
                 else
-                    if [[ $is_install = true ]]; then
+                    if [[ "${is_install:-}" = true ]]; then
                     # to get a dash before each IP
                         processed_ips="- $ip"
                         break
