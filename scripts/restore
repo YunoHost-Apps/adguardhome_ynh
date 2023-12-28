@@ -52,7 +52,8 @@ ipv6_interface="$(get_network_interface 6)"
 configure_network_interface_dnsmasq "$ipv4_interface" "$ipv6_interface"
 
 # get IPv4 for the AGH config file
-ipv4_addr=$(process_ips "$(ip -4 address show "$ipv4_interface" 2> /dev/null | grep inet)")
+# the 'sed' is used to get rid of the network prefix ('/24' for example) and the router IP
+ipv4_addr=$(process_ips "$(ip -4 address show "$ipv4_interface" 2> /dev/null | grep inet | sed 's&/.*&&')")
 
 # get IPv6 for the AGH config file
 # the 'sed' is used to get rid of the network prefix ('/64' for example)
