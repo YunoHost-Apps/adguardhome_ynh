@@ -64,7 +64,7 @@ process_ips(){
     for i in $(seq "$(echo "$ips" | wc -w)" -1 1); do
             ip=$(echo "$ips" | awk "{print \$$i}")
             # check if the so-called IP really is one
-            if ynh_validate_ip4 --ip_address="$ip"; then
+            if ynh_validate_ip4 --ip_address="$ip" || ynh_validate_ip6 --ip_address="$ip"; then
                 # if the IP is public and the user doesn't want to expose port 53, skip it
                 if is_public_ip "$ip" && [ "$open_port_53" == "false" ] ; then
                     break
