@@ -2,8 +2,29 @@ test_format = 1.0
 
 [default]
 
-    # -------------------------------
-    # Default args to use for install
-    # -------------------------------
+# -------------------------------
+# Default args to use for install
+# -------------------------------
 
-    args.dns_over_https=1
+# false by default
+args.open_port_53 = 1
+args.dns_over_https = 1
+
+# -------------------------------
+# additional tests suite
+# -------------------------------
+
+[open_port_53]
+only = ["install.root"]
+args.open_port_53 = 0
+args.dns_over_https = 1
+
+[open_doh_doq_ports]
+only = ["install.root"]
+args.open_port_53 = 1
+args.dns_over_https = 0
+
+[open_both_port_53_and_doh_doq_ports]
+only = ["install.root"]
+args.open_port_53 = 0
+args.dns_over_https = 0
