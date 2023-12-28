@@ -11,5 +11,5 @@ It's really important to use the configuration panel to activate or deactivate t
 This is because YunoHost needs to perform actions such as automatically opening or closing the server's ports and refresh the IP to provide to AdGuard Home, which cannot be done without going through the configuration panel.
 
 This update is at risk of crashing AdGuard Home, so:  
-If any trouble or question, please refer to [the package's admin docs](https://github.com/YunoHost-Apps/adguardhome_ynh/blob/master/doc/ADMIN.md)! ^w^  
-If needed and a similar issue does not already exist, please [open an issue on the GitHub's package page](https://github.com/YunoHost-Apps/adguardhome_ynh/issues)!
+- If any trouble or question, please refer to [the package's admin docs](https://github.com/YunoHost-Apps/adguardhome_ynh/blob/master/doc/ADMIN.md)! In any case, we recommend reading it! ^w^  
+- If needed and a similar issue does not already exist, please [open an issue on the GitHub's package page](https://github.com/YunoHost-Apps/adguardhome_ynh/issues)!

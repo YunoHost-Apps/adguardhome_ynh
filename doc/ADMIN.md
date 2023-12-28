@@ -15,7 +15,7 @@ The right IP to use are shown in the "Setup Guide" page of your AdGuard Home ins
 If you would expose the port 53 on Internet, you'll be able to use the public IP of your server (the same as in your domain name DNS settings) on any device outside your home network.
 
 **Warning:** you should not have public IPs of the config file if the port 53 is **not exposed** on Internet (else: AGH crashes)  
-They should be automatically removed when upgrading this package or when modifiying this port 53 exposure setting, but it's in the docs just in case.
+Please note: They should be automatically removed when upgrading this package or when modifiying this port 53 exposure setting, but it's in the docs just in case.
 You can remove them in your config file `/var/www/adguardhome/AdGuardHome.yaml` in the `dns: bind_hosts:` section.
 Any IP that doesn't start with the folowing are public ones:
 
