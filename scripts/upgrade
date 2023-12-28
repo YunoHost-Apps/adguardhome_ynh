@@ -124,9 +124,6 @@ usermod -a -G ssl-cert "$app"
 #=================================================
 ynh_script_progression --message="Updating a configuration file..." --weight=1
 
-# put the network interface in a dedicated dnsmasq config
-configure_network_interface_dnsmasq
-
 # get IPv4 for the AGH config file
 ipv4_addr=$(process_ips "$(ip -4 route get 1.2.3.4 2> /dev/null | head -n1 | head -n1)")
 

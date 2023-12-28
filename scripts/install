@@ -77,8 +77,12 @@ usermod -a -G ssl-cert "$app"
 #=================================================
 ynh_script_progression --message="Adding a configuration file..." --weight=1
 
+# get the name of the network interface in IPv4 and IPv6
+ipv4_interface="$(get_network_interface 4)"
+ipv6_interface="$(get_network_interface 6)"
+
 # put the network interface in a dedicated dnsmasq config
-configure_network_interface_dnsmasq
+configure_network_interface_dnsmasq "$ipv4_interface" "$ipv6_interface"
 
 # get IPv4 for the AGH config file (with a starting "- ")
 ipv4_addr=$(echo "- " "$(process_ips "$(ip -4 route get 1.2.3.4 2> /dev/null | head -n1 | head -n1)")")

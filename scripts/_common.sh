@@ -8,15 +8,21 @@
 # PERSONAL HELPERS
 #=================================================
 
+get_network_interface(){
+# get the network interface name for IPv4 and IPv6
+
+    local IPvx="$1"
+
+    # note: echo the IP route command to prevent a crash if the server doesn't have any IPv4/6
+    # shellcheck disable=SC2005
+    echo ipv4_interface="$(echo "$(ip -"$IPvx" route get 1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+' || true)"
+}
+
 configure_network_interface_dnsmasq(){
 # used to put the network interface in a dedicated dnsmasq config
 
-    # get the network interface name for IPv4 and IPv6
-    # note: echo the IP route command to prevent a crash if the server doesn't have any IPv4/6
-    # shellcheck disable=SC2005
-    ipv4_interface=$(echo "$(ip -4 route get 1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+' || true)
-    # shellcheck disable=SC2005
-    ipv6_interface=$(echo "$(ip -6 route get ::1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+' || true)
+    local ipv4_interface="$1"
+    local ipv6_interface="$2"
 
     if [ -z "$ipv4_interface" ] && [ -z "$ipv6_interface" ]; then
             ynh_die --message="Impossible to find the main network interface, please report this issue."
