@@ -54,7 +54,7 @@ elif [ -z "${dns_over_https:-}" ] || [ "${dns_over_https:-}" == "0" ]; then
     ynh_exec_warn_less yunohost firewall reload
 fi
 
-# about all those 'ynh_replace_string':
+# about all those 'ynh_write_var_in_file':
 # AGH modifies by itself the config file when an user modifies it using the front-end
 # so if we're using 'ynh_add_config' to process the config file, each
 # regeneration of the config would break the user's changes :/ (yeah ik...)
@@ -62,22 +62,20 @@ fi
 
 # fill the 'tls:' section of the AGH configuration if necessary
 if grep -q "certificate_path: \"\"" "$install_dir/AdGuardHome.yaml" || grep -q "private_key_path: \"\"" "$install_dir/AdGuardHome.yaml" || grep -q "server_name: \"\"" "$install_dir/AdGuardHome.yaml"; then
-	ynh_replace_string --match_string="enabled: \"\"" --replace_string="enabled: \"$dns_over_https\"" --target_file="$install_dir/AdGuardHome.yaml"
-	# using sed magic because of the line break :/
-	sed --in-place "/tls:$/{n;s/enabled: false/enabled: $dns_over_https/}" "$install_dir/AdGuardHome.yaml"
-	ynh_replace_string --match_string="server_name: \"\"" --replace_string="server_name: $domain" --target_file="$install_dir/AdGuardHome.yaml"
-	ynh_replace_string --match_string="allow_unencrypted_doh: false" --replace_string="allow_unencrypted_doh: true" --target_file="$install_dir/AdGuardHome.yaml"
-	ynh_replace_string --match_string="certificate_path: \"\"" --replace_string="certificate_path: /etc/yunohost/certs/$domain/crt.pem" --target_file="$install_dir/AdGuardHome.yaml"
-	ynh_replace_string --match_string="private_key_path: \"\"" --replace_string="private_key_path: /etc/yunohost/certs/$domain/key.pem" --target_file="$install_dir/AdGuardHome.yaml"
+	ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="tls>enabled" --value="$dns_over_https"
+	ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="server_name" --value="$domain"
+	ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="allow_unencrypted_doh" --value="true"
+	ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="certificate_path" --value="/etc/yunohost/certs/$domain/crt.pem"
+	ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="private_key_path" --value="/etc/yunohost/certs/$domain/key.pem"
 fi
 
 # check if one of 'port_https:', 'port_dns_over_tls:' or 'port_dns_over_quic:' uses the default setting
 if grep -q "port_https: 443" "$install_dir/AdGuardHome.yaml" || grep -q "port_dns_over_tls: 853" "$install_dir/AdGuardHome.yaml" || grep -q "port_dns_over_quic: 784" "$install_dir/AdGuardHome.yaml"; then
 	# if so: mandatory replacement for them
 	# (because the final user can't easily know the ports used by the package)
-	ynh_replace_string --match_string="port_https: 443" --replace_string="port_https: $port_internal_https" --target_file="$install_dir/AdGuardHome.yaml"
-	ynh_replace_string --match_string="port_dns_over_tls: 853" --replace_string="port_dns_over_tls: $port_dns_over_http" --target_file="$install_dir/AdGuardHome.yaml"
-	ynh_replace_string --match_string="port_dns_over_quic: 784" --replace_string="port_dns_over_quic: $port_dns_over_quic" --target_file="$install_dir/AdGuardHome.yaml"
+	ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="port_https" --value="$port_internal_https"
+	ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="port_dns_over_tls" --value="$port_dns_over_http"
+	ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="port_dns_over_quic" --value="$port_dns_over_quic"
 fi
 
 # remove setting no longer required
