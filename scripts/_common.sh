@@ -60,7 +60,6 @@ process_ips(){
 # used to process the IPs to put in the AGH's config file
 
     local ips="$1"
-    if [ "$2" == "install" ]; then local install=true; fi
 
     for i in $(seq "$(echo "$ips" | wc -w)" -1 1); do
             ip=$(echo "$ips" | awk "{print \$$i}")
@@ -70,14 +69,8 @@ process_ips(){
                 if is_public_ip "$ip" && [ "$open_port_53" == "false" ] ; then
                     break
                 else
-                    # special case for installation, as a dash is required before an IP
-                    if $install; then
-                        ips="- $ip"
-                        break
-                    else
-                        ips="$ip"
-                        break
-                    fi
+                    ips="$ip"
+                    break
                 fi
             fi
     done
