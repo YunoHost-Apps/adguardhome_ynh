@@ -77,8 +77,10 @@ process_ips(){
             ip=$(echo "$ips" | awk "{print \$$i}")
             # check if the so-called IP really is one
             if ynh_validate_ip4 --ip_address="$ip" || ynh_validate_ip6 --ip_address="$ip"; then
-                # if the IP is public and the user doesn't want to expose port 53, skip it
-                if ! is_public_ip "$ip" && ! [ "$open_port_53" == "false" ] ; then
+                # don't process if the IP is public and the port 53 closed
+                if is_public_ip "$ip" && [ "$open_port_53" == "false" ] ; then
+                    exit 1
+                else
                     if [[ "${is_install:-}" = true ]]; then
                     # to get a dash before each IP
                         processed_ips+="- $ip "
