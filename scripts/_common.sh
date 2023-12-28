@@ -71,23 +71,19 @@ process_ips(){
 # used to process the IPs to put in the AGH's config file
 
     local ips="$1"
-    local processed_ips
+    local processed_ips=""
 
     for i in $(seq "$(echo "$ips" | wc -w)" -1 1); do
             ip=$(echo "$ips" | awk "{print \$$i}")
             # check if the so-called IP really is one
             if ynh_validate_ip4 --ip_address="$ip" || ynh_validate_ip6 --ip_address="$ip"; then
                 # if the IP is public and the user doesn't want to expose port 53, skip it
-                if is_public_ip "$ip" && [ "$open_port_53" == "false" ] ; then
-                    break
-                else
+                if ! is_public_ip "$ip" && ! [ "$open_port_53" == "false" ] ; then
                     if [[ "${is_install:-}" = true ]]; then
                     # to get a dash before each IP
-                        processed_ips="- $ip"
-                        break
+                        processed_ips+="- $ip "
                     else
-                        processed_ips="$ip"
-                        break
+                        processed_ips+="$ip "
                     fi
                 fi
             fi
