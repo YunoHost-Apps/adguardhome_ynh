@@ -60,6 +60,7 @@ process_ips(){
 # used to process the IPs to put in the AGH's config file
 
     local ips="$1"
+    local processed_ips
 
     for i in $(seq "$(echo "$ips" | wc -w)" -1 1); do
             ip=$(echo "$ips" | awk "{print \$$i}")
@@ -69,13 +70,13 @@ process_ips(){
                 if is_public_ip "$ip" && [ "$open_port_53" == "false" ] ; then
                     break
                 else
-                    ips="$ip"
+                    processed_ips="$ip"
                     break
                 fi
             fi
     done
 
-    echo "$ips"
+    echo "$processed_ips"
 }
 
 update_agh_config(){
