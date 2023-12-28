@@ -81,10 +81,10 @@ process_ips(){
                 if is_public_ip "$ip" && [ "$open_port_53" == "false" ] ; then
                     exit 1
                 else
-                    after_first_pass=true
-                    if [ $after_first_pass = true ]; then
+                    if [ "${after_first_pass:-}" = true ]; then
                         processed_ips+=$(printf "$processed_ips\n%s" "/n")
                     fi
+                    after_first_pass=true
                     if [[ "${is_install:-}" = true ]]; then
                     # to get a dash before each IP
                         processed_ips+=$(printf "$processed_ips\n%s" "- $ip")
