@@ -29,22 +29,22 @@ ynh_systemd_action --service_name="$app" --action="stop"
 #=================================================
 ynh_script_progression --message="Ensuring downward compatibility..." --weight=1
 
-if [ -n "${open_port_53:-}" ] && [ "${open_port_53:-}" == "1" ]; then
+if [ -z "${open_port_53:-}" ] && [ "${open_port_53:-}" = true ]; then
     open_port_53="true"
 	ynh_app_setting_set --app="$app" --key=open_port_53 --value="$open_port_53"
 	# if open_port_53 is true, we need to open port 53
     ynh_exec_warn_less yunohost firewall allow Both 53
     ynh_exec_warn_less yunohost firewall reload
-elif [ -z "${open_port_53:-}" ] || [ "${open_port_53:-}" == "0" ]; then
+elif [ -n "${open_port_53:-}" ] || [ "${open_port_53:-}" = false ]; then
     open_port_53="false"
 	ynh_app_setting_set --app="$app" --key=open_port_53 --value="$open_port_53"
 fi
 
-if [ -n "${dns_over_https:-}" ] && [ "${dns_over_https:-}" == "1" ]; then
+if [ -z "${dns_over_https:-}" ] && [ "${dns_over_https:-}" = true ]; then
 	dns_over_https="true"
 	ynh_app_setting_set --app="$app" --key=dns_over_https --value=$dns_over_https
 	# no need to open the ports, as they were opened at the 'Provisioning ports' step
-elif [ -z "${dns_over_https:-}" ] || [ "${dns_over_https:-}" == "0" ]; then
+elif [ -n "${dns_over_https:-}" ] || [ "${dns_over_https:-}" = false ]; then
 	dns_over_https="false"
 	ynh_app_setting_set --app="$app" --key=dns_over_https --value=$dns_over_https
 	# if dns_over_https is false, we need to close ports,
@@ -151,3 +151,6 @@ ynh_systemd_action --service_name="$app" --action="restart" --log_path="systemd"
 #=================================================
 
 ynh_script_progression --message="Upgrade of $app completed" --last
+
+# temporarily show the AGH config for debug purposes
+ynh_print_info --message="$(head -n 30 /var/www/adguardhome/AdGuardHome.yaml)"
