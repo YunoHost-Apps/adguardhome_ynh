@@ -17,7 +17,7 @@ ynh_script_progression --message="Storing installation settings..." --weight=2
 if [[ $dns_over_https == 0 ]]; then
     dns_over_https="true"
     # no need to open the ports, as they were opened at the 'Provisioning ports' step
-    ynh_print_info --message="DoH and DoQ ports have already been opened at port provision step."
+    ynh_print_info --message="DoH and DoQ ports are open."
 else
     dns_over_https="false"
     # if dns_over_https is false, we need to close ports,
