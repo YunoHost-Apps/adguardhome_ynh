@@ -83,9 +83,9 @@ process_ips(){
                 else
                     if [[ "${is_install:-}" = true ]]; then
                     # to get a dash before each IP
-                        processed_ips+="- $ip "
+                        processed_ips+=" - $ip"
                     else
-                        processed_ips+="$ip "
+                        processed_ips+=" $ip"
                     fi
                 fi
             fi
