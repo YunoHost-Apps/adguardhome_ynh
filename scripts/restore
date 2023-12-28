@@ -52,10 +52,11 @@ ipv6_interface="$(get_network_interface 6)"
 configure_network_interface_dnsmasq "$ipv4_interface" "$ipv6_interface"
 
 # get IPv4 for the AGH config file
-ipv4_addr=$(process_ips "$(ip -4 route get 1.2.3.4 2> /dev/null | head -n1 | head -n1)")
+ipv4_addr=$(process_ips "$(ip -4 address show "$ipv4_interface" 2> /dev/null | grep inet)")
 
 # get IPv6 for the AGH config file
-ipv6_addr=$(process_ips "$(ip -6 route get ::1.2.3.4 2> /dev/null | head -n1)")
+# the 'sed' is used to get rid of the network prefix ('/64' for example)
+ipv6_addr=$(process_ips "$(ip -6 address show "$ipv6_interface" 2> /dev/null | grep inet | sed 's&/.*&&')")
 
 # update the IP adresses in the AGH config file
 update_agh_config
