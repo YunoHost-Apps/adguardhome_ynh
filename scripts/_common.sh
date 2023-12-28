@@ -83,9 +83,9 @@ process_ips(){
                 else
                     if [[ "${is_install:-}" = true ]]; then
                     # to get a dash before each IP
-                        processed_ips+=$'- 192.168.42.80\n'
+                        processed_ips+=$(printf "$processed_ips\n%s" "- $ip")
                     else
-                        processed_ips+=$'$ip\n'
+                        pprocessed_ips+=$(printf "$processed_ips\n%s" "$ip")
                     fi
                 fi
             fi
