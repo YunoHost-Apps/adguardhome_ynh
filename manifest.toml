@@ -35,8 +35,9 @@ default = "/adguard"
 type = "path"
 
 [install.init_main_permission]
-default = "visitors"
+default = "all_users"
 type = "group"
+help.en = "Even by restricting access to users only, the AdGuard Home API will be available (ex. for a mobile app use)."
 
 [install.admin]
 type = "user"
