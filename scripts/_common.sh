@@ -92,17 +92,21 @@ process_ips(){
 update_agh_ip_config(){
 # used to update the IP adresses in the AGHconfig file
 
+# use python's yaml and open the AGH config file
 python3 -c "import yaml
 with open(\"$install_dir/AdGuardHome.yaml\", 'r') as file:
 	conf_file = yaml.safe_load(file)
 
+# reset the IPs in the AGH config file
 conf_file[\"dns\"][\"bind_hosts\"] = []
 
+# add each IPv4 and IPv6 in the AGH config file
 for ip in \"$ipv4_addr\".split():
     conf_file[\"dns\"][\"bind_hosts\"].append(ip)
 for ip in \"$ipv6_addr\".split():
     conf_file[\"dns\"][\"bind_hosts\"].append(ip)
 
+# save the config file
 with open(\"$install_dir/AdGuardHome.yaml\", 'w') as file:
     yaml.dump(conf_file, file)
 "
