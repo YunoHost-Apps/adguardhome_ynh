@@ -99,9 +99,9 @@ with open(\"$install_dir/AdGuardHome.yaml\", 'r') as file:
 conf_file[\"dns\"][\"bind_hosts\"] = []
 
 for ip in \"$ipv4_addr\":
-    conf_file[\"dns\"][\"bind_hosts\"].append(\"ip\")
+    conf_file[\"dns\"][\"bind_hosts\"].append(ip)
 for ip in \"$ipv6_addr\":
-    conf_file[\"dns\"][\"bind_hosts\"].append(\"ip\")
+    conf_file[\"dns\"][\"bind_hosts\"].append(ip)
 
 with open(\"$install_dir/AdGuardHome.yaml\", 'w') as file:
     yaml.dump(conf_file, file)
