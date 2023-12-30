@@ -81,7 +81,7 @@ process_ips(){
                 if [ "$(is_public_ip "$ip")" == 0 ] && [ "$open_port_53" == "false" ] ; then
                     exit 1
                 else
-                    processed_ips+=$(printf "$processed_ips\n%s" "$ip")
+                    processed_ips+="$ip "
                 fi
             fi
     done
