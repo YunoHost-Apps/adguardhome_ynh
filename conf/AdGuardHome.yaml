@@ -13,9 +13,7 @@ http_proxy: ""
 language: ""
 theme: auto
 dns:
-  bind_hosts:
-    __IPV4_ADDR__
-    __IPV6_ADDR__
+  bind_hosts: []
   port: 53
   anonymize_client_ip: false
   ratelimit: 20

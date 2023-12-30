@@ -84,8 +84,6 @@ ipv6_interface="$(get_network_interface 6)"
 # put the network interface in a dedicated dnsmasq config
 configure_network_interface_dnsmasq "$ipv4_interface" "$ipv6_interface"
 
-# to warn process_ips that we're doing an installation (to get a dash before each IP)
-is_install=true
 # get IPv4 for the AGH config file
 # the 'sed' is used to get rid of the network prefix ('/24' for example) and the router IP
 ipv4_addr=$(process_ips "$(ip -4 address show "$ipv4_interface" 2> /dev/null | grep inet | sed 's&/.*&&')")
@@ -93,6 +91,9 @@ ipv4_addr=$(process_ips "$(ip -4 address show "$ipv4_interface" 2> /dev/null | g
 # get IPv6 for the AGH config file
 # the 'sed' is used to get rid of the network prefix ('/64' for example)
 ipv6_addr=$(process_ips "$(ip -6 address show "$ipv6_interface" 2> /dev/null | grep inet | sed 's&/.*&&')")
+
+# update the IP adresses in the AGH config file
+update_agh_ip_config
 
 password=$(python3 -c "import bcrypt; print(bcrypt.hashpw(b\"$password\", bcrypt.gensalt(rounds=10)).decode())")
 ynh_app_setting_set --app="$app" --key=password --value="$password"

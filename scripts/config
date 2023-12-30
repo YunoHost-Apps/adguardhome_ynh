@@ -46,7 +46,7 @@ set__open_port_53() {
     ipv6_addr=$(process_ips "$(ip -6 address show "$ipv6_interface" 2> /dev/null | grep inet | sed 's&/.*&&')")
 
     # update the IP adresses in the AGH config file
-    update_agh_config
+    update_agh_ip_config
 
     # save the new setting
     ynh_app_setting_set "$app" --key=open_port_53 --value="$open_port_53"

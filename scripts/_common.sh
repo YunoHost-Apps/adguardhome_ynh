@@ -81,16 +81,7 @@ process_ips(){
                 if [ "$(is_public_ip "$ip")" == 0 ] && [ "$open_port_53" == "false" ] ; then
                     exit 1
                 else
-                    if [ "${after_first_pass:-}" = true ]; then
-                        processed_ips+=$(printf "$processed_ips\n%s" "/n")
-                    fi
-                    after_first_pass=true
-                    if [[ "${is_install:-}" = true ]]; then
-                    # to get a dash before each IP
-                        processed_ips+=$(printf "$processed_ips\n%s" "- $ip")
-                    else
-                        pprocessed_ips+=$(printf "$processed_ips\n%s" "$ip")
-                    fi
+                    processed_ips+=$(printf "$processed_ips\n%s" "$ip")
                 fi
             fi
     done
@@ -98,26 +89,22 @@ process_ips(){
     echo "${processed_ips:-}"
 }
 
-update_agh_config(){
+update_agh_ip_config(){
 # used to update the IP adresses in the AGHconfig file
 
 python3 -c "import yaml
 with open(\"$install_dir/AdGuardHome.yaml\", 'r') as file:
 	conf_file = yaml.safe_load(file)
 
-need_file_update = False
-
 conf_file[\"dns\"][\"bind_hosts\"] = []
-if \"$ipv4_addr\":
-    conf_file[\"dns\"][\"bind_hosts\"].append(\"$ipv4_addr\")
-    need_file_update = True
-if \"$ipv6_addr\":
-    conf_file[\"dns\"][\"bind_hosts\"].append(\"$ipv6_addr\")
-    need_file_update = True
-	
-if need_file_update:
-	with open(\"$install_dir/AdGuardHome.yaml\", 'w') as file:
-		yaml.dump(conf_file, file)
+
+for ip in \"$ipv4_addr\":
+    conf_file[\"dns\"][\"bind_hosts\"].append(\"ip\")
+for ip in \"$ipv6_addr\":
+    conf_file[\"dns\"][\"bind_hosts\"].append(\"ip\")
+
+with open(\"$install_dir/AdGuardHome.yaml\", 'w') as file:
+    yaml.dump(conf_file, file)
 "
 }
 
