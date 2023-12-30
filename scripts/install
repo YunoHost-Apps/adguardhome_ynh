@@ -41,8 +41,6 @@ else
     ynh_print_info --message="Port 53 is already closed."
 fi
 
-ynh_app_setting_set --app="$app" --key=open_port_53 --value="$open_port_53"
-
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
