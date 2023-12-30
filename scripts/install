@@ -38,7 +38,7 @@ if [[ $open_port_53 == 0 ]]; then
     ynh_exec_warn_less yunohost firewall reload
 else
     open_port_53="false"
-    ynh_print_info --message="Port 53 is already closed."
+    ynh_print_info --message="Port 53 is closed."
 fi
 
 ynh_app_setting_set --app="$app" --key=open_port_53 --value="$open_port_53"
