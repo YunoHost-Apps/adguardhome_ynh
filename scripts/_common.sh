@@ -46,8 +46,6 @@ configure_network_interface_dnsmasq(){
     systemctl restart dnsmasq
 
     ynh_store_file_checksum --file="/etc/dnsmasq.d/$app"
-
-    ynh_port_available --port=53 || ynh_die --message="Port 53 is needs to be available for this app"
 }
 
 is_public_ip(){
