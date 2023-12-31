@@ -57,8 +57,8 @@ set__open_port_53() {
 
 set__dns_over_https() {
 
-    ynh_app_setting_get --app="$app" --key=port_dns_over_http
-    ynh_app_setting_get --app="$app" --key=port_dns_over_quic
+    port_dns_over_http=$(ynh_app_setting_get --app="$app" --key=port_dns_over_http)
+    port_dns_over_quic=$(ynh_app_setting_get --app="$app" --key=port_dns_over_quic)
 
     if [ "$dns_over_https" == "true" ]; then
         ynh_print_info --message="Opening DoH and DoQ ports..."
