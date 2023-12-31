@@ -47,9 +47,8 @@ set__open_port_53() {
     # the 'sed' is used to get rid of the network prefix ('/64' for example)
     ipv6_addr=$(process_ips "$(ip -6 address show "$ipv6_interface" 2> /dev/null | grep inet | sed 's&/.*&&')")
 
-    ynh_print_info --message="Updating the AGH config file..."
-
     # update the IP adresses in the AGH config file
+    ynh_print_info --message="Updating the AGH config file..."
     update_agh_ip_config
 
     # save the new setting
@@ -74,6 +73,10 @@ set__dns_over_https() {
         # else, throw error
         ynh_print_warn --message="The variable 'dns_over_https' should be 'true' or 'false' but isn't, please report this."
     fi
+
+    # update the value in the AGH config file
+    ynh_print_info --message="Updating the AGH config file..."
+    ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="tls>enabled" --value="$dns_over_https"
 
     # save the new setting
     ynh_app_setting_set "$app" --key=dns_over_https --value="$dns_over_https"
