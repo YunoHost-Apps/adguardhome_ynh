@@ -81,10 +81,13 @@ process_ips(){
         # check if the so-called IP really is one
         if [[ $(ynh_validate_ip4 --ip_address="$ip") == 0 || $(ynh_validate_ip6 --ip_address="$ip") == 0 ]]; then
             # don't process if the IP is public and the port 53 closed
+            echo "IP validated: $ip"
             if [ "$(is_public_ip "$ip")" == 0 ] && [ "$open_port_53" == "false" ]; then
                 # don't add this IP (do nothing)
+                echo "don't add"
                 :
             else
+                echo "add"
                 # add this IP and a space as IP delimiter
                 processed_ips+="$ip "
             fi
