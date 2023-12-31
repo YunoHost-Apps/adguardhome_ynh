@@ -79,6 +79,7 @@ process_ips(){
             if [ "$(ynh_validate_ip4 --ip_address="$ip")" ] || [ "$(ynh_validate_ip6 --ip_address="$ip")" ] ; then
                 # don't process if the IP is public and the port 53 closed
                 if [ "$(is_public_ip "$ip")" == 0 ] && [ "$open_port_53" == "false" ] ; then
+                    # don't add this IP
                     processed_ips+=""
                 else
                     processed_ips+="$ip "
