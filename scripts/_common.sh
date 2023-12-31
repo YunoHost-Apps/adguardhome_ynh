@@ -76,7 +76,7 @@ process_ips(){
     for i in $(seq "$(echo "$ips" | wc -w)" -1 1); do
             ip=$(echo "$ips" | awk "{print \$$i}")
             # check if the so-called IP really is one
-            if [[ $(ynh_validate_ip4 --ip_address="$ip") || $(ynh_validate_ip6 --ip_address="$ip") ]] ; then
+            if [ "$(ynh_validate_ip4 --ip_address="$ip")" ] || [ "$(ynh_validate_ip6 --ip_address="$ip")" ] ; then
                 # don't process if the IP is public and the port 53 closed
                 if [ "$(is_public_ip "$ip")" == 0 ] && [ "$open_port_53" == "false" ] ; then
                     exit 1
@@ -91,6 +91,10 @@ process_ips(){
 
 update_agh_ip_config(){
 # used to update the IP adresses in the AGHconfig file
+
+if [ -z "${ipv4_addr:-}" ] && [ -z "${ipv6_addr:-}" ]; then
+    ynh_die --message="At leat one IP adress is required to run AdGuard Home. Please report this error."
+fi
 
 # use python's yaml and open the AGH config file
 python3 -c "import yaml
