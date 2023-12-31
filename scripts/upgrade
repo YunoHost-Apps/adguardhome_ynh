@@ -64,7 +64,7 @@ fi
 
 # fill the 'tls:' section of the AGH configuration if necessary
 if grep -q "certificate_path: \"\"" "$install_dir/AdGuardHome.yaml" || grep -q "private_key_path: \"\"" "$install_dir/AdGuardHome.yaml" || grep -q "server_name: \"\"" "$install_dir/AdGuardHome.yaml"; then
-	ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="tls>enabled" --value="$dns_over_https"
+	ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="enabled" --after="tls:" --value="$dns_over_https"
 	ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="server_name" --value="$domain"
 	ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="allow_unencrypted_doh" --value="true"
 	ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="certificate_path" --value="/etc/yunohost/certs/$domain/crt.pem"
