@@ -74,10 +74,6 @@ set__dns_over_https() {
         ynh_print_warn --message="The variable 'dns_over_https' should be 'true' or 'false' but isn't, please report this."
     fi
 
-    # update the value in the AGH config file
-    ynh_print_info --message="Updating the AGH config file..."
-    ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="tls>enabled" --value="$dns_over_https"
-
     # save the new setting
     ynh_app_setting_set "$app" --key=dns_over_https --value="$dns_over_https"
 }
