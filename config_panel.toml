@@ -2,6 +2,7 @@ version = "1.0"
 
 [main]
 name = "AdGuard Home configuration"
+help = "If any trouble or question, please refer to [the package's admin docs](https://github.com/YunoHost-Apps/adguardhome_ynh/blob/master/doc/ADMIN.md)!"
 services = ["__APP__"]
 
 [main.options.open_port_53]
