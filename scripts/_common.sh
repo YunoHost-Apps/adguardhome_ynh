@@ -82,6 +82,7 @@ process_ips(){
                     # don't add this IP (do nothing)
                     :
                 else
+                    # add this IP and a space as IP delimiter
                     processed_ips+="$ip "
                 fi
             fi
