@@ -52,7 +52,7 @@ set__open_port_53() {
     update_agh_ip_config
 
     # save the new setting
-    ynh_app_setting_set "$app" --key=open_port_53 --value="$open_port_53"
+    ynh_app_setting_set "$app" --key=open_port_53 --value="$open_port_53" --debug
 }
 
 set__dns_over_https() {
