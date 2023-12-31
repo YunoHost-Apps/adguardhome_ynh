@@ -73,15 +73,15 @@ process_ips(){
     local ips="$1"
     local processed_ips=""
 
-    # remove the 'inet6' and 'inet' from the IP
+    # remove the 'inet6' and 'inet' from the IP addresses string
     ips="$(echo "$ips" | sed "s/inet6//g ; s/inet//g")"
 
     # for each IP
     for ip in $ips; do
         # check if the so-called IP really is one
-        if [ "$(ynh_validate_ip4 --ip_address="$ip")" ] || [ "$(ynh_validate_ip6 --ip_address="$ip")" ] ; then
+        if [[ "$(ynh_validate_ip4 --ip_address="$ip")" == 0 ]] || [[ "$(ynh_validate_ip6 --ip_address="$ip")" == 0 ]]; then
             # don't process if the IP is public and the port 53 closed
-            if [ "$(is_public_ip "$ip")" == 0 ] && [ "$open_port_53" == "false" ] ; then
+            if [ "$(is_public_ip "$ip")" == 0 ] && [ "$open_port_53" == "false" ]; then
                 # don't add this IP (do nothing)
                 :
             else
