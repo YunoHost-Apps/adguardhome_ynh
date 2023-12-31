@@ -25,7 +25,8 @@ Any IP that doesn't start with the folowing are public ones:
 - `192.168.`
 - `fcxx:` (where the `x` can be any hexadecimal character)
 - `fdxx:` (where the `x` can be any hexadecimal character)
-- `fe80:`
+
+**Warning:** IPv6 starting with `fe80:` (IPv6 LLA) can't be used for DNS purposes, if you try to put one in the AGH config, it won't work.
 
 So, any other IP should be a public one.
 
