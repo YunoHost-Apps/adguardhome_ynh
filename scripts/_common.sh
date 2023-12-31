@@ -80,13 +80,17 @@ process_ips(){
     for ip in $ips; do
         # check if the so-called IP really is one
         if ynh_validate_ip4 --ip_address="$ip" || ynh_validate_ip6 --ip_address="$ip"; then
-            # don't process if the IP is public and the port 53 closed
-            if is_public_ip "$ip" && [ "$open_port_53" == "false" ]; then
-                # don't add this IP (do nothing)
-                :
-            else
-                # add this IP and a space as IP delimiter
-                processed_ips+="$ip "
+            # we can't use IPv6 LLA for DNS: https://github.com/AdguardTeam/AdGuardHome/issues/2926#issuecomment-1284489380
+            # if we try to bind port 53 on a fe80:: address, AGH crashes
+            if ! [[ "$ip" =~ ^fe80:* ]]; then
+                # don't process if the IP is public and the port 53 closed
+                if is_public_ip "$ip" && [ "$open_port_53" == "false" ]; then
+                    # don't add this IP (do nothing)
+                    :
+                else
+                    # add this IP and a space as IP delimiter
+                    processed_ips+="$ip "
+                fi
             fi
         fi
     done
