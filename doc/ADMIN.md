@@ -93,7 +93,7 @@ It should look like the list in the previous section.
 You can use the following command to automatically give you a ready-to-use list:
 
 ```bash
-curl -sL ip.guide/AS"$(curl -sL ip.guide | jq -s --indent 1 ".[].network.autonomous_system.asn")" | jq -s --indent 1 ".[].routes" | sed "/\[/d;/{/d;/]/d;/}/d;s/  \"//;s/\",//;s/\"//"
+curl -sL ip.guide/AS"$(curl -sL ip.guide | jq -s --indent 1 ".[].network.autonomous_system.asn")" | jq -s -j --indent 1 ".[].routes" | sed "/v4/d;/v6/d;/\],/d" | tr -d " [{]\",}"
 ```
 
 **Note:** maybe you'll need to do this step multiple times, as some Internet provider have multiple ASN numbers. So if one day your AdGuard Home refuses to reply, it might be because of this.
