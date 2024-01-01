@@ -86,6 +86,7 @@ It's not perfect but it still drastically reduces the chances of unauthorized us
 **Note:** in case of connection on not authorized wifi networks with your smartphone, you will not be able to use your AdGuard Home instance.
 
 Using the connexion to allow, go to <https://ip.guide/> and click on "Autonomous Systems".  
+**Note:** If you're using an iPhone, make sure that the ["Limit IP tracking" setting](https://support.apple.com/guide/iphone/iph499d287c2/ios) is disabled (otherwise you must authorize Akamai IP addresses using the same method).
 You can now copy all the IP adresses in the "routes" section, remove all quotation marks, commas and spaces, but keep one IP per line, then paste the result into your allowlist.  
 It should look like the list in the previous section.
 
