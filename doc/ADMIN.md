@@ -15,7 +15,7 @@ The right IP to use are shown in the "Setup Guide" page of your AdGuard Home ins
 If you would expose the port 53 on Internet, you'll be able to use the public IP of your server (the same as in your domain name DNS settings) on any device outside your home network.
 
 **Warning:** you should not have public IPs of the config file if the port 53 is **not exposed** on Internet (else: AGH crashes)  
-Please note: They should be automatically removed when upgrading this package or when modifiying this port 53 exposure setting, but it's in the docs just in case.
+**Please note:** They should be automatically removed when upgrading this package or when modifiying this port 53 exposure setting, but it's in the docs just in case.
 You can remove them in your config file `/var/www/adguardhome/AdGuardHome.yaml` in the `dns: bind_hosts:` section.
 Any IP that doesn't start with the folowing are public ones:
 
@@ -69,7 +69,7 @@ fc00::/7
 fe80::/16
 ```
 
-Note: The slash `/` and the following number after the IP adresses represents the network mask, it's called the CIDR notation. If you want to learn about the CIDR notation, [you can read this article](https://whatismyipaddress.com/cidr).
+**Note:** The slash `/` and the following number after the IP adresses represents the network mask, it's called the CIDR notation. If you want to learn about the CIDR notation, [you can read this article](https://whatismyipaddress.com/cidr).
 
 ### Authorize some public IP addresses
 
@@ -83,10 +83,10 @@ You can add any public IP you know you'll use.
 
 If you want to use your AGH instance on your smartphone, it gets more complex: you have to allow the IP ranges of your mobile operator.  
 It's not perfect but it still drastically reduces the chances of unauthorized use, while allowing you to use it with your smartphone.  
-Note: in case of connection on not authorized wifi networks with your smartphone, you will not be able to use your AdGuard Home instance.
+**Note:** in case of connection on not authorized wifi networks with your smartphone, you will not be able to use your AdGuard Home instance.
 
 Using the connexion to allow, go to <https://ip.guide/> and click on "Autonomous Systems".  
 You can now copy all the IP adresses in the "routes" section, remove all quotation marks, commas and spaces, but keep one IP per line, then paste the result into your allowlist.  
 It should look like the list in the previous section.
 
-Note: maybe you'll need to do this step multiple times, as some Internet provider have multiple ASN numbers. So if one day your AdGuard Home refuses to reply, it might be because of this.
+**Note:** maybe you'll need to do this step multiple times, as some Internet provider have multiple ASN numbers. So if one day your AdGuard Home refuses to reply, it might be because of this.
