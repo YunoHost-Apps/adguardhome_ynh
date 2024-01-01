@@ -96,4 +96,6 @@ You can use the following command to automatically give you a ready-to-use list:
 curl -sL ip.guide/AS"$(curl -sL ip.guide | jq -s --indent 1 ".[].network.autonomous_system.asn")" | jq -s -j --indent 1 ".[].routes" | sed "/v4/d;/v6/d;/\],/d" | tr -d " [{]\",}"
 ```
 
+The command asks your IP address to ip.guide, which returns the "Autonomous System" number, then the commands asks the IP ranges, then display it on your screen.
+
 **Note:** maybe you'll need to do this step multiple times, as some Internet provider have multiple ASN numbers. So if one day your AdGuard Home refuses to reply, it might be because of this.
