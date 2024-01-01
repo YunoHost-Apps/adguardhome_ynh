@@ -109,11 +109,12 @@ ynh_script_progression --message="Configuring a systemd service..." --weight=1
 # Create a dedicated systemd config
 ynh_add_systemd_config
 
-if [[ $dns_over_https == 0 ]] && [[ $expose_port_53 == 0 ]]; then
+# declare needs_exposed_ports according to real user need
+if [ "$dns_over_https" == "true" ] && [ "$expose_port_53" == "true" ]; then
     yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "53" "$port_dns_over_http" "$port_dns_over_quic"
-elif [[ $dns_over_https == 0 ]]; then
+elif [ "$dns_over_https" == "true" ]; then
     yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "$port_dns_over_http" "$port_dns_over_quic"
-elif [[ $expose_port_53 == 0 ]]; then
+elif [ "$expose_port_53" == "true" ]; then
     yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "53"
 else
     yunohost service add "$app" --description="Ads & trackers blocking DNS server"
