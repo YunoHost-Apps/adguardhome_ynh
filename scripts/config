@@ -17,19 +17,6 @@ ynh_abort_if_errors
 
 set__expose_port_53() {
 
-    if [ "$expose_port_53" == "true" ]; then
-        ynh_print_info --message="Opening port 53..."
-        # if the user would expose port 53 to the Internet, open it
-        ynh_exec_warn_less yunohost firewall allow Both 53
-    elif [ "$expose_port_53" == "false" ]; then
-        # else if false, close it
-        ynh_print_info --message="Closing port 53..."
-        ynh_exec_warn_less yunohost firewall disallow Both 53
-    else
-        # else, throw error
-        ynh_print_warn --message="The variable 'expose_port_53' should be 'true' or 'false' but isn't, please report this."
-    fi
-
     # regenerate config, needed to add or delete public IPs following the user's choice
 
     ynh_print_info --message="Obtaining IP addresses for the AGH config file..."

@@ -29,8 +29,13 @@ fi
 
 ynh_app_setting_set --app="$app" --key=dns_over_https --value="$dns_over_https"
 
-ynh_print_info --message="Opening port 53..."
-ynh_exec_warn_less yunohost firewall allow Both 53
+
+# if the port 53 is not open, open it, it's mandatory to use AGH
+if ! yunohost firewall list | grep -q " 53$"; then
+    ynh_print_info --message="Opening port 53..."
+    ynh_exec_warn_less yunohost firewall allow Both 53
+fi
+
 if [[ $expose_port_53 == 0 ]]; then
     expose_port_53="true"
 else
