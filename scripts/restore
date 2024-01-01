@@ -22,8 +22,8 @@ if [ "$dns_over_https" == "false" ]; then
     ynh_exec_warn_less yunohost firewall disallow UDP "$port_dns_over_quic"
 fi
 
-if [ "$open_port_53" == "true" ]; then
-	# if open_port_53 is true, we need to open port 53
+if [ "$expose_port_53" == "true" ]; then
+	# if expose_port_53 is true, we need to open port 53
     ynh_exec_warn_less yunohost firewall allow Both 53
 fi
 
@@ -80,7 +80,15 @@ ynh_restore_file --origin_path="/etc/nginx/conf.d/$domain.d/$app.conf"
 ynh_restore_file --origin_path="/etc/systemd/system/$app.service"
 systemctl enable "$app.service" --quiet
 
-yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "53" "$port_dns_over_http" "$port_dns_over_quic"
+if [[ $dns_over_https == 0 ]] && [[ $expose_port_53 == 0 ]]; then
+    yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "53" "$port_dns_over_http" "$port_dns_over_quic"
+elif [[ $dns_over_https == 0 ]]; then
+    yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "$port_dns_over_http" "$port_dns_over_quic"
+elif [[ $expose_port_53 == 0 ]]; then
+    yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "53"
+else
+    yunohost service add "$app" --description="Ads & trackers blocking DNS server"
+fi
 
 #=================================================
 # START SYSTEMD SERVICE
