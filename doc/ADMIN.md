@@ -93,7 +93,7 @@ It should look like the list in the previous section.
 You can use the following command to automatically give you a ready-to-use list:
 
 ```bash
-AS="$(curl -sL ip.guide | jq -s --indent 1 ".[].network.autonomous_system.asn")" | curl -sL ip.guide/AS"$AS" | jq -s --indent 1 ".[].routes" |
+curl -sL ip.guide/AS"$(curl -sL ip.guide | jq -s --indent 1 ".[].network.autonomous_system.asn")" | jq -s --indent 1 ".[].routes" |
 sed "/\[/d;/{/d;/]/d;/}/d;s/  \"//;s/\",//;s/\"//"
 ```
 
