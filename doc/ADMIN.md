@@ -47,3 +47,46 @@ If you host your machine at home, for using DoH or DoQ, you have to open the fol
 - `784` in UDP (for DNS over QUIC)
 
 Then you can use `https://adguard.example.com/dns-query` (where `adguard.example.com` is the domain-name associated to your AdGuard Home) as a DoH or DoQ DNS server for your devices. ^w^
+
+## Allowlist
+
+If your port 53 is exposed on Internet, you can secure your AdGuard Home server using allowlist to prevent unauthorized use.
+
+We've had YunoHost users surprised to see their instance receiving tens of thousands of requests per day, this was due to the public exposure of port 53 on Internet and the lack of securisation of their instance.
+
+The allowlist setting is located in your AdGuard Home interface:  
+Settings → DNS settings → Access settings → Allowed clients
+
+### Local network
+
+If you selfhost at home, you can simply paste this in your allowlist (it will allow any kind of private IP):
+
+```text
+10.0.0.0/8
+172.16.0.0/12
+192.168.0.0/16
+fc00::/7
+fe80::/16
+```
+
+Note: The slash `/` and the following number after the IP adresses represents the network mask, it's called the CIDR notation. If you want to learn about the CIDR notation, [you can read this article](https://whatismyipaddress.com/cidr).
+
+### Authorize some public IP addresses
+
+Then you need to add the authorized public IP addresses.
+
+For example, to authorize the IPv4 of your home internet connexion, open <https://ip.yunohost.org/> and paste the showed IP in the allowlist.
+
+If your ISP has assigned you an IPv6 range (ex. `2a01:d34d:b33f:1312::/64`), you can add it so that any device on your home network using an address in this range will be authorized.
+
+You can add any public IP you know you'll use.
+
+If you want to use your AGH instance on your smartphone, it gets more complex: you have to allow the IP ranges of your mobile operator.  
+It's not perfect but it still drastically reduces the chances of unauthorized use, while allowing you to use it with your smartphone.  
+Note: in case of connection on not authorized wifi networks with your smartphone, you will not be able to use your AdGuard Home instance.
+
+Using the connexion to allow, go to <https://ip.guide/> and click on "Autonomous Systems".  
+You can now copy all the IP adresses in the "routes" section, remove all quotation marks, commas and spaces, but keep one IP per line, then paste the result into your allowlist.  
+It should look like the list in the previous section.
+
+Note: maybe you'll need to do this step multiple times, as some Internet provider have multiple ASN numbers. So if one day your AdGuard Home refuses to reply, it might be because of this.
