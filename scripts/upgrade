@@ -138,10 +138,6 @@ ipv4_addr=$(process_ips "$(ip -4 address show "$ipv4_interface" 2> /dev/null | g
 # the 'sed' is used to get rid of the network prefix ('/64' for example)
 ipv6_addr=$(process_ips "$(ip -6 address show "$ipv6_interface" 2> /dev/null | grep inet | sed 's&/.*&&')")
 
-# debug
-ynh_print_info --message="IPv4: $ipv4_addr"
-ynh_print_info --message="IPv6: $ipv6_addr"
-
 # update the IP adresses in the AGH config file
 update_agh_ip_config
 
