@@ -111,7 +111,7 @@ ynh_add_nginx_config
 # Create a dedicated systemd config
 ynh_add_systemd_config
 
-yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "$port_dns_over_http" "$port_dns_over_quic"
+yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "53" "$port_dns_over_http" "$port_dns_over_quic"
 
 #=================================================
 # SPECIFIC UPGRADE
