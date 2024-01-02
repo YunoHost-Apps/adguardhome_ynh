@@ -21,6 +21,8 @@ You need to know that if you expose your DNS server to Internet, anyone who know
 This risk is greatly minimized by the rate limiting setting, which is set to 20 requests per second per client by default:  
 Settings → DNS settings → DNS server configuration → Rate limit
 
+You can completely or almost completely reduce the risk of unauthorized use with the help of the [Allowlist section](#allowlist) further down in this documentation.
+
 To use AdGuard Home in your home network if your self-hosting at home, you **don't need** to activate this setting.  
 You simply have to use the private IP adress of your server (like `192.168.0.1` or so) as DNS IP for your IT hardware at home.  
 The right IP addresses to use are shown in the "Setup Guide" page of your AdGuard Home instance.
