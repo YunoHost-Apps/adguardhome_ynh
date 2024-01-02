@@ -14,7 +14,7 @@ When disabled:
 When enabled:
 
 - YunoHost **will** check if the port 53 is accessible on Internet and warns you if not
-- You need to **manually open port 53** on your touter if you self-host at home
+- You need to **manually open port 53** of your router if you self-host at home
 - Public IP adresses **will** be added to the AdGuard Home configuration
 
 You need to know that if you expose your DNS server to Internet, anyone who knows your server's IP can make a DNS request to it. It *may be used* to perform [amplification attacks](https://en.wikipedia.org/wiki/Denial-of-service_attack#Amplification)!  
