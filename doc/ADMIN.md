@@ -93,7 +93,7 @@ It should look like the list in the previous section.
 You can use the following command to automatically give you a ready-to-use list:
 
 ```bash
-curl -sL ip.guide/AS"$(curl -sL ip.guide | jq -s --indent 1 ".[].network.autonomous_system.asn")" | jq -s -j --indent 1 ".[].routes" | sed "/v.*:/d;/\],/d" | tr -d " {]\",}"
+curl -sL ip.guide/AS"$(curl -sL ip.guide | jq -s ".[].network.autonomous_system.asn")" | jq -s ".[].routes" | sed "/v.*:/d;/\],/d" | tr -d " {]\",}"
 ```
 
 The command asks your IP address to ip.guide, which returns the "Autonomous System" number, then the commands asks the IP ranges, then display it on your screen.
