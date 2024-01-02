@@ -6,17 +6,30 @@ You want to be sure to understand the config settings? You're at the right place
 
 This setting is **disabled** by default.
 
-You need to know that anyone who knows your server's IP can make a DNS request to it. It may be used to perform [amplification attacks](https://en.wikipedia.org/wiki/Denial-of-service_attack#Amplification)!
+When disabled:
 
-To use AdGuard Home in your home network, you don't need to activate this setting.  
+- YunoHost **will not** check if the port 53 is accessible on Internet and warns you if not (so no irrelevant warning)
+- Public IP adresses **will not** be added to the AdGuard Home configuration
+
+When enabled:
+
+- YunoHost **will** check if the port 53 is accessible on Internet and warns you if not
+- You need to **manually open port 53** on your touter if you self-host at home
+- Public IP adresses **will** be added to the AdGuard Home configuration
+
+You need to know that if you expose your DNS server to Internet, anyone who knows your server's IP can make a DNS request to it. It *may be used* to perform [amplification attacks](https://en.wikipedia.org/wiki/Denial-of-service_attack#Amplification)!  
+This risk is greatly minimized by the rate limiting setting, which is set to 20 requests per second per client by default:  
+Settings → DNS settings → DNS server configuration → Rate limit
+
+To use AdGuard Home in your home network if your self-hosting at home, you **don't need** to activate this setting.  
 You simply have to use the private IP adress of your server (like `192.168.0.1` or so) as DNS IP for your IT hardware at home.  
-The right IP to use are shown in the "Setup Guide" page of your AdGuard Home instance.
+The right IP addresses to use are shown in the "Setup Guide" page of your AdGuard Home instance.
 
 If you would expose the port 53 on Internet, you'll be able to use the public IP of your server (the same as in your domain name DNS settings) on any device outside your home network.
 
-**Warning:** you should not have public IPs of the config file if the port 53 is **not exposed** on Internet (else: AGH crashes)  
-**Please note:** They should be automatically removed when upgrading this package or when modifiying this port 53 exposure setting, but it's in the docs just in case.
-You can remove them in your config file `/var/www/adguardhome/AdGuardHome.yaml` in the `dns: bind_hosts:` section.
+**Warning:** you should not have public IPs in the config file if the port 53 is **not exposed** on Internet (else: AGH crashes)  
+**Please note:** They should be automatically removed when upgrading this package or when modifiying this port 53 exposure setting, but it's in the docs just in case.  
+You can remove them in your config file `/var/www/adguardhome/AdGuardHome.yaml` in the `dns: bind_hosts:` section.  
 Any IP that doesn't start with the folowing are public ones:
 
 - `10.`

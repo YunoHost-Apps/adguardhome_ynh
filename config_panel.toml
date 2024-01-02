@@ -5,12 +5,12 @@ name = "AdGuard Home configuration"
 help = "If any trouble or question, please refer to the admin documentation right below!"
 services = ["__APP__"]
 
-[main.options.open_port_53]
+[main.options.expose_port_53]
 ask = "Expose port 53 to the Internet?"
 no = "false"
 type = "boolean"
 yes = "true"
-help = "If so, anyone who knows your server's IP can make a DNS request to it. It may be used to perform amplification attacks: https://en.wikipedia.org/wiki/Denial-of-service_attack#Amplification Read the admin doc to secure your server using allowlist."
+help = "If so, anyone who knows your server's IP can make a DNS request to it. It may be used to perform amplification attacks: https://en.wikipedia.org/wiki/Denial-of-service_attack#Amplification Please read the admin doc to understand that setting and to secure your server using allowlist."
 
 [main.options.dns_over_https]
 ask = "Enable DNS-over-HTTPS/QUIC?"
