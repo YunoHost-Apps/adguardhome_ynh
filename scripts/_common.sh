@@ -84,7 +84,7 @@ process_ips(){
             # if we try to bind port 53 on a fe80:: address, AGH crashes
             if ! [[ "$ip" =~ ^fe80:* ]]; then
                 # don't process if the IP is public and the port 53 closed
-                if is_public_ip "$ip" && [ "$open_port_53" == "false" ]; then
+                if is_public_ip "$ip" && [ "$expose_port_53" == "false" ]; then
                     # don't add this IP (do nothing)
                     :
                 else
