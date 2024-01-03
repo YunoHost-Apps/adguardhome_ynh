@@ -10,10 +10,9 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# STANDARD REMOVE
+# PROCESS CLOSING PORTS
 #=================================================
-# REMOVE SERVICE INTEGRATION IN YUNOHOST
-#=================================================
+ynh_script_progression --message="Process closing ports..." --weight=2
 
 # close ports
 ynh_print_info --message="Closing port 53..."
@@ -23,6 +22,12 @@ if [ "$dns_over_https" == "true" ]; then
     ynh_exec_warn_less yunohost firewall disallow Both "$port_dns_over_http" --no-reload
     ynh_exec_warn_less yunohost firewall disallow UDP "$port_dns_over_quic"
 fi
+
+#=================================================
+# STANDARD REMOVE
+#=================================================
+# REMOVE SERVICE INTEGRATION IN YUNOHOST
+#=================================================
 
 # Remove the service from the list of services known by YunoHost (added from `yunohost service add`)
 if ynh_exec_warn_less yunohost service status "$app" >/dev/null
