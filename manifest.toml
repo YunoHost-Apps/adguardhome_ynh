@@ -45,7 +45,7 @@ type = "user"
 [install.password]
 type = "password"
 
-[install.open_port_53]
+[install.expose_port_53]
 ask.en = "Expose port 53 to the Internet?"
 help.en = "If so, anyone who knows your server's IP can make a DNS request to it. It may be used to perform amplification attacks: https://en.wikipedia.org/wiki/Denial-of-service_attack#Amplification"
 default = false
