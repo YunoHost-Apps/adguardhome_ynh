@@ -37,20 +37,12 @@ elif [ -n "${expose_port_53:-}" ] || [ "${expose_port_53:-}" = false ]; then
 	ynh_app_setting_set --app="$app" --key=expose_port_53 --value="$expose_port_53"
 fi
 
-
 if [ -z "${dns_over_https:-}" ] && [ "${dns_over_https:-}" = true ]; then
 	dns_over_https="true"
 	ynh_app_setting_set --app="$app" --key=dns_over_https --value=$dns_over_https
-    # no need to open the ports, as they were opened at the 'Provisioning ports' step
-    ynh_print_info --message="DoH and DoQ ports are open."
 elif [ -n "${dns_over_https:-}" ] || [ "${dns_over_https:-}" = false ]; then
 	dns_over_https="false"
 	ynh_app_setting_set --app="$app" --key=dns_over_https --value=$dns_over_https
-    # if dns_over_https is false, we need to close ports,
-    # as they were opened at the 'Provisioning ports' step
-    ynh_print_info --message="Closing DoH and DoQ ports..."
-    ynh_exec_warn_less yunohost firewall disallow Both "$port_dns_over_http" --no-reload
-    ynh_exec_warn_less yunohost firewall disallow UDP "$port_dns_over_quic"
 fi
 
 # about all those 'ynh_write_var_in_file':
