@@ -5,6 +5,9 @@ name = "AdGuard Home configuration"
 help = "If any trouble or question, please refer to the admin documentation right below!"
 services = ["__APP__"]
 
+[main.options]
+name = "Configure AdGuard Home options"
+
 [main.options.expose_port_53]
 ask = "Expose port 53 to the Internet?"
 no = "false"
@@ -19,6 +22,9 @@ type = "boolean"
 yes = "true"
 bind = "tls>enabled:__INSTALL_DIR__/AdGuardHome.yaml"
 help = "If so, anyone who knows your adguard address can make a doh request to https://adguardomain.tld/dns-query  It also may be used to perform amplification attacks. Read the admin doc to secure your server using allowlist."
+
+[main.extra]
+name = "Extra tools"
 
 [main.extra.new_password]
 ask = "Set a new admin password"
