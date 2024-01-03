@@ -45,6 +45,11 @@ elif [ -n "${dns_over_https:-}" ] || [ "${dns_over_https:-}" = false ]; then
 	ynh_app_setting_set --app="$app" --key=dns_over_https --value=$dns_over_https
 fi
 
+# if the DNS port is not 53, make sure it is
+if ! [ "$(ynh_read_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="port" --after="dns")" == "53" ]; then
+	ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="port" --after="dns" --value="53"
+fi
+
 # about all those 'ynh_write_var_in_file':
 # AGH modifies by itself the config file when an user modifies it using the front-end
 # so if we're using 'ynh_add_config' to process the config file, each
