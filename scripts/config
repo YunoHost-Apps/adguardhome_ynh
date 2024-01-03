@@ -95,10 +95,12 @@ set__dns_over_https() {
 set__new_password() {
 
     # user's password encryption
+    ynh_print_info --message="Encrypting the new password..."
     password=$(python3 -c "import bcrypt; print(bcrypt.hashpw(b\"$new_password\", bcrypt.gensalt(rounds=10)).decode())")
     ynh_app_setting_set --app="$app" --key=password --value="$password"
 
     # save the new setting in the AGH config file
+    ynh_print_info --message="Saving the new password in the AGH configuration..."
     ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="password" --value="$password"
 }
 
