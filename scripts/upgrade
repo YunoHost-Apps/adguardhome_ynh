@@ -82,6 +82,7 @@ fi
 
 # if the DNS port in the AGH config is not 53, make sure it is...
 if ! [ "$(ynh_read_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="port" --after="dns")" == "53" ]; then
+	ynh_print_info --message="Fixing port 53 in the AGH config file..."
 	ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="port" --after="dns" --value="53"
 fi
 
