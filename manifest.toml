@@ -78,6 +78,9 @@ dns_over_http.exposed = "Both"
 dns_over_quic.default = 784
 dns_over_quic.exposed = "UDP"
 internal_https.default = 13120
+# AGH also uses port 53 but we can't put it here as dnsmasq uses it by default
+# and the ynh core would assign us another port, however, on installation we
+# edit dnsmasq's configuration to allow AGH to use port 53 on non-localhost IPs
 
 [resources.system_user]
 
