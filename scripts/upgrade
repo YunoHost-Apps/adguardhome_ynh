@@ -86,6 +86,10 @@ fi
 # remove setting no longer required
 ynh_app_setting_delete --app="$app" --key=port_adguard
 
+if [ -z "${new_password:-}" ]; then
+	ynh_app_setting_set --app="$app" --key=new_password --value=""
+fi
+
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================

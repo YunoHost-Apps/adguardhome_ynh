@@ -19,3 +19,8 @@ type = "boolean"
 yes = "true"
 bind = "tls>enabled:__INSTALL_DIR__/AdGuardHome.yaml"
 help = "If so, anyone who knows your adguard address can make a doh request to https://adguardomain.tld/dns-query  It also may be used to perform amplification attacks. Read the admin doc to secure your server using allowlist."
+
+[main.extra.new_password]
+ask = "Set a new admin password"
+type = "string"
+help = "With this tool, you can easily change the password of your AdGuard Home. Just put the desired password in the text input."
