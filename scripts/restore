@@ -12,21 +12,30 @@ source /usr/share/yunohost/helpers
 
 #=================================================
 # PROCESS OPENING/CLOSING PORTS
-# no need to open the DoH/DoQ ports, as they were opened at the 'Provisioning ports' step
 #=================================================
-
-if [ "$dns_over_https" == "false" ]; then
-    # if dns_over_https is false, we need to close ports,
-    # as they were opened at the 'Provisioning ports' step
-    ynh_exec_warn_less yunohost firewall disallow Both "$port_dns_over_http" --no-reload
-    ynh_exec_warn_less yunohost firewall disallow UDP "$port_dns_over_quic"
-fi
-
 
 # if the port 53 is not open, open it, it's mandatory to use AGH
 if ! yunohost firewall list | grep -q " 53$"; then
     ynh_print_info --message="Opening port 53..."
     ynh_exec_warn_less yunohost firewall allow Both 53
+fi
+
+if [ "${dns_over_https:-}" = true ]; then
+	# if DoH and DoQ are closed
+	if ! yunohost firewall list | grep -q " $port_dns_over_http$" && ! yunohost firewall list | grep -q " $port_dns_over_quic$"; then
+		ynh_print_info --message="Opening DoH and DoQ ports..."
+		ynh_exec_warn_less yunohost firewall allow Both "$port_dns_over_http" --no-reload
+		ynh_exec_warn_less yunohost firewall allow UDP "$port_dns_over_quic"
+	else
+		# no need to open the ports, as they were opened at the 'Provisioning ports' step
+		ynh_print_info --message="DoH and DoQ ports are open."
+	fi
+else
+    # if dns_over_https is false, we need to close ports,
+    # as they were opened at the 'Provisioning ports' step
+    ynh_print_info --message="Closing DoH and DoQ ports..."
+    ynh_exec_warn_less yunohost firewall disallow Both "$port_dns_over_http" --no-reload
+    ynh_exec_warn_less yunohost firewall disallow UDP "$port_dns_over_quic"
 fi
 
 #=================================================
