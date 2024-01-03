@@ -13,6 +13,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 # PROCESS OPENING/CLOSING PORTS
 #=================================================
+ynh_script_progression --message="Process opening & closing ports..." --weight=2
 
 # if the port 53 is not open, open it, it's mandatory to use AGH
 if ! yunohost firewall list | grep -q " 53$"; then
