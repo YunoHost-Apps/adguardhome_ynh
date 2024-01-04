@@ -12,7 +12,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 # PROCESS CLOSING PORTS
 #=================================================
-ynh_script_progression --message="Process closing ports..." --weight=2
+ynh_script_progression --message="Closing ports..." --weight=2
 
 # close ports
 ynh_print_info --message="Closing port 53..."
