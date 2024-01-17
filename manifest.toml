@@ -1,3 +1,5 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/master/schemas/manifest.v2.schema.json
+
 packaging_format = 2
 
 description.en = "Network-wide ads & trackers blocking DNS server"
@@ -83,6 +85,7 @@ internal_https.default = 13120
 # edit dnsmasq's configuration to allow AGH to use port 53 on non-localhost IPs
 
 [resources.system_user]
+allow_email = true
 
 [resources.install_dir]
 
