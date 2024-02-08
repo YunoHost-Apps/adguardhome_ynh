@@ -15,7 +15,7 @@ dns:
   bind_hosts:
   __IPV4_ADDR__
   __IPV6_ADDR__
-  port: __PORT_ADGUARD__
+  port: 53
   statistics_interval: 1
   querylog_enabled: true
   querylog_file_enabled: true

@@ -119,7 +119,7 @@ ynh_script_progression --message="Configuring a systemd service..." --weight=1
 # Create a dedicated systemd config
 ynh_add_systemd_config
 
-yunohost service add $app --description="Ads & trackers blocking DNS server" --needs_exposed_ports $port_adguard
+yunohost service add $app --description="Ads & trackers blocking DNS server" --needs_exposed_ports 53
 
 #=================================================
 # START SYSTEMD SERVICE
