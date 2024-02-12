@@ -5,9 +5,9 @@ description.fr = "Serveur DNS, bloqueur de publicités et trackers"
 id = "adguardhome"
 name = "AdGuard Home"
 
-version = "0.107.44~ynh2"
+version = "0.107.44~ynh3"
 
-maintainers = [ "ddataa" ]
+maintainers = [ "ddataa", "OniriCorpe" ]
 
 [upstream]
 admindoc = "https://github.com/AdguardTeam/AdGuardHome/wiki"
