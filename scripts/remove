@@ -28,6 +28,13 @@ ynh_remove_systemd_config
 # Remove the dedicated NGINX config
 ynh_remove_nginx_config
 
+# Remove other various files specific to the app...
+
+# Remove the dedicated dnsmasq config for AdGuardHome
+ynh_secure_remove --file="/etc/dnsmasq.d/$app"
+
+systemctl restart dnsmasq
+
 #=================================================
 # END OF SCRIPT
 #=================================================
