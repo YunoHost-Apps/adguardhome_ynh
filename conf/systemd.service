@@ -1,7 +1,7 @@
 [Unit]
 Description=AdGuardHome: Network-level blocker
 ConditionFileIsExecutable=__INSTALL_DIR__/AdGuardHome
-After=syslog.target network-online.target
+After=syslog.target network-online.target nginx.service
 
 [Service]
 Type=simple
