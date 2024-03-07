@@ -2,7 +2,7 @@ http:
   pprof:
     port: 6060
     enabled: false
-  address: 0.0.0.0:__PORT__
+  address: 127.0.0.1:__PORT__
   session_ttl: 720h
 users:
   - name: __ADMIN__
