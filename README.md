@@ -20,21 +20,20 @@ AdGuard Home is a network-wide software for blocking ads & tracking. After you s
 
 It operates as a DNS server that re-routes tracking domains to a "black hole", thus preventing your devices from connecting to those servers. It's based on software we use for our public AdGuard DNS servers -- both share a lot of common code.
 
-
-**Shipped version:** 0.107.45~ynh1
+**Shipped version:** 0.107.45~ynh2
 
 ## Screenshots
 
-![Screenshot of AdGuard Home](./doc/screenshots/68747470733a2f2f63646e2e616467756172642e636f6d2f7075626c69632f416467756172642f436f6d6d6f6e2f616467756172645f686f6d652e676966.gif)
+![Screenshot of AdGuard Home](./doc/screenshots/demo.gif)
 
 ## Documentation and resources
 
-* Official app website: <https://adguard.com/adguard-home.html>
-* Official user documentation: <https://kb.adguard.com/en>
-* Official admin documentation: <https://github.com/AdguardTeam/AdGuardHome/wiki>
-* Upstream app code repository: <https://github.com/AdguardTeam/AdGuardHome>
-* YunoHost Store: <https://apps.yunohost.org/app/adguardhome>
-* Report a bug: <https://github.com/YunoHost-Apps/adguardhome_ynh/issues>
+- Official app website: <https://adguard.com/adguard-home.html>
+- Official user documentation: <https://kb.adguard.com/en>
+- Official admin documentation: <https://github.com/AdguardTeam/AdGuardHome/wiki>
+- Upstream app code repository: <https://github.com/AdguardTeam/AdGuardHome>
+- YunoHost Store: <https://apps.yunohost.org/app/adguardhome>
+- Report a bug: <https://github.com/YunoHost-Apps/adguardhome_ynh/issues>
 
 ## Developer info
 
@@ -42,7 +41,7 @@ Please send your pull request to the [testing branch](https://github.com/YunoHos
 
 To try the testing branch, please proceed like that.
 
-``` bash
+```bash
 sudo yunohost app install https://github.com/YunoHost-Apps/adguardhome_ynh/tree/testing --debug
 or
 sudo yunohost app upgrade adguardhome -u https://github.com/YunoHost-Apps/adguardhome_ynh/tree/testing --debug
