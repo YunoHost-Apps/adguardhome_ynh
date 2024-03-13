@@ -20,21 +20,20 @@ AdGuard Home est un logiciel à l'échelle du réseau pour bloquer les publicit�
 
 Il fonctionne comme un serveur DNS qui redirige les domaines de pistage vers un "trou noir", empêchant ainsi vos appareils de se connecter à ces serveurs. Il est basé sur un logiciel que nous utilisons pour nos serveurs DNS publics AdGuard - les deux partagent beaucoup de code commun. 
 
-
-**Version incluse :** 0.107.45~ynh1
+**Version incluse :** 0.107.45~ynh2
 
 ## Captures d’écran
 
-![Capture d’écran de AdGuard Home](./doc/screenshots/68747470733a2f2f63646e2e616467756172642e636f6d2f7075626c69632f416467756172642f436f6d6d6f6e2f616467756172645f686f6d652e676966.gif)
+![Capture d’écran de AdGuard Home](./doc/screenshots/demo.gif)
 
 ## Documentations et ressources
 
-* Site officiel de l’app : <https://adguard.com/adguard-home.html>
-* Documentation officielle utilisateur : <https://kb.adguard.com/en>
-* Documentation officielle de l’admin : <https://github.com/AdguardTeam/AdGuardHome/wiki>
-* Dépôt de code officiel de l’app : <https://github.com/AdguardTeam/AdGuardHome>
-* YunoHost Store: <https://apps.yunohost.org/app/adguardhome>
-* Signaler un bug : <https://github.com/YunoHost-Apps/adguardhome_ynh/issues>
+- Site officiel de l’app : <https://adguard.com/adguard-home.html>
+- Documentation officielle utilisateur : <https://kb.adguard.com/en>
+- Documentation officielle de l’admin : <https://github.com/AdguardTeam/AdGuardHome/wiki>
+- Dépôt de code officiel de l’app : <https://github.com/AdguardTeam/AdGuardHome>
+- YunoHost Store : <https://apps.yunohost.org/app/adguardhome>
+- Signaler un bug : <https://github.com/YunoHost-Apps/adguardhome_ynh/issues>
 
 ## Informations pour les développeurs
 
@@ -42,7 +41,7 @@ Merci de faire vos pull request sur la [branche testing](https://github.com/Yuno
 
 Pour essayer la branche testing, procédez comme suit.
 
-``` bash
+```bash
 sudo yunohost app install https://github.com/YunoHost-Apps/adguardhome_ynh/tree/testing --debug
 ou
 sudo yunohost app upgrade adguardhome -u https://github.com/YunoHost-Apps/adguardhome_ynh/tree/testing --debug
