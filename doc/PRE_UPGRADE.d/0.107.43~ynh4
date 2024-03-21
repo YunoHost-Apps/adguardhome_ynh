@@ -1,0 +1,17 @@
+From this 0.107.43~ynh4 version, some things have changed:  
+- port 53 is no longer exposed on the Internet by default, it's now a deliberate choice  
+- it is now possible to use DoH and DoQ with Let's Encrypt certificates out of the box, but this is also disabled by default for the same reason.
+
+To activate either of these features, please use the config panel:  
+Applications → AdGuard Home → AdGuard Home configuration  
+- Expose port 53 to the Internet?  
+- Enable DNS-over-HTTPS/QUIC?
+
+It's really important to use the configuration panel to activate or deactivate the DNS-over-HTTPS/QUIC setting, and **NOT** the built-in setting in the AdGuardHome interface.  
+This is because YunoHost needs to perform actions such as automatically opening or closing the server's ports and refresh the IP to provide to AdGuard Home, which cannot be done without going through the configuration panel.
+
+Also, a new password tool has been added in the config panel too, to make it easier to change the administration password of AdGuard Home! ^w^
+
+This update is at risk of crashing AdGuard Home, so:  
+- If any trouble or question, please refer to [the package's admin docs](https://github.com/YunoHost-Apps/adguardhome_ynh/blob/master/doc/ADMIN.md)! In any case, we recommend reading it! ^w^  
+- If needed and a similar issue does not already exist, please [open an issue on the GitHub's package page](https://github.com/YunoHost-Apps/adguardhome_ynh/issues)!

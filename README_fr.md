@@ -29,12 +29,12 @@ Il fonctionne comme un serveur DNS qui redirige les domaines de pistage vers un 
 
 ## Documentations et ressources
 
-* Site officiel de l’app : <https://adguard.com/adguard-home.html>
-* Documentation officielle utilisateur : <https://kb.adguard.com/en>
-* Documentation officielle de l’admin : <https://github.com/AdguardTeam/AdGuardHome/wiki>
-* Dépôt de code officiel de l’app : <https://github.com/AdguardTeam/AdGuardHome>
-* YunoHost Store: <https://apps.yunohost.org/app/adguardhome>
-* Signaler un bug : <https://github.com/YunoHost-Apps/adguardhome_ynh/issues>
+- Site officiel de l’app : <https://adguard.com/adguard-home.html>
+- Documentation officielle utilisateur : <https://kb.adguard.com/en>
+- Documentation officielle de l’admin : <https://github.com/AdguardTeam/AdGuardHome/wiki>
+- Dépôt de code officiel de l’app : <https://github.com/AdguardTeam/AdGuardHome>
+- YunoHost Store : <https://apps.yunohost.org/app/adguardhome>
+- Signaler un bug : <https://github.com/YunoHost-Apps/adguardhome_ynh/issues>
 
 ## Informations pour les développeurs
 
