@@ -13,8 +13,7 @@ debug_pprof: false
 web_session_ttl: 720
 dns:
   bind_hosts:
-  __IPV4_ADDR__
-  __IPV6_ADDR__
+  10.0.0.105
   port: 53
   statistics_interval: 1
   querylog_enabled: true
