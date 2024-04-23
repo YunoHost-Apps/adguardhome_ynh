@@ -2,7 +2,7 @@ bind_host: 127.0.0.1
 bind_port: __PORT__
 beta_bind_port: 0
 users:
-- name: __ADMIN__
+- name: erkan
   password: __PASSWORD__
 auth_attempts: 5
 block_auth_min: 15
