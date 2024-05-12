@@ -16,12 +16,12 @@ yes = "true"
 help = "If so, anyone who knows your server's IP can make a DNS request to it. It may be used to perform amplification attacks: https://en.wikipedia.org/wiki/Denial-of-service_attack#Amplification Please read the admin doc to understand that setting and to secure your server using allowlist."
 
 [main.options.dns_over_https]
-ask = "Enable DNS-over-HTTPS/QUIC?"
+ask = "Enable DNS-over-HTTPS/TLS/QUIC?"
 no = "false"
 type = "boolean"
 yes = "true"
 bind = "tls>enabled:__INSTALL_DIR__/AdGuardHome.yaml"
-help = "If so, anyone who knows your adguard address can make a doh request to https://adguardomain.tld/dns-query  It also may be used to perform amplification attacks. Read the admin doc to secure your server using allowlist."
+help = "If so, anyone who knows your adguard address can make a DoH request to https://adguardomain.tld/dns-query or using DoT or DoQ.  It also may be used to perform amplification attacks. Read the admin doc to secure your server using allowlist."
 
 [main.extra]
 name = "Extra tools"
