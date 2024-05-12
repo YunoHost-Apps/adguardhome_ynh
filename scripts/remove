@@ -41,7 +41,9 @@ ynh_remove_systemd_config
 # Remove the dedicated NGINX config
 ynh_remove_nginx_config
 
-# Remove other various files specific to the app...
+#=================================================
+# REMOVE VARIOUS FILES specific to the app...
+#=================================================
 
 # remove the kernel config file for DoQ
 ynh_secure_remove --file="/etc/sysctl.d/10-adguardhome.conf"
