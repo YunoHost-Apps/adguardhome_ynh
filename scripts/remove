@@ -43,6 +43,9 @@ ynh_remove_nginx_config
 
 # Remove other various files specific to the app...
 
+# remove the kernel config file for DoQ
+ynh_secure_remove --file="/etc/sysctl.d/10-adguardhome.conf"
+
 # Remove the dedicated dnsmasq config for AdGuardHome
 ynh_secure_remove --file="/etc/dnsmasq.d/$app"
 

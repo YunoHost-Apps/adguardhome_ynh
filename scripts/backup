@@ -38,6 +38,8 @@ ynh_backup --src_path="/etc/systemd/system/$app.service"
 # BACKUP VARIOUS FILES
 #=================================================
 
+# backup the kernel config file for DoQ
+ynh_backup --src_path="/etc/sysctl.d/10-adguardhome.conf"
 
 #=================================================
 # END OF SCRIPT

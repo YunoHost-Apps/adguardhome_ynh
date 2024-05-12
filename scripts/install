@@ -90,6 +90,9 @@ ynh_add_nginx_config
 # use of the Let's Encrypt certs for DOT/DOQ
 usermod -a -G ssl-cert "$app"
 
+# adding a kernel config file for DoQ
+ynh_add_config --template="10-adguardhome.conf" --destination="/etc/sysctl.d/10-adguardhome.conf"
+
 #=================================================
 # ADD A CONFIGURATION
 #=================================================

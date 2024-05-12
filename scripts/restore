@@ -104,6 +104,13 @@ else
 fi
 
 #=================================================
+# RESTORE VARIOUS FILES
+#=================================================
+
+# restore the kernel config file for DoQ
+ynh_restore_file --origin_path="/etc/sysctl.d/10-adguardhome.conf"
+
+#=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression --message="Starting a systemd service..." --weight=1

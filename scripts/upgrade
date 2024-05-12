@@ -120,7 +120,7 @@ then
 	ynh_script_progression --message="Upgrading source files..." --weight=1
 
 	# Download, check integrity, uncompress and patch the source from app.src
-	ynh_setup_source --dest_dir=$install_dir --full_replace=1 --keep="data AdGuardHome.yaml"
+	ynh_setup_source --dest_dir="$install_dir" --full_replace=1 --keep="data AdGuardHome.yaml"
 fi
 
 chmod -R o-rwx "$install_dir"
@@ -157,6 +157,9 @@ fi
 # adding the adguardhome dedicated user to the 'ssl-cert' group to permit the
 # use of the Let's Encrypt certs for DOT/DOQ
 usermod -a -G ssl-cert "$app"
+
+# adding a kernel config file for DoQ
+ynh_add_config --template="10-adguardhome.conf" --destination="/etc/sysctl.d/10-adguardhome.conf"
 
 #=================================================
 # UPDATE A CONFIG FILE
