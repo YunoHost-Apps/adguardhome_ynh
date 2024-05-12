@@ -20,12 +20,15 @@ AdGuard Home is a network-wide software for blocking ads & tracking. After you s
 
 It operates as a DNS server that re-routes tracking domains to a "black hole", thus preventing your devices from connecting to those servers. It's based on software we use for our public AdGuard DNS servers -- both share a lot of common code.
 
+**Important note**: This AdGuard Home package needs to disable Dnsmasq on the main network interface to allow AdGuard Home to listen DNS resquest using it.  
+However, Dnsmasq is not disabled and will continue to function as the *localhost DNS server*.
 
-**Paketatutako bertsioa:** 0.107.45~ynh1
+
+**Paketatutako bertsioa:** 0.107.48~ynh1
 
 ## Pantaila-argazkiak
 
-![AdGuard Home(r)en pantaila-argazkia](./doc/screenshots/68747470733a2f2f63646e2e616467756172642e636f6d2f7075626c69632f416467756172642f436f6d6d6f6e2f616467756172645f686f6d652e676966.gif)
+![AdGuard Home(r)en pantaila-argazkia](./doc/screenshots/demo.gif)
 
 ## Dokumentazioa eta baliabideak
 
