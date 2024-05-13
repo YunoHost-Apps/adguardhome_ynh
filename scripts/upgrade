@@ -29,19 +29,21 @@ ynh_systemd_action --service_name="$app" --action="stop"
 #=================================================
 ynh_script_progression --message="Ensuring downward compatibility..." --weight=1
 
-if [ -z "${expose_port_53:-}" ] || [ "${expose_port_53:-}" = true ]; then
-    expose_port_53="true"
-	ynh_app_setting_set --app="$app" --key=expose_port_53 --value="$expose_port_53"
-elif [ -n "${expose_port_53:-}" ] || [ "${expose_port_53:-}" = false ]; then
+if [ -z "${expose_port_53:-}" ] || [ "${expose_port_53:-}" = false ]; then
+	# if 'expose_port_53' doesn't exist or is false 
     expose_port_53="false"
+	ynh_app_setting_set --app="$app" --key=expose_port_53 --value="$expose_port_53"
+elif [ "${expose_port_53:-}" = true ]; then
+    expose_port_53="true"
 	ynh_app_setting_set --app="$app" --key=expose_port_53 --value="$expose_port_53"
 fi
 
-if [ -z "${dns_over_https:-}" ] || [ "${dns_over_https:-}" = true ]; then
-	dns_over_https="true"
-	ynh_app_setting_set --app="$app" --key=dns_over_https --value=$dns_over_https
-elif [ -n "${dns_over_https:-}" ] || [ "${dns_over_https:-}" = false ]; then
+if [ -z "${dns_over_https:-}" ] || [ "${dns_over_https:-}" = false ]; then
+	# if 'dns_over_https' doesn't exist or is false 
 	dns_over_https="false"
+	ynh_app_setting_set --app="$app" --key=dns_over_https --value=$dns_over_https
+elif [ "${dns_over_https:-}" = true ]; then
+	dns_over_https="true"
 	ynh_app_setting_set --app="$app" --key=dns_over_https --value=$dns_over_https
 fi
 
