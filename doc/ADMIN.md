@@ -61,11 +61,11 @@ If you host your machine at home, for using DoH or DoQ, you have to open the fol
 - `853` in TCP & UDP (for DNS over HTTP)
 - `784` in UDP (for DNS over QUIC)
 
-Then you can use the following adresses (where `adguard.example.com` is the domain-name associated to your AdGuard Home) as a DoH, DoT or DoQ DNS server for your devices:
+Then you can use the following adresses as a DoH, DoT or DoQ DNS server for your devices:
 
-- DNS over HTTP: `https://adguard.example.com/dns-query`
-- DNS over TLS: `tls://adguard.example.com:853`
-- DNS over QUIC: `quic://adguard.emelyne.eu:784`
+- DNS over HTTP: `https://__DOMAIN__/dns-query`
+- DNS over TLS: `tls://__DOMAIN__:__PORT_DNS_OVER_TLS__`
+- DNS over QUIC: `quic://__DOMAIN__:__PORT_DNS_OVER_QUIC__`
 
 ## Allowlist
 
