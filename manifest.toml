@@ -54,8 +54,8 @@ default = false
 type = "boolean"
 
 [install.dns_over_https]
-ask.en = "Should DNS-over-HTTPS/QUIC be enabled?"
-help.en = "If so, anyone who knows your adguard address can make a doh request to https://adguardomain.tld/dns-query"
+ask.en = "Should DNS-over-HTTPS/TLS/QUIC be enabled?"
+help.en = "If so, anyone who knows your adguard address can make a doh request to https://adguardomain.tld/dns-query or using DoT/DoQ"
 default = false
 type = "boolean"
 
@@ -75,8 +75,8 @@ type = "boolean"
     autoupdate.strategy = "latest_github_release"
 
 [resources.ports]
-dns_over_http.default = 853
-dns_over_http.exposed = "Both"
+dns_over_tls.default = 853
+dns_over_tls.exposed = "Both"
 dns_over_quic.default = 784
 dns_over_quic.exposed = "UDP"
 internal_https.default = 13120

@@ -19,7 +19,7 @@ ynh_print_info --message="Closing port 53..."
 ynh_exec_warn_less yunohost firewall disallow Both 53
 if [ "$dns_over_https" == "true" ]; then
     ynh_print_info --message="Closing DoH and DoQ ports..."
-    ynh_exec_warn_less yunohost firewall disallow Both "$port_dns_over_http" --no-reload
+    ynh_exec_warn_less yunohost firewall disallow Both "$port_dns_over_tls" --no-reload
     ynh_exec_warn_less yunohost firewall disallow UDP "$port_dns_over_quic"
 fi
 
