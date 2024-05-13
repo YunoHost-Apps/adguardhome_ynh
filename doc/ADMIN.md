@@ -58,8 +58,8 @@ This is because YunoHost needs to perform actions such as automatically opening 
 
 If you host your machine at home, for using DoH or DoQ, you have to open the following ports on your router by yourself:
 
-- `853` in TCP & UDP (for DNS over HTTP)
-- `784` in UDP (for DNS over QUIC)
+- `__PORT_DNS_OVER_TLS__` in TCP & UDP (for DNS over TLS)
+- `__PORT_DNS_OVER_QUIC__` in UDP (for DNS over QUIC)
 
 Then you can use the following adresses as a DoH, DoT or DoQ DNS server for your devices:
 
