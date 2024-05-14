@@ -77,8 +77,10 @@ type = "boolean"
 [resources.ports]
 dns_over_tls.default = 853
 dns_over_tls.exposed = "Both"
+dns_over_tls.fixed = true
 dns_over_quic.default = 784
 dns_over_quic.exposed = "UDP"
+dns_over_tls.fixed = true
 internal_https.default = 13120
 # AGH also uses port 53 but we can't put it here as dnsmasq uses it by default
 # and the ynh core would assign us another port, however, on installation we
