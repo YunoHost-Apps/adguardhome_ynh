@@ -62,14 +62,10 @@ if grep -q "certificate_path: \"\"" "$install_dir/AdGuardHome.yaml" || grep -q "
 	ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="private_key_path" --value="/etc/yunohost/certs/$domain/key.pem"
 fi
 
-# check if one of 'port_https:', 'port_dns_over_tls:' or 'port_dns_over_quic:' uses the default setting
-if grep -q "port_https: 443" "$install_dir/AdGuardHome.yaml" || grep -q "port_dns_over_tls: 853" "$install_dir/AdGuardHome.yaml" || grep -q "port_dns_over_quic: 784" "$install_dir/AdGuardHome.yaml"; then
-	# if so: mandatory replacement for them
-	# (because the final user can't easily know the ports used by the package)
-	ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="port_https" --value="$port_internal_https"
-	ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="port_dns_over_tls" --value="$port_dns_over_tls"
-	ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="port_dns_over_quic" --value="$port_dns_over_quic"
-fi
+# make sure that the ports configured for the app are those known by the package
+ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="address" --after="http:" --value="127.0.0.1:$port"
+ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="port_dns_over_tls" --value="$port_dns_over_tls"
+ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="port_dns_over_quic" --value="$port_dns_over_quic"
 
 # remove setting no longer required
 ynh_app_setting_delete --app="$app" --key=port_adguard
