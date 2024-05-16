@@ -9,7 +9,7 @@ services = ["__APP__"]
 name = "Configure AdGuard Home options"
 
 [main.options.expose_port_53]
-ask = "Expose port 53 to the Internet?"
+ask = "Bind to public IP addresses?"
 no = "false"
 type = "boolean"
 yes = "true"

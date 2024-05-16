@@ -2,7 +2,7 @@
 
 You want to be sure to understand the config settings? You're at the right place! ^w^
 
-## Expose port 53 to the Internet?
+## Bind to public IP addresses?
 
 This setting is **disabled** by default.
 
