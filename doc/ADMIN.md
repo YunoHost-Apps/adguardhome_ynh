@@ -75,6 +75,7 @@ We've had YunoHost users surprised to see their instance receiving tens of thous
 
 In this allowlist, you can put [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid)s in place of IP addresses for the devices that uses DNS over HTTP.  
 But since since YunoHost can't handle wildcard domain names, you can't use this ClientID functionnality with DNS over TLS and DNS over QUIC, sorry about that.
+**Note:** to use DNS over HTTP with a ClientID, you have to use the following URL: `https://__DOMAIN__/dns-query/your-client-id`
 
 The allowlist setting is located in your AdGuard Home interface:  
 `Settings → DNS settings → Access settings → Allowed clients`
