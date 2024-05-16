@@ -24,32 +24,31 @@ You can easilly configure this app:
 
 [Your configuration should look like this.](https://raw.githubusercontent.com/YunoHost-Apps/adguardhome_ynh/master/doc/screenshots/apps/AGH-remote.PNG)
 
-### Secure DNS profile creator
+### Secure DNS profile
 
-To use your AGH instance as the DNS server on your Apple device, you can use [Secure DNS profile creator](https://dns.notjakob.com/index.html).
+To use your AGH instance as the DNS server on your Apple device, you can generate an Apple 'Secure DNS profile'.  
+Note: as a more tech-savy alternative to this tutorial, you can use [Secure DNS profile creator](https://dns.notjakob.com/index.html).
 
 To do so, you first need to activate the DNS over HTTP/TLS/QUIC functionnality using the YunoHost Webadmin.  
 If you're reading this you should already be in the right page: just click the "AdGuard Home configuration" option at the top of this text, toggle on "Activate DNS over HTTP/TLS/QUIC?" then "Save".  
-Else, open The YunoHost Webadmin and follow this path: `Applications -> AdGuard Home -> AdGuard Home configuration`
+Else, open The YunoHost Webadmin and follow this path: `Applications → AdGuard Home → AdGuard Home configuration`
 
-Now, click the "Secure DNS profile creator" link above and fill the input fields.
+Now that it's done, go to AdGuard Home [Setup Guide](https://__DOMAIN____PATH__#guide) page of your instance, click the "DNS Privacy" option and scroll to the bottom.
 
-- Name of DNS provider: put an arbitrary name here, for example "AGH"
-- Select either DNS-over-HTTPS (DoH) or DNS-over-TLS (DoT)
-  - If you don't know which one to choose, you can read the "DNS-over-HTTPS or DNS-over-TLS?" section of [the tool's homepage(https://dns.notjakob.com/index.html)
-  - If you want to use the [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid) option, you can't choose DoT since YunoHost can't handle wildcard domain names, so mandatory DoH for you
-- For the primary DNS settings, you have to put trustworthy servers IPs, for example [the FDN ones](https://www.fdn.fr/actions/dns/)
-- And finally the setting for your AdGuard Home server URL:
-  - If you selected DoH: put your domain name between `https://` and `/dns-query`: `https://__DOMAIN__/dns-query`
-  - If you selected DoT: put your bare domain name: `__DOMAIN__`
+- Hostname: keep it that way
+- HTTPS port: same, keep it that way
+- Protocol: now you have to made a choice: select either DNS-over-HTTPS or DNS-over-TLS
+  - If you want to use the [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid) option, you can't choose DNS-over-TLS since YunoHost can't handle wildcard domain names, so mandatory DNS-over-HTTPS for you
+  - If you don't know which one to choose, here's some help:
+    - as stated above, pick DNS-over-HTTPS if you want to use the ClientID feature to authenticate your requests
+    - pick DNS-over-HTTPS if you are likely to use networks that filter the DNS-over-TLS port, such as companies, schools, etc.
+    - else, pick DNS-over-TLS because it's a bit faster, as it uses one less [OSI network layer](https://en.wikipedia.org/wiki/OSI_model)
+- ClientID: enter a ClientID, `iphone-123456` as an example
+  - Don't forget to add the exact same ClientID to your Allowlist in the `Settings → DNS settings → Access settings → Allowed clients`
 
-You can toggle the "Advanced" button to exclude the created profile to be used when you're on your domestic WiFi network or some other settings.
+You can now click on the "Download configuration file" button and accept the download.
 
-[Your configuration should look like this.](https://raw.githubusercontent.com/YunoHost-Apps/adguardhome_ynh/master/doc/screenshots/apps/DNS-profile-creator.jpeg)
-
-Now, click the "Add to profile" button to generate the profile file, validate the "Configuration successfully added to profile." message showed on screen, then click the "Download Profile" button and accept the download.
-
-Finaly, open the system settings, click on the "Downloaded profile" message and install it by entering your device password and tapping the "Install" button a couple times.
+Finaly, open the system settings, click on the "Downloaded profile" message and install it by entering your device password and tapping the "Install" button a couple times. Ignore the text indicating that the profile is unsigned.
 
 Your device should now use your AdGuard Home instance as its DNS server. Congrats!
 
