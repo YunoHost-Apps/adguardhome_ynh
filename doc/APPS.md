@@ -33,7 +33,7 @@ To do so, you first need to activate the DNS over HTTP/TLS/QUIC functionnality u
 If you're reading this you should already be in the right page: just click the "AdGuard Home configuration" option at the top of this text, toggle on "Activate DNS over HTTP/TLS/QUIC?" then "Save".  
 Else, open The YunoHost Webadmin and follow this path: `Applications → AdGuard Home → AdGuard Home configuration`
 
-Now that it's done, go to AdGuard Home [Setup Guide](https://__DOMAIN____PATH__#guide) page of your instance, click the "DNS Privacy" option and scroll to the bottom.
+Now that it's done, go to the [Setup Guide](https://__DOMAIN____PATH__#guide) page of your AdGuard Home instance, click the "DNS Privacy" option and scroll to the bottom.
 
 - Hostname: keep it that way
 - HTTPS port: same, keep it that way
