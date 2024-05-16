@@ -38,7 +38,7 @@ Now, click the "Secure DNS profile creator" link above and fill the input fields
 - Salect either DNS-over-HTTPS (DoH) or DNS-over-TLS (DoT)
 - For the primary DNS settings, you have to put trustworthy servers IPs, for example [the FDN ones](https://www.fdn.fr/actions/dns/)
 - And finally the setting for your AdGuard Home server URL:
-  - If you selected DoH: put your domain name followed by `/dns-query`: `https://__DOMAIN__/dns-query`
+  - If you selected DoH: put your domain name between `https://` and `/dns-query`: `https://__DOMAIN__/dns-query`
   - If you selected DoT: put your bare domain name: `__DOMAIN__`
 
 You can toggle the "Advanced" button to exclude the created profile to be used when you're on your domestic WiFi network or some other settings.
