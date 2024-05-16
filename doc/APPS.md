@@ -36,6 +36,7 @@ Now, click the "Secure DNS profile creator" link above and fill the input fields
 
 - Name of DNS provider: put an arbitrary name here, for example "AGH"
 - Select either DNS-over-HTTPS (DoH) or DNS-over-TLS (DoT)
+  - If you don't know which one to choose, you can read the "DNS-over-HTTPS or DNS-over-TLS?" section of [the tool's homepage(https://dns.notjakob.com/index.html)
 - For the primary DNS settings, you have to put trustworthy servers IPs, for example [the FDN ones](https://www.fdn.fr/actions/dns/)
 - And finally the setting for your AdGuard Home server URL:
   - If you selected DoH: put your domain name between `https://` and `/dns-query`: `https://__DOMAIN__/dns-query`
