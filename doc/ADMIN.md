@@ -63,7 +63,7 @@ If you host your machine at home, for using DoH or DoQ, you have to open the fol
 
 Then you can use the following adresses as a DoH, DoT or DoQ DNS server for your devices:
 
-- DNS over HTTP: `https://__DOMAIN__/dns-query`
+- DNS over HTTP: `https://__DOMAIN__/dns-query` (or `https://__DOMAIN__/dns-query/your-client-id` with a [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid))
 - DNS over TLS: `tls://__DOMAIN__:__PORT_DNS_OVER_TLS__`
 - DNS over QUIC: `quic://__DOMAIN__:__PORT_DNS_OVER_QUIC__`
 
