@@ -102,7 +102,7 @@ If your ISP has assigned you an IPv6 range (ex. `2a01:d34d:b33f:1312::/64`), you
 
 You can add any public IP you know you'll use.
 
-If you want to use your AGH instance on your smartphone, it gets more complex: you have to allow the IP ranges of your mobile operator.  
+If you want to use your AGH instance on your smartphone without using the [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid) feature (only availabe with DoH, check the 'Apps' documentation to find out how to use it on your phone), it gets more complex: you have to allow the IP ranges of your mobile operator.  
 It's not perfect but it still drastically reduces the chances of unauthorized use, while allowing you to use it with your smartphone.  
 **Note:** in case of connection on not authorized wifi networks with your smartphone, you will not be able to use your AdGuard Home instance.
 
