@@ -38,11 +38,11 @@ Now that it's done, go to AdGuard Home [Setup Guide](https://__DOMAIN____PATH__#
 - Hostname: keep it that way
 - HTTPS port: same, keep it that way
 - Protocol: now you have to made a choice: select either DNS-over-HTTPS or DNS-over-TLS
-  - If you want to use the [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid) option, you can't choose DNS-over-TLS since YunoHost can't handle wildcard domain names, so mandatory DNS-over-HTTPS for you
+  - If you want to use the [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid) option to whitelist your client, you can't choose DNS-over-TLS since YunoHost can't handle wildcard domain names, so mandatory DNS-over-HTTPS for you
   - If you don't know which one to choose, here's some help:
-    - as stated above, pick DNS-over-HTTPS if you want to use the ClientID feature to authenticate your requests
-    - pick DNS-over-HTTPS if you are likely to use networks that filter the DNS-over-TLS port, such as companies, schools, etc.
-    - else, pick DNS-over-TLS because it's a bit faster, as it uses one less [OSI network layer](https://en.wikipedia.org/wiki/OSI_model)
+    - As stated above, pick DNS-over-HTTPS if you want to use the ClientID feature to authenticate your requests
+    - Pick DNS-over-HTTPS if you are likely to use networks that filter the DNS-over-TLS port, such as companies, schools, etc.
+    - Else, pick DNS-over-TLS because it's a bit faster, as it uses one less [OSI network layer](https://en.wikipedia.org/wiki/OSI_model)
 - ClientID: enter a ClientID, `iphone-123456` as an example
   - Don't forget to add the exact same ClientID to your Allowlist in the `Settings → DNS settings → Access settings → Allowed clients`
 
