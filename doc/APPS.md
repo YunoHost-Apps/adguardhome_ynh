@@ -22,7 +22,7 @@ You can easilly configure this app:
 - Enter your AdGuard Home credentials in the "Authentication" fields
 - Test the connection, if a green check is showed up, you're alright
 
-![A screenshot showing the previous instructions completed in the app](https://raw.githubusercontent.com/YunoHost-Apps/adguardhome_ynh/master/doc/screenshots/apps/AGH-remote.PNG)
+[Your configuration should look like this.](https://raw.githubusercontent.com/YunoHost-Apps/adguardhome_ynh/master/doc/screenshots/apps/AGH-remote.PNG)
 
 ### Secure DNS profile creator
 
@@ -38,8 +38,8 @@ Now, click the "Secure DNS profile creator" link above and fill the input fields
 - Salect either DNS-over-HTTPS (DoH) or DNS-over-TLS (DoT)
 - For the primary DNS settings, you have to put trustworthy servers IPs, for example [the FDN ones](https://www.fdn.fr/actions/dns/)
 - And finally the setting for your AdGuard Home server URL:
-	- If you selected DoH: put your domain name followed by `/dns-query`: `https://__DOMAIN__/dns-query`
-	- If you selected DoT: put your bare domain name: `__DOMAIN__`
+  - If you selected DoH: put your domain name followed by `/dns-query`: `https://__DOMAIN__/dns-query`
+  - If you selected DoT: put your bare domain name: `__DOMAIN__`
 
 You can toggle the "Advanced" button to exclude the created profile to be used when you're on your domestic WiFi network or some other settings.
 
