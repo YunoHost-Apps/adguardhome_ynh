@@ -51,3 +51,5 @@ Now, click the "Add to profile" button to generate the profile file, validate th
 And finaly, open the system settings, click the "Downloaded profile" and install it bu entering your device password and tapping the final "Install" button.
 
 Your device should now use your AdGuard Home instance as its DNS server. Congrats!
+
+Installed DNS profiles can be managed in the Settings under "General" then "VPN and Device Management".
