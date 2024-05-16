@@ -2,7 +2,7 @@
 
 ## Android
 
-To be completed by someone who uses an Android app
+To be completed by someone who uses an Android app, feel free to contribute!
 
 ## Apple devices
 
@@ -11,7 +11,7 @@ To be completed by someone who uses an Android app
 [AdGuard Home Remote](https://apps.apple.com/app/id1543143740) by [RocketScience IT](https://rocketscience-it.nl/) is compatible with Mac, iPhone, iPad and Watch.  
 It is free with an in-app purchase of 6€ or US$5 to unlock some features. No ads, no tracking.
 
-This app is for monitoring or configuring your AGH instance, not to use your AGH as a DNS server on your Apple device.
+This app is for monitoring or configuring your AGH instance, not to use your AGH as a DNS server on your Apple device. See the section bellow for that!
 
 You can easilly configure this app:
 
@@ -27,7 +27,7 @@ You can easilly configure this app:
 ### Secure DNS profile
 
 To use your AGH instance as the DNS server on your Apple device, you can generate an Apple 'Secure DNS profile'.  
-Note: as a more tech-savvy alternative to this tutorial, you can use [Secure DNS profile creator](https://dns.notjakob.com/index.html).
+**Note:** as a more tech-savvy alternative to this tutorial, you can use [Secure DNS profile creator](https://dns.notjakob.com/index.html).
 
 To do so, you first need to activate the DNS over HTTP/TLS/QUIC functionnality using the YunoHost Webadmin.  
 If you're reading this you should already be in the right page: just click the "AdGuard Home configuration" option at the top of this text, toggle on "Activate DNS over HTTP/TLS/QUIC?" then "Save".  
@@ -52,4 +52,4 @@ Finaly, open the system settings, click on the "Downloaded profile" message and 
 
 Your device should now use your AdGuard Home instance as its DNS server. Congrats!
 
-Note: Installed DNS profiles can be managed in the Settings under "General" then "VPN and Device Management".
+**Note:** Installed DNS profiles can be managed in the Settings under "General" then "VPN and Device Management".

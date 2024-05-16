@@ -14,12 +14,12 @@ When disabled:
 When enabled:
 
 - YunoHost **will** check if the port 53 is accessible on Internet and warns you if not
-- You need to **manually open port 53** of your router if you self-host at home!
-- Public IP adresses **will** be added to the AdGuard Home configuration, so AGH will be able to bind to them
+- ⚠️ You need to **manually open port 53** of your router if you self-host at home!
+- Server's public IP adresses **will** be added to the AdGuard Home configuration, so AGH will be able to bind to them
 
 You need to know that if you expose your DNS server to Internet, anyone who knows your server's IP can make a DNS request to it. It *may be used* to perform [amplification attacks](https://en.wikipedia.org/wiki/Denial-of-service_attack#Amplification)!  
 This risk is greatly minimized by the rate limiting setting, which is set to 20 requests per second per client by default:  
-Settings → DNS settings → DNS server configuration → Rate limit
+`Settings → DNS settings → DNS server configuration → Rate limit`
 
 You can completely or almost completely reduce the risk of unauthorized use with the help of the [Allowlist section](#allowlist) further down in this documentation.
 
