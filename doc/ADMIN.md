@@ -73,7 +73,8 @@ If your port 53 is exposed on Internet, you can secure your AdGuard Home server 
 
 We've had YunoHost users surprised to see their instance receiving tens of thousands of requests per day, this was due to the public exposure of port 53 on Internet and the lack of securisation of their instance.
 
-In this allowlist, you can put [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid)s in place of IP addresses for the devices that uses DNS over HTTP. But since since YunoHost can't handle wildcard domain names, you can't use this ClientID functionnality with DNS over TLS and DNS over QUIC, sorry about that.
+In this allowlist, you can put [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid)s in place of IP addresses for the devices that uses DNS over HTTP.  
+But since since YunoHost can't handle wildcard domain names, you can't use this ClientID functionnality with DNS over TLS and DNS over QUIC, sorry about that.
 
 The allowlist setting is located in your AdGuard Home interface:  
 `Settings → DNS settings → Access settings → Allowed clients`
