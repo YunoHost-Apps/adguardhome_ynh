@@ -26,7 +26,7 @@ You can easilly configure this app:
 
 ### Secure DNS profile creator
 
-To use your AGH instance as a DNS server on your Apple device, you can use [Secure DNS profile creator](https://dns.notjakob.com/index.html).
+To use your AGH instance as the DNS server on your Apple device, you can use [Secure DNS profile creator](https://dns.notjakob.com/index.html).
 
 To do so, you first need to activate the DNS over HTTP/TLS/QUIC functionnality using the YunoHost Webadmin.  
 If you're reading this you should already be in the right page: just click the "AdGuard Home configuration" option at the top of this text, toggle on "Activate DNS over HTTP/TLS/QUIC?" then "Save".  
@@ -49,8 +49,8 @@ You can toggle the "Advanced" button to exclude the created profile to be used w
 
 Now, click the "Add to profile" button to generate the profile file, validate the "Configuration successfully added to profile." message showed on screen, then click the "Download Profile" button and accept the download.
 
-And finaly, open the system settings, click the "Downloaded profile" and install it bu entering your device password and tapping the final "Install" button.
+Finaly, open the system settings, click on the "Downloaded profile" message and install it by entering your device password and tapping the "Install" button a couple times.
 
 Your device should now use your AdGuard Home instance as its DNS server. Congrats!
 
-Installed DNS profiles can be managed in the Settings under "General" then "VPN and Device Management".
+Note: Installed DNS profiles can be managed in the Settings under "General" then "VPN and Device Management".
