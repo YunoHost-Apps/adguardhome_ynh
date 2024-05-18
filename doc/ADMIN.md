@@ -41,7 +41,7 @@ Any IP **that doesn't start** with the folowing are public ones:
 - `fcxx:` (where the `x` can be any hexadecimal character)
 - `fdxx:` (where the `x` can be any hexadecimal character)
 
-**Warning:** IPv6 starting with `fe80:` (IPv6 LLA) CAN'T be used for DNS purposes, if you try to put one in the AGH config, it won't work and crash.
+**Warning:** IPv6 starting with `fe80:` (IPv6 LLA) CAN'T be used for DNS purposes, if you try to put one in the AGH config, it won't work and crash!
 
 So, any other IP should be a public one.
 
@@ -51,7 +51,7 @@ Restart AdGuard Home after applying the needed edits: `yunohost service restart 
 
 This setting is **disabled** by default.
 
-You need to know that anyone who knows your AdGuard Home domain-name can make a DNS request to it. It may be used to perform [amplification attacks](https://en.wikipedia.org/wiki/Denial-of-service_attack#Amplification)!
+If enabled, you need to know that anyone who knows your AdGuard Home domain-name can make a DNS request to it. It may be used to perform [amplification attacks](https://en.wikipedia.org/wiki/Denial-of-service_attack#Amplification)!
 
 It's really important to use the configuration panel to deactivate this setting, and **NOT** the built-in setting in the AdGuardHome interface.  
 This is because YunoHost needs to perform actions such as automatically opening or closing the server's ports and refresh the IP to provide to AdGuard Home, which cannot be done without going through the configuration panel.
