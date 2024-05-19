@@ -29,8 +29,8 @@ La bonne adresse à utiliser est indiquée en haut de la page "Setup Guide" de v
 
 Si vous voulez exposer le port 53 sur Internet, vous devrez utiliser l'adresse IP publique de votre serveur (la même que celle configurée dans les paramètres DNS de votre nom de domaine) sur les apapreils situés ou pouvant se situer à l'extérieur de votre domicile.
 
-**Avertissement :** vous ne devez pas avoir d'adresse IP publique dans votre configuration AdGuard Home si le port 53 n'est pas exposé sur Internet (sinon AGH crash).
-**Veuillez noter :** Elles devraient être automatiquement lors de la mise à jour du packge ou en modifiant ce réglage de l'exposition du port 53, mais c'est dans la doc au cas où.  
+**Avertissement :** vous ne devez pas avoir d'adresse IP publique dans votre configuration AdGuard Home si le port 53 n'est pas exposé sur Internet (sinon AGH crash).  
+**Veuillez noter :** elles devraient être automatiquement lors de la mise à jour du packge ou en modifiant ce réglage de l'exposition du port 53, mais c'est dans la doc au cas où.  
 Vous pouvez les retirer dans la configuration située à `/var/www/adguardhome/AdGuardHome.yaml` dans la section `dns: bind_hosts:`.  
 Si une IP **ne débute pas** par ce qui suit, c'est une IP publique :
 
@@ -41,7 +41,7 @@ Si une IP **ne débute pas** par ce qui suit, c'est une IP publique :
 - `fcxx:` (où le `x` peut être n'importe quel caractère' hexadecimal)
 - `fdxx:` (où le `x` peut être n'importe quel caractère' hexadecimal)
 
-**Avertissement :** Les IPv6 débutant par `fe80:` (IPv6 LLA) NE peuvent PAS être utilisées pour du DNS, si vous essayez d'en mettre une dans la configuration de AGH, ça ne fonctionnera pas et AGH crashera !
+**Avertissement :** les IPv6 débutant par `fe80:` (IPv6 LLA) NE peuvent PAS être utilisées pour du DNS, si vous essayez d'en mettre une dans la configuration de AGH, ça ne fonctionnera pas et AGH crashera !
 
 Donc toute autre adresse IP devrait être une adresse IP publique.
 
@@ -74,7 +74,7 @@ Sir votre prot 53 est exposé sur Internet, vous pouvez sécuriser votre instanc
 Nous avons déjà reçu des messages d'utilisateurices de YunoHost interloqué-es en se rendant compte que leur instance AGH recevait des dizaines de milliers de requêtes inconnues par jour, cela étant du à l'exposition publique du port 53 sur Internet et au manque de sécurisation de leur instance.
 
 Dans cette liste blanche, vous pouvez ajouter des [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid) en lieu et place des adresses IP de vos appareils utilisant le DNS sur HTTP.  
-Comme YunoHost ne supporte pas les noms de domaines "wildcard", l'usage de la fonctionnalité des ClientID n'est pas possible avec l'utilisation du DNS sur TLS et le DNS sur QUIC. Nous sommes désolées pour cela.
+Comme YunoHost ne supporte pas les noms de domaines "wildcard", l'usage de la fonctionnalité des ClientID n'est pas possible avec l'utilisation du DNS sur TLS et le DNS sur QUIC. Nous sommes désolées pour cela.  
 **Note :** afin d'utiliser le DNS sur HTTP avec un ClientID, vous devez utiliser une adresse telle que : `https://__DOMAIN__/dns-query/votre-client-id`
 
 Les réglages de la liste blanche se situent dans l'interface de AdGuard Home à cet endroit : `Settings → DNS settings → Access settings → Allowed clients`
@@ -91,7 +91,7 @@ fc00::/7
 fe80::/16
 ```
 
-**Note:** Le slash `/` et le numéro le suivant, après une adresse IP, representent le masque de sous réseau, ceci est appelé la notation CIDR. Si vous voulez en savoir plus sur la notation CIDR, [vous pouvez lire cet article](https://whatismyipaddress.com/cidr) (en anglais).
+**Note :** le slash `/` et le numéro le suivant, après une adresse IP, representent le masque de sous réseau, ceci est appelé la notation CIDR. Si vous voulez en savoir plus sur la notation CIDR, [vous pouvez lire cet article](https://whatismyipaddress.com/cidr) (en anglais).
 
 ### Authoriser quelques adresses IP publiques
 
@@ -108,7 +108,7 @@ Ce n'est clairement pas parfait mais cela diminue quand même drastiquement les 
 **Note :** en cas de connexion sur des réseaux wifi non préalablement autorisés, vous ne pourrez pas utiliser votre instance AdGuard Home.
 
 En utilisant la connexion à autoriser, rendez-vous sur <https://ip.guide/> et cliquez sur "Autonomous Systems".  
-**Note :** Si vous utilisez un iPhone, vérifiez bien que [les options "Limiter le suivi de l'adresse IP" ou "Relais privé iCloud"](https://support.apple.com/guide/iphone/iph499d287c2/ios) sont désactivées (sinon vous devrez autoriser les adresses IP de Akamai en utilisant la même méthode).
+**Note :** si vous utilisez un iPhone, vérifiez bien que [les options "Limiter le suivi de l'adresse IP" ou "Relais privé iCloud"](https://support.apple.com/guide/iphone/iph499d287c2/ios) sont désactivées (sinon vous devrez autoriser les adresses IP de Akamai en utilisant la même méthode).  
 Vous pouvez désormais copier toutes les adresses IP présentes dans la section "routes", retirer tous les guillemets, virgules et espaces en conservant une IP par ligne, puis coller ce résultat dans votre liste blanche.  
 Cela devrait ressembler à la liste de la section précédente de ce tutoriel.
 
