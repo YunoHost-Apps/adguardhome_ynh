@@ -15,7 +15,7 @@ When enabled:
 
 - YunoHost **will** check if the port 53 is accessible on Internet and warns you if not
 - ⚠️ You need to **manually open port 53** of your router if you self-host at home!
-- Server's public IP adresses **will** be added to the AdGuard Home configuration, so AGH will be able to bind to them
+- Server's public IP adresses **will** be added to the AdGuard Home configuration, so AGH will be able to bind to them and will expose directly the port 53 to the Internet
 
 You need to know that if you expose your DNS server to Internet, anyone who knows your server's IP can make a DNS request to it. It *may be used* to perform [amplification attacks](https://en.wikipedia.org/wiki/Denial-of-service_attack#Amplification)!  
 This risk is greatly minimized by the rate limiting setting, which is set to 20 requests per second per client by default:  
@@ -53,10 +53,10 @@ This setting is **disabled** by default.
 
 If enabled, you need to know that anyone who knows your AdGuard Home domain-name can make a DNS request to it. It may be used to perform [amplification attacks](https://en.wikipedia.org/wiki/Denial-of-service_attack#Amplification)!
 
-It's really important to use the configuration panel to deactivate this setting, and **NOT** the built-in setting in the AdGuardHome interface.  
+It's really important to use the configuration panel included in the YunoHost Webadmin interface to activate or deactivate this setting, and **NOT** the built-in setting in the AdGuardHome interface.  
 This is because YunoHost needs to perform actions such as automatically opening or closing the server's ports and refresh the IP to provide to AdGuard Home, which cannot be done without going through the configuration panel.
 
-If you host your machine at home, for using DoH or DoQ, you have to open the following ports on your router by yourself:
+If you host your machine at home, for using DoT or DoQ, you have to open the following ports on your router by yourself:
 
 - `__PORT_DNS_OVER_TLS__` in TCP & UDP (for DNS over TLS)
 - `__PORT_DNS_OVER_QUIC__` in UDP (for DNS over QUIC)
@@ -71,7 +71,7 @@ Then you can use the following adresses as a DoH, DoT or DoQ DNS server for your
 
 If your port 53 is exposed on Internet, you can secure your AdGuard Home server using allowlist to prevent unauthorized use.
 
-We've had YunoHost users surprised to see their instance receiving tens of thousands of requests per day, this was due to the public exposure of port 53 on Internet and the lack of securisation of their instance.
+We've had YunoHost users surprised to see their instance receiving tens of thousands of unknown requests per day, this was due to the public exposure of port 53 on Internet and the lack of securisation of their instance.
 
 In this allowlist, you can put [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid)s in place of IP addresses for the devices that uses DNS over HTTP.  
 But since since YunoHost can't handle wildcard domain names, you can't use this ClientID functionnality with DNS over TLS and DNS over QUIC, sorry about that.
@@ -96,7 +96,7 @@ fe80::/16
 
 ### Authorize some public IP addresses
 
-Then you need to add the authorized public IP addresses.
+Then you can add some authorized public IP addresses.
 
 For example, to authorize the IPv4 of your home internet connexion, open <https://ip.yunohost.org/> and paste the showed IP in the allowlist.
 
@@ -106,10 +106,10 @@ You can add any public IP you know you'll use.
 
 If you want to use your AGH instance on your smartphone without using the [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid) feature (only availabe with DoH, check the 'Apps' documentation to find out how to use it on your phone), it gets more complex: you have to allow the IP ranges of your mobile operator.  
 It's not perfect but it still drastically reduces the chances of unauthorized use, while allowing you to use it with your smartphone.  
-**Note:** in case of connection on not authorized wifi networks with your smartphone, you will not be able to use your AdGuard Home instance.
+**Note:** in case of connection on non authorized wifi networks with your smartphone, you will not be able to use your AdGuard Home instance.
 
 Using the connexion to allow, go to <https://ip.guide/> and click on "Autonomous Systems".  
-**Note:** If you're using an iPhone, make sure that the ["Limit IP tracking" setting](https://support.apple.com/guide/iphone/iph499d287c2/ios) is disabled (otherwise you must authorize Akamai IP addresses using the same method).  
+**Note:** If you're using an iPhone, make sure that the ["Limit IP tracking" or "iCloud private relay" settings](https://support.apple.com/guide/iphone/iph499d287c2/ios) are disabled (otherwise you must authorize Akamai IP addresses using the same method).  
 You can now copy all the IP adresses in the "routes" section, remove all quotation marks, commas and spaces, but keep one IP per line, then paste the result into your allowlist.  
 It should look like the list in the previous section.
 
@@ -119,6 +119,6 @@ You can use the following command to automatically give you a ready-to-use list:
 curl -sL ip.guide/AS"$(curl -sL ip.guide | jq -s ".[].network.autonomous_system.asn")" | jq -s ".[].routes" | sed "/v.*:/d;/\],/d" | tr -d " {]\",}"
 ```
 
-The command asks your IP address to ip.guide, which returns the "Autonomous System" number, then the commands asks the IP ranges, then display it on your screen.
+The command asks your IP address to ip.guide, which returns the "Autonomous System" number (ASN) of your access provider, then the commands asks its IP ranges, then display it on your screen.
 
 **Note:** maybe you'll need to do this step multiple times, as some Internet provider have multiple ASN numbers. So if one day your AdGuard Home refuses to reply, it might be because of this.
