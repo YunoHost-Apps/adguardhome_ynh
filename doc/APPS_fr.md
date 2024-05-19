@@ -2,7 +2,28 @@
 
 ## Android
 
-Doit être complété par quelqu'un qui utilise Android
+### DNS privé intégré
+
+Android propose une fonctionalité nommée **DNS privé** depuis sa version 9.
+Ce paramètre **DNS privé** ne fonctionnera que pour *DNS-over-TLS*, car *DNS-over-HTTPS* n'est limité qu'à une paire de fournisseurs figés dans le code.
+
+Android étant distribuée en de multiples variantes selon les fournisseurs d'appareils, l'emplacement de ce paramètre peut varier.
+Il est peu ou prou placé dans `Paramètres → Connexions → Plus de paramètres de connexion → DNS privé`
+Là, sélectionnez "Nom d'hôte du fournisseur DNS privé", et encodez le nom de domaine de votre serveur Adguard Home: `__DOMAIN__` (pas de protocole, pas de barre oblique, seulement le domaine).
+
+### Intra
+
+Intra par [Jigsaw Operations LLC](https://jigsaw.google.com) peut-être téléchargée depuis [Google Play](https://play.google.com/store/apps/details?id=app.intra) ou [F-Droid](https://f-droid.org/packages/app.intra/).
+Cette application gratuite permet de vous connecter à votre serveur Adguard Home via *DNS-over-HTTPS*.
+
+Pour la configurer, une fois installée :
+- Ouvrez son menu latéral `≡ → Paramètres → Sélectionnez un serveur DNS over HTTPS`
+- Choisissez `URL de serveur personnaliséer` et encodez votre URL :
+  - `https://__DOMAIN__/dns-query`
+  - Si vous souhaitez suivre les requêtes de votre appareil ou utiliser des règles personnalisées, remplacez [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid) dans l'URL suivante: `https://__DOMAIN__/dns-query/ClientID`,
+- Retournez au menu principal de l'app, et activez-la avec l'interrupteur en haut à droite de l'écran.
+
+Techniquement, elle créé une connexion VPN locale pour imposer l'usage de votre serveur DNS : une icône 🔑 apparaîtra en haut de votre écran, une fois activée.
 
 ## Appareils Apple
 
