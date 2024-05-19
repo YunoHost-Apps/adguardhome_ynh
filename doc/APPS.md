@@ -4,7 +4,7 @@
 
 To use the DNS-over-HTTPS/TLS/QUIC functionality, you need to enable it from your app's YunoHost configuration panel.
 
-If you're reading this using the YunoHost interface, you should already be in the right page: just click on the [AdGuard Home configuration](#/apps/adguardhome/main) option at the top of this text, toggle on "Activate DNS over HTTP/TLS/QUIC?" then "Save".
+If you're reading this using the YunoHost interface, you should already be in the right page: just click on the [AdGuard Home configuration](#/apps/__APP__/main) option at the top of this text, toggle on "Activate DNS over HTTP/TLS/QUIC?" then "Save".
 Else, open The YunoHost Webadmin and follow this path: `Applications → AdGuard Home → AdGuard Home configuration`.
 
 From the command line interface: `yunohost app config set __APP__ main.options.dns_over_https -v 1`
