@@ -1,11 +1,21 @@
 # Apps documentation
 
+## Preamble
+
+To use the DNS-over-HTTPS/TLS/QUIC functionality, you need to enable it from your app's YunoHost configuration panel.
+
+If you're reading this using the YunoHost interface, you should already be in the right page: just click on the [AdGuard Home configuration](#/apps/adguardhome/main) option at the top of this text, toggle on "Activate DNS over HTTP/TLS/QUIC?" then "Save".
+Else, open The YunoHost Webadmin and follow this path: `Applications → AdGuard Home → AdGuard Home configuration`.
+
+From the command line interface: `yunohost app config set __APP__ main.options.dns_over_https -v 1`
+
 ## Android
 
 ### Built-in Private DNS
 
 Android offers a Private DNS feature starting its version 9 and above.
 This Private DNS setting will only work for DNS-over-TLS with Adguard Home, since DNS-over-HTTPS is limited to a couple of hardcoded providers.
+Make sure to have followed the instructions of the Preamble above.
 
 Android being available under various flavours depending on your phone manufacturer, the location of that setting can vary.
 It is generally along the lines of `Settings → Connections → More connection parameters → Private DNS`.
@@ -50,11 +60,7 @@ You can easily configure this app:
 To use your AGH instance as the DNS server on your Apple device, you can generate an Apple 'Secure DNS profile'.  
 **Note:** as a more tech-savvy alternative to this tutorial, you can use [Secure DNS profile creator](https://dns.notjakob.com/index.html).
 
-To do so, you first need to activate the DNS over HTTP/TLS/QUIC functionality using the YunoHost Webadmin.
-If you're reading this using the YunoHost interface, you should already be in the right page: just click the "AdGuard Home configuration" option at the top of this text, toggle on "Activate DNS over HTTP/TLS/QUIC?" then "Save".  
-Else, open The YunoHost Webadmin and follow this path: `Applications → AdGuard Home → AdGuard Home configuration`
-
-Now that it's done, go to the [Setup Guide](https://__DOMAIN____PATH__#guide) page of your AdGuard Home instance, click the "DNS Privacy" option and scroll to the bottom.
+Make sure you have followed the instructions of the Preamble above, then go to the [Setup Guide](https://__DOMAIN____PATH__#guide) page of your AdGuard Home instance, click the "DNS Privacy" option and scroll to the bottom.
 
 - Hostname: keep it that way
 - HTTPS port: same, keep it that way

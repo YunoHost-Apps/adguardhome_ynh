@@ -1,5 +1,13 @@
 # Documentation des applications
 
+## Préambule
+
+Pour utiliser la fonctionnalité DNS sur HTTP/TLS/QUIC, vous devez l'activer dans l'interface d'administration de YunoHost.
+Si vous lisez ceci via l'interface web de YunoHost, vous devriez déjà être au bon endroit: cliquez simplement sur l'option [AdGuard Home configuration](#/apps/adguardhome/main) au dessus de ce texte, activez "Activate DNS over HTTP/TLS/QUIC?" puis cliquez sur "Save".
+Sinon, ouvrez l'interface d'administration Web et suivez ce chemin : `Applications → AdGuard Home → AdGuard Home configuration`
+
+Depuis la ligne de commande: `yunohost app config set __APP__ main.options.dns_over_https -v 1`
+
 ## Android
 
 ### DNS privé intégré
@@ -50,11 +58,7 @@ Vous pouvez facilement configurer l'app :
 Afin d'utiliser votre instance AGH en tant que serveur DNS de votre appareil Apple, vous pouvez générer un "Profil DNS sécurisé".
 **Note :** en alternative pour utilisateurice expérimenté•e à ce tutoriel, vous pouvez également utiliser l'outil  [Secure DNS profile creator](https://dns.notjakob.com/index.html).
 
-Pour ce faire, vous devez au préalable activer la fonctionnalité DNS sur HTTP/TLS/QUIC en utilisant l'interface d'administration Web de YunoHost.  
-Si vous lisez ceci via l'interface YunoHost', vous devriez déjà être au bon endroit: cliquez simplement sur l'option "AdGuard Home configuration" au dessus de ce texte, activez "Activate DNS over HTTP/TLS/QUIC?" puis cliquez sur "Save".  
-Sinon, ouvrez l'interface d'administration Web et suivez ce chemin : `Applications → AdGuard Home → AdGuard Home configuration`
-
-Désormais, rendez-vous sur la page [Setup Guide](https://__DOMAIN____PATH__#guide) de votre instance AdGuard Home, cliquez sur "DNS privacy" et descendez tout en bas.
+Assurez-vous d'avoir suivi les instructions du Préambule ci-dessus, puis rendez-vous sur la page [Setup Guide](https://__DOMAIN____PATH__#guide) de votre instance AdGuard Home, cliquez sur "DNS privacy" et descendez tout en bas.
 
 - Hostname : laisser comme tel
 - HTTPS port : laisser aussi comme tel
