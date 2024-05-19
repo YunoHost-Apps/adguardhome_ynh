@@ -35,15 +35,15 @@ Sinon, ouvrez l'interface d'administration Web et suivez ce chemin : `Applicatio
 
 Désormais, rendez-vous sur la page [Setup Guide](https://__DOMAIN____PATH__#guide) de votre instance AdGuard Home, cliquez sur "DNS privacy" et déscendez tout en bas.
 
-- Hostname: laisser comme tel
-- HTTPS port: laisser aussi comme tel
-- Protocol: vous devez désormais faire un choix entre DNS-over-HTTPS et DNS-over-TLS
+- Hostname : laisser comme tel
+- HTTPS port : laisser aussi comme tel
+- Protocol : vous devez désormais faire un choix entre DNS-over-HTTPS et DNS-over-TLS
   - Si vous désirez utiliser la fonctionnalité [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid) afin de mettre vos appareils sur liste blanche, vous ne pouvez pas choisir DNS-over-TLS car YunoHost ne peut pas gérer les noms de domaines "wildcard", l'usage du DNS-over-HTTPS sera donc obligatoire pour vous
   - Si vous ne savez pas lequel choisir, voici un peu d'aide :
     - Comme expliqué ci-dessus, choisissez DNS-over-HTTPS si vous souhaitez utiliser la fonctionnalité ClientID pour authentifier vos requêtes
     - Choisissez DNS-over-HTTPS si vous devez fréquemment utiliser des réseaux succeptibles de filtrer le port du DNS-over-TLS, tels que ceux des entreprises, des écoles, etc.
     - Sinon, choisissez le DNS-over-TLS pour sa rapidité légèrement suppérieure, comme il utilise une [couche réseau OSI](https://fr.wikipedia.org/wiki/Mod%C3%A8le_OSI) de moins
-- ClientID: renseigner un ClientID, `iphone-123456` par exemple
+- ClientID : renseigner un ClientID, `iphone-123456` par exemple
   - N'oubliez pas d'ajouter un ClientID identique dans votre liste blanche : `Settings → DNS settings → Access settings → Allowed clients`
 
 Vous pouvez maintenant cliquer sur le bouton "Download configuration file" et accepter le téléchargement.
@@ -52,4 +52,4 @@ Pour finir, ouvrez les réglages système, cliquez sur le message "Profil télé
 
 Votre appareil devrait maintenant utiliser votre instance AdGuard Home en tant que serveur DNS. Super !
 
-**Note :** Les profils installés peuvent être gérés dans les Réglages, dans "Général" puis "VPN et gestion de l'appareil".
+**Note :** les profils installés peuvent être gérés dans les Réglages, dans "Général" puis "VPN et gestion de l'appareil".
