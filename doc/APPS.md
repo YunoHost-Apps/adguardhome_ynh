@@ -8,7 +8,7 @@ Android offers a Private DNS feature starting its version 9 and above.
 This Private DNS setting will only work for DNS-over-TLS with Adguard Home, since DNS-over-HTTPS is limited to a couple of hardcoded providers.
 
 Android being available under various flavours depending on your phone manufacturer, the location of that setting can vary.
-It is generally along the lines of `Settings > Connections > More connections parameters > Private DNS`.
+It is generally along the lines of `Settings → Connections → More connection parameters → Private DNS`.
 There, select "Hostname of the private DNS provider" and enter your Adguard Home's domain: `__DOMAIN__` (no protocol, no slash, only the domain).
 
 ### Intra
@@ -34,7 +34,7 @@ It is free with an in-app purchase of 6€ or US$5 to unlock some features. No a
 
 This app is for monitoring or configuring your AGH instance, not to use your AGH as a DNS server on your Apple device. See the section bellow for that!
 
-You can easilly configure this app:
+You can easily configure this app:
 
 - Add Instance
 - Choose a display name
@@ -50,7 +50,7 @@ You can easilly configure this app:
 To use your AGH instance as the DNS server on your Apple device, you can generate an Apple 'Secure DNS profile'.  
 **Note:** as a more tech-savvy alternative to this tutorial, you can use [Secure DNS profile creator](https://dns.notjakob.com/index.html).
 
-To do so, you first need to activate the DNS over HTTP/TLS/QUIC functionnality using the YunoHost Webadmin.  
+To do so, you first need to activate the DNS over HTTP/TLS/QUIC functionality using the YunoHost Webadmin.
 If you're reading this using the YunoHost interface, you should already be in the right page: just click the "AdGuard Home configuration" option at the top of this text, toggle on "Activate DNS over HTTP/TLS/QUIC?" then "Save".  
 Else, open The YunoHost Webadmin and follow this path: `Applications → AdGuard Home → AdGuard Home configuration`
 

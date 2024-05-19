@@ -54,7 +54,7 @@ Pour ce faire, vous devez au préalable activer la fonctionnalité DNS sur HTTP/
 Si vous lisez ceci via l'interface YunoHost', vous devriez déjà être au bon endroit: cliquez simplement sur l'option "AdGuard Home configuration" au dessus de ce texte, activez "Activate DNS over HTTP/TLS/QUIC?" puis cliquez sur "Save".  
 Sinon, ouvrez l'interface d'administration Web et suivez ce chemin : `Applications → AdGuard Home → AdGuard Home configuration`
 
-Désormais, rendez-vous sur la page [Setup Guide](https://__DOMAIN____PATH__#guide) de votre instance AdGuard Home, cliquez sur "DNS privacy" et déscendez tout en bas.
+Désormais, rendez-vous sur la page [Setup Guide](https://__DOMAIN____PATH__#guide) de votre instance AdGuard Home, cliquez sur "DNS privacy" et descendez tout en bas.
 
 - Hostname : laisser comme tel
 - HTTPS port : laisser aussi comme tel
@@ -63,7 +63,7 @@ Désormais, rendez-vous sur la page [Setup Guide](https://__DOMAIN____PATH__#gui
   - Si vous ne savez pas lequel choisir, voici un peu d'aide :
     - Comme expliqué ci-dessus, choisissez DNS-over-HTTPS si vous souhaitez utiliser la fonctionnalité ClientID pour authentifier vos requêtes
     - Choisissez DNS-over-HTTPS si vous devez fréquemment utiliser des réseaux succeptibles de filtrer le port du DNS-over-TLS, tels que ceux des entreprises, des écoles, etc.
-    - Sinon, choisissez le DNS-over-TLS pour sa rapidité légèrement suppérieure, comme il utilise une [couche réseau OSI](https://fr.wikipedia.org/wiki/Mod%C3%A8le_OSI) de moins
+    - Sinon, choisissez le DNS-over-TLS pour sa rapidité légèrement supérieure, comme il utilise une [couche réseau OSI](https://fr.wikipedia.org/wiki/Mod%C3%A8le_OSI) de moins
 - ClientID : renseigner un ClientID, `iphone-123456` par exemple
   - N'oubliez pas d'ajouter un ClientID identique dans votre liste blanche : `Settings → DNS settings → Access settings → Allowed clients`
 
