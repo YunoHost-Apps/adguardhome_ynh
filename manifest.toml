@@ -40,6 +40,7 @@ yunohost = ">= 11.2"
 default = "all_users"
 type = "group"
 help.en = "Even by restricting access to users only, the AdGuard Home API will be available (ex. for a mobile app use)."
+help.fr = "Même en limitant l'accès aux seuls utilisateurs, l'API AdGuard Home sera disponible (par ex. pour utiliser une application mobile)."
 
     [install.admin]
     type = "user"
@@ -48,14 +49,18 @@ help.en = "Even by restricting access to users only, the AdGuard Home API will b
     type = "password"
 
 [install.expose_port_53]
-ask.en = "Expose port 53 to the Internet?"
-help.en = "If so, anyone who knows your server's IP can make a DNS request to it. It may be used to perform amplification attacks: https://en.wikipedia.org/wiki/Denial-of-service_attack#Amplification"
+ask.en = "Bind to public IP addresses?"
+ask.fr = "Liaison avec les adresses IP publiques ?"
+help.en = "If so, anyone who knows your server's IP can make a DNS request to it. It may be used to perform amplification attacks: https://en.wikipedia.org/wiki/Denial-of-service_attack#Amplification Please read the admin doc to understand that setting and to secure your server using allowlist."
+help.fr = "Si activé, quiconque connaissant l'adresse IP de votre serveur pourra lui faire des requêtes DNS. Il pourrait être utilisé afin de réaliser des attaques par amplification DNS : https://www.malekal.com/attaque-dos-amplification Veuillez lire le guide d'administration pour comprendre ce paramètre et comment sécuriser votre serveur en utilisant la liste blanche."
 default = false
 type = "boolean"
 
 [install.dns_over_https]
-ask.en = "Should DNS-over-HTTPS/TLS/QUIC be enabled?"
-help.en = "If so, anyone who knows your adguard address can make a doh request to https://adguardomain.tld/dns-query or using DoT/DoQ"
+ask.en = "Enable DNS-over-HTTPS/TLS/QUIC?"
+ask.fr = "Activer le DNS-sur-HTTPS/TLS/QUIC ?"
+help.en = "If so, anyone who knows your adguard address can make a DoH request to https://adguardomain.tld/dns-query or using DoT or DoQ.  It also may be used to perform amplification attacks. Read the admin doc to secure your server using allowlist."
+help.fr = "Si activé, quiconque connaissant l'adresse de votre serveur pourra lui faire des requêtes DoH sur https://adguardomain.tld/dns-query ou en utilisant le DoT ou DoQ. Il pourrait aussi être utilisé afin de réaliser des attaques par amplification DNS. Veuillez lire le guide d'administration pour comprendre ce paramètre et comment sécuriser votre serveur en utilisant la liste blanche."
 default = false
 type = "boolean"
 
