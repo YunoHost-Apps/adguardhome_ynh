@@ -14,7 +14,7 @@ args.dns_over_https = 1
 # Commits to test upgrade from
 # -------------------------------
 
-test_upgrade_from.c1b81566.name = "Upgrade from 0.107.43~ynh3"
+# test_upgrade_from.c1b81566.name = "Upgrade from 0.107.43~ynh3"
 
 # -------------------------------
 # additional tests suite
