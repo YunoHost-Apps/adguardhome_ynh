@@ -24,7 +24,7 @@ Il fonctionne comme un serveur DNS qui redirige les domaines de pistage vers un 
 Cependant, Dnsmasq n'est pas désactivé et continuera à fonctionner en tant que *serveur DNS localhost*.
 
 
-**Version incluse :** 0.107.48~ynh2
+**Version incluse :** 0.107.48~ynh3
 
 ## Captures d’écran
 

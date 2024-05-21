@@ -10,17 +10,30 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
+# PROCESS CLOSING PORTS
+#=================================================
+ynh_script_progression --message="Closing ports..." --weight=2
+
+# close ports
+ynh_print_info --message="Closing port 53..."
+ynh_exec_warn_less yunohost firewall disallow Both 53
+if [ "$dns_over_https" == "true" ]; then
+    ynh_print_info --message="Closing DoH and DoQ ports..."
+    ynh_exec_warn_less yunohost firewall disallow Both "$port_dns_over_tls" --no-reload
+    ynh_exec_warn_less yunohost firewall disallow UDP "$port_dns_over_quic"
+fi
+
+#=================================================
 # STANDARD REMOVE
 #=================================================
 # REMOVE SERVICE INTEGRATION IN YUNOHOST
 #=================================================
 
 # Remove the service from the list of services known by YunoHost (added from `yunohost service add`)
-if ynh_exec_warn_less yunohost service status "$app" >/dev/null
-then
-	ynh_script_progression --message="Removing $app service integration..." --weight=1
-	yunohost service remove "$app"
-fi
+ynh_script_progression --message="Removing $app service integration..." --weight=1
+yunohost service remove "$app"
+
+ynh_script_progression --message="Removing system configurations related to $app..." --weight=1
 
 # Remove the dedicated systemd config
 ynh_remove_systemd_config
@@ -28,7 +41,12 @@ ynh_remove_systemd_config
 # Remove the dedicated NGINX config
 ynh_remove_nginx_config
 
-# Remove other various files specific to the app...
+#=================================================
+# REMOVE VARIOUS FILES specific to the app...
+#=================================================
+
+# remove the kernel config file for DoQ
+ynh_secure_remove --file="/etc/sysctl.d/10-adguardhome.conf"
 
 # Remove the dedicated dnsmasq config for AdGuardHome
 ynh_secure_remove --file="/etc/dnsmasq.d/$app"

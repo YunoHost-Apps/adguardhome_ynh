@@ -1,12 +1,43 @@
 version = "1.0"
 
 [main]
-name = "AdguardHome configuration"
+name.en = "AdGuard Home configuration"
+name.fr = "Configuration de AdGuard Home"
+help.en = "If any trouble or question, please refer to the admin documentation right below!"
+help.fr = "En cas de problème ou questionnement, référez-vous au guide d'administration en bas de la page !"
+
 services = ["__APP__"]
 
-        [main.options.dns_over_https]
-        ask = "Enable DNS-over-HTTPS"
-        type = "boolean"
-        yes = "true"
-        no = "false"
-        bind = "allow_unencrypted_doh:__INSTALL_DIR__/AdGuardHome.yaml"
+[main.options]
+name.en = "Configure AdGuard Home options"
+name.fr = "Options de configuration de AdGuard Home"
+
+[main.options.expose_port_53]
+ask.en = "Bind to public IP addresses?"
+ask.fr = "Liaison avec les adresses IP publiques ?"
+no = "false"
+type = "boolean"
+yes = "true"
+help.en = "If so, anyone who knows your server's IP can make a DNS request to it. It may be used to perform amplification attacks: https://en.wikipedia.org/wiki/Denial-of-service_attack#Amplification Please read the admin doc to understand that setting and to secure your server using allowlist."
+help.fr = "Si activé, quiconque connaissant l'adresse IP de votre serveur pourra lui faire des requêtes DNS. Il pourrait être utilisé afin de réaliser des attaques par amplification DNS : https://www.malekal.com/attaque-dos-amplification Veuillez lire le guide d'administration pour comprendre ce paramètre et comment sécuriser votre serveur en utilisant la liste blanche."
+
+[main.options.dns_over_https]
+ask.en = "Enable DNS-over-HTTPS/TLS/QUIC?"
+ask.fr = "Activer le DNS-sur-HTTPS/TLS/QUIC ?"
+no = "false"
+type = "boolean"
+yes = "true"
+bind = "tls>enabled:__INSTALL_DIR__/AdGuardHome.yaml"
+help.en = "If so, anyone who knows your adguard address can make a DoH request to https://adguardomain.tld/dns-query or using DoT or DoQ.  It also may be used to perform amplification attacks. Read the admin doc to secure your server using allowlist."
+help.fr = "Si activé, quiconque connaissant l'adresse de votre serveur pourra lui faire des requêtes DoH sur https://adguardomain.tld/dns-query ou en utilisant le DoT ou DoQ. Il pourrait aussi être utilisé afin de réaliser des attaques par amplification DNS. Veuillez lire le guide d'administration pour comprendre ce paramètre et comment sécuriser votre serveur en utilisant la liste blanche."
+
+[main.extra]
+name.en = "Extra tools"
+name.fr = "Outils"
+
+[main.extra.new_password]
+ask.en = "Set a new admin password"
+ask.fr = "Changer le mot de passe administrateur"
+type = "string"
+help.en = "With this tool, you can easily change the password of your AdGuard Home. Just put the desired password in the text input."
+help.fr = "À l'aide de cet outil, vous pouvez facilement changer le mot de passe de votre AdGuard Home. Renseignez juste le mot de passe désiré dans le champ de saisie."
