@@ -1,0 +1,111 @@
+#!/bin/bash
+
+#=================================================
+# GENERIC STARTING
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
+source _common.sh
+source /usr/share/yunohost/helpers
+
+ynh_abort_if_errors
+
+# import needed settings
+port_dns_over_tls=$(ynh_app_setting_get --app="$app" --key=port_dns_over_tls)
+port_dns_over_quic=$(ynh_app_setting_get --app="$app" --key=port_dns_over_quic)
+
+#=================================================
+# SPECIFIC SETTERS
+#=================================================
+
+set__expose_port_53() {
+
+    # regenerate config, needed to add or delete public IPs following the user's choice
+
+    ynh_print_info --message="Obtaining IP addresses for the AGH config file..."
+
+    # get the name of the network interface in IPv4 and IPv6
+    ipv4_interface="$(get_network_interface 4)"
+    ipv6_interface="$(get_network_interface 6)"
+
+    # the 'sed' is used to get rid of the network prefix ('/24' for example) and the router IP
+    ipv4_addr=$(process_ips "$(ip -4 address show "$ipv4_interface" 2> /dev/null | grep inet | sed 's&/.*&&')")
+
+    # get IPv6 for the AGH config file
+    # the 'sed' is used to get rid of the network prefix ('/64' for example)
+    ipv6_addr=$(process_ips "$(ip -6 address show "$ipv6_interface" 2> /dev/null | grep inet | sed 's&/.*&&')")
+
+    # update the IP adresses in the AGH config file
+    ynh_print_info --message="Updating the AGH config file..."
+    update_agh_ip_config
+
+    # declare needs_exposed_ports according to real user need
+    ynh_print_info --message="Updating the YunoHost service for AdGuard Home..."
+    if [ "$dns_over_https" == "true" ] && [ "$expose_port_53" == "true" ]; then
+        yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "53" "$port_dns_over_tls"
+    elif [ "$dns_over_https" == "true" ]; then
+        yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "$port_dns_over_tls"
+    elif [ "$expose_port_53" == "true" ]; then
+        yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "53"
+    else
+        yunohost service add "$app" --description="Ads & trackers blocking DNS server"
+    fi
+
+    # save the new setting
+    ynh_app_setting_set --app="$app" --key=expose_port_53 --value="$expose_port_53"
+}
+
+set__dns_over_https() {
+
+    if [ "$dns_over_https" == "true" ]; then
+        ynh_print_info --message="Opening DoH and DoQ ports..."
+        # if DNS over HTTPS/QUIC is activated, open the associated ports
+        ynh_exec_warn_less yunohost firewall allow Both "$port_dns_over_tls" --no-reload
+        ynh_exec_warn_less yunohost firewall allow UDP "$port_dns_over_quic"
+    elif [ "$dns_over_https" == "false" ]; then
+        # else if false, close them
+        ynh_print_info --message="Closing DoH and DoQ ports..."
+        ynh_exec_warn_less yunohost firewall disallow Both "$port_dns_over_tls" --no-reload
+        ynh_exec_warn_less yunohost firewall disallow UDP "$port_dns_over_quic"
+    else
+        # else, throw error
+        ynh_print_warn --message="The variable 'dns_over_https' should be 'true' or 'false' but isn't, please report this."
+    fi
+
+    # declare needs_exposed_ports according to real user need
+    ynh_print_info --message="Updating the YunoHost service for AdGuard Home..."
+    if [ "$dns_over_https" == "true" ] && [ "$expose_port_53" == "true" ]; then
+        yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "53" "$port_dns_over_tls"
+    elif [ "$dns_over_https" == "true" ]; then
+        yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "$port_dns_over_tls"
+    elif [ "$expose_port_53" == "true" ]; then
+        yunohost service add "$app" --description="Ads & trackers blocking DNS server" --needs_exposed_ports "53"
+    else
+        yunohost service add "$app" --description="Ads & trackers blocking DNS server"
+    fi
+
+    # save the new setting in the AGH config file
+    ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="enabled" --after="tls:" --value="$dns_over_https"
+
+    # save the new setting in YNH
+    ynh_app_setting_set --app="$app" --key=dns_over_https --value="$dns_over_https"
+}
+
+set__new_password() {
+
+    # user's password encryption
+    ynh_print_info --message="Encrypting the new password..."
+    password=$(python3 -c "import bcrypt; print(bcrypt.hashpw(b\"$new_password\", bcrypt.gensalt(rounds=10)).decode())")
+    ynh_app_setting_set --app="$app" --key=password --value="$password"
+
+    # save the new setting in the AGH config file
+    ynh_print_info --message="Saving the new password in the AGH configuration..."
+    ynh_write_var_in_file --file="$install_dir/AdGuardHome.yaml" --key="password" --value="$password"
+}
+
+#=================================================
+# GENERIC FINALIZATION
+#=================================================
+
+ynh_app_config_run "$1"

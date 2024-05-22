@@ -13,6 +13,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 # DECLARE DATA AND CONF FILES TO BACKUP
 #=================================================
+
 ynh_print_info --message="Declaring files to be backed up..."
 
 #=================================================
@@ -37,7 +38,8 @@ ynh_backup --src_path="/etc/systemd/system/$app.service"
 # BACKUP VARIOUS FILES
 #=================================================
 
-ynh_backup --src_path="/etc/dnsmasq.d/$app"
+# backup the kernel config file for DoQ
+ynh_backup --src_path="/etc/sysctl.d/10-adguardhome.conf"
 
 #=================================================
 # END OF SCRIPT

@@ -1,3 +1,5 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/master/schemas/manifest.v2.schema.json
+
 packaging_format = 2
 
 description.en = "Network-wide ads & trackers blocking DNS server"
@@ -5,7 +7,7 @@ description.fr = "Serveur DNS, bloqueur de publicités et trackers"
 id = "adguardhome"
 name = "AdGuard Home"
 
-version = "0.107.48~ynh2"
+version = "0.107.49~ynh1"
 
 maintainers = [ "ddataa", "OniriCorpe" ]
 
@@ -21,8 +23,8 @@ architectures = "all"
 disk = "50M"
 ldap = false
 multi_instance = false
-ram.build = "50M"
-ram.runtime = "50M"
+ram.build = "200M"
+ram.runtime = "200M"
 sso = false
 yunohost = ">= 11.2"
 
@@ -34,9 +36,11 @@ yunohost = ">= 11.2"
     default = "/adguard"
     type = "path"
 
-    [install.init_main_permission]
-    default = "visitors"
-    type = "group"
+[install.init_main_permission]
+default = "all_users"
+type = "group"
+help.en = "Even by restricting access to users only, the AdGuard Home API will be available (ex. for a mobile app use)."
+help.fr = "Même en limitant l'accès aux seuls utilisateurs, l'API AdGuard Home sera disponible (par ex. pour utiliser une application mobile)."
 
     [install.admin]
     type = "user"
@@ -44,19 +48,30 @@ yunohost = ">= 11.2"
     [install.password]
     type = "password"
 
-    [install.dns_over_https]
-    ask.en = "Should DNS-over-HTTPS be enabled? (If so, anyone who knows your adguard address can make a doh request to https://adguardomain.tld/dns-query)"
-    default = true
-    type = "boolean"
+[install.expose_port_53]
+ask.en = "Bind to public IP addresses?"
+ask.fr = "Liaison avec les adresses IP publiques ?"
+help.en = "If so, anyone who knows your server's IP can make a DNS request to it. It may be used to perform amplification attacks: https://en.wikipedia.org/wiki/Denial-of-service_attack#Amplification Please read the admin doc to understand that setting and to secure your server using allowlist."
+help.fr = "Si activé, quiconque connaissant l'adresse IP de votre serveur pourra lui faire des requêtes DNS. Il pourrait être utilisé afin de réaliser des attaques par amplification DNS : https://www.malekal.com/attaque-dos-amplification Veuillez lire le guide d'administration pour comprendre ce paramètre et comment sécuriser votre serveur en utilisant la liste blanche."
+default = false
+type = "boolean"
+
+[install.dns_over_https]
+ask.en = "Enable DNS-over-HTTPS/TLS/QUIC?"
+ask.fr = "Activer le DNS-sur-HTTPS/TLS/QUIC ?"
+help.en = "If so, anyone who knows your adguard address can make a DoH request to https://adguardomain.tld/dns-query or using DoT or DoQ.  It also may be used to perform amplification attacks. Read the admin doc to secure your server using allowlist."
+help.fr = "Si activé, quiconque connaissant l'adresse de votre serveur pourra lui faire des requêtes DoH sur https://adguardomain.tld/dns-query ou en utilisant le DoT ou DoQ. Il pourrait aussi être utilisé afin de réaliser des attaques par amplification DNS. Veuillez lire le guide d'administration pour comprendre ce paramètre et comment sécuriser votre serveur en utilisant la liste blanche."
+default = false
+type = "boolean"
 
 [resources]
     [resources.sources.main]
-    amd64.sha256 = "1549d0277451b6c5b3e0320ef198bd63a74ed77d2a4ddc23e91849e913699637"
-    amd64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.48/AdGuardHome_linux_amd64.tar.gz"
-    arm64.sha256 = "3990ebc918b0c8ce9782888e842b0ce8014e13d99ab271aeda6eac0d150069e6"
-    arm64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.48/AdGuardHome_linux_arm64.tar.gz"
-    armhf.sha256 = "b2259fedfac872260654feca82a4b80ebee8e76cb742a198bd0971b70d879c4a"
-    armhf.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.48/AdGuardHome_linux_armv7.tar.gz"
+    amd64.sha256 = "cc151f5c8bd4123df2d67072360fa042b3089ab1ae65fde1d293c1bc6f3fbf52"
+    amd64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.49/AdGuardHome_linux_amd64.tar.gz"
+    arm64.sha256 = "9a2bf1bc3643c45f1c6421f31876df2d54bd480e40d3122ca7cf370f3e43b690"
+    arm64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.49/AdGuardHome_linux_arm64.tar.gz"
+    armhf.sha256 = "f28832f9f37b07a776a727d1eb1f4dc2eafc0903ce454968f4b7da50c8121f5f"
+    armhf.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.49/AdGuardHome_linux_armv7.tar.gz"
     in_subdir = 2
 
     autoupdate.asset.amd64 = "^AdGuardHome_linux_amd64.tar.gz$"
@@ -65,10 +80,18 @@ yunohost = ">= 11.2"
     autoupdate.strategy = "latest_github_release"
 
 [resources.ports]
-adguard.default = 53
-adguard.exposed = "Both"
+dns_over_tls.default = 853
+dns_over_tls.exposed = "Both"
+dns_over_tls.fixed = true
+dns_over_quic.default = 784
+dns_over_quic.exposed = "UDP"
+dns_over_quic.fixed = true
+# AGH also uses port 53 but we can't put it here as dnsmasq uses it by default
+# and the ynh core would assign us another port, however, on installation we
+# edit dnsmasq's configuration to allow AGH to use port 53 on non-localhost IPs
 
 [resources.system_user]
+allow_email = true
 
 [resources.install_dir]
 
