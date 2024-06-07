@@ -7,7 +7,7 @@ description.fr = "Serveur DNS, bloqueur de publicités et trackers"
 id = "adguardhome"
 name = "AdGuard Home"
 
-version = "0.107.50~ynh1"
+version = "0.107.51~ynh1"
 
 maintainers = [ "ddataa", "OniriCorpe" ]
 
@@ -66,12 +66,12 @@ type = "boolean"
 
 [resources]
     [resources.sources.main]
-    amd64.sha256 = "92bc40209490aef66b5ec01f1593abfe89ece2648a9da43e7c874750b29cbf20"
-    amd64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.50/AdGuardHome_linux_amd64.tar.gz"
-    arm64.sha256 = "24318e13eb5d468e837bbfb340af2128dbbb63024aa619b6fcf63c8df684f101"
-    arm64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.50/AdGuardHome_linux_arm64.tar.gz"
-    armhf.sha256 = "52fb96cab8a74e8cee73e48473bb7052161b61409473a706ebab2a9944b4d679"
-    armhf.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.50/AdGuardHome_linux_armv7.tar.gz"
+    amd64.sha256 = "6eb61c7a6714c04922077c82876cbb9f6222e83ec67ca30aaa6dc55423d957b2"
+    amd64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.51/AdGuardHome_linux_amd64.tar.gz"
+    arm64.sha256 = "402921e73c94c9fd423a4d9c6fcb0674fb52cc16138f0a47dc549a2378c6e6fd"
+    arm64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.51/AdGuardHome_linux_arm64.tar.gz"
+    armhf.sha256 = "383a47b855386310de4003b20e9b45417bcb3dc4c3270069e22ac4939b2bcb95"
+    armhf.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.51/AdGuardHome_linux_armv7.tar.gz"
     in_subdir = 2
 
     autoupdate.asset.amd64 = "^AdGuardHome_linux_amd64.tar.gz$"
