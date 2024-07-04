@@ -102,7 +102,16 @@ update_agh_ip_config(){
 # used to update the IP adresses in the AGHconfig file
 
 if [ -z "${ipv4_addr:-}" ] && [ -z "${ipv6_addr:-}" ]; then
-    ynh_die --message="At leat one IP adress is required to run AdGuard Home. Please report this error."
+    if [ -z "${expose_port_53:-}" ] || [[ "$expose_port_53" = "false" ]]; then
+        # if the variable 'expose_port_53' is unset or false, maybe the machine
+        # doesn't have any private IP? User guidance is relevant...
+        ynh_die --message="At leat one IP adress is required to run AdGuard Home. Please report this error. 
+        (If you're using a VPS that haven't any private IPs, you need to run the command \`yunohost app setting adguardhome expose_port_53 -v true\` 
+        to activate public IP binding and unlock your situation, then re-run the upgrade process. Sorry about that!)"
+    else
+        # else, do not show the message under parenthesis, because it's irrelevant
+        ynh_die --message="At leat one IP adress is required to run AdGuard Home. Please report this error."
+    fi
 fi
 
 # use python's yaml and open the AGH config file
