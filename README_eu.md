@@ -5,7 +5,7 @@ EZ editatu eskuz.
 
 # AdGuard Home YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/adguardhome.svg)](https://dash.yunohost.org/appci/app/adguardhome) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/adguardhome.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/adguardhome.maintain.svg)
+[![Integrazio maila](https://dash.yunohost.org/integration/adguardhome.svg)](https://ci-apps.yunohost.org/ci/apps/adguardhome/) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/adguardhome.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/adguardhome.maintain.svg)
 
 [![Instalatu AdGuard Home YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=adguardhome)
 
