@@ -106,8 +106,7 @@ if [ -z "${ipv4_addr:-}" ] && [ -z "${ipv6_addr:-}" ]; then
         # if the variable 'expose_port_53' is unset or false, maybe the machine
         # doesn't have any private IP? User guidance is relevant...
         ynh_die --message="At leat one IP adress is required to run AdGuard Home. Please report this error. 
-        (If you're using a VPS that haven't any private IPs, you need to run the command \`yunohost app setting adguardhome expose_port_53 -v true\` 
-        to activate public IP binding and unlock your situation, then re-run the upgrade process. Sorry about that!)"
+        (You can refer to [the troubleshooting page](https://github.com/YunoHost-Apps/adguardhome_ynh/blob/master/doc/TROUBLESHOOTING.md) to get help)"
     else
         # else, do not show the message under parenthesis, because it's irrelevant
         ynh_die --message="At leat one IP adress is required to run AdGuard Home. Please report this error."
