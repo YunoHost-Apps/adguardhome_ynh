@@ -28,7 +28,7 @@ Cependant, Dnsmasq n'est pas désactivé et continuera à fonctionner en tant qu
 
 ## Captures d’écran
 
-![Capture d’écran de AdGuard Home](./doc/screenshots/demo.gif)
+![Capture d’écran de AdGuard Home](./doc/screenshots/screenshot.png)
 
 ## Documentations et ressources
 
