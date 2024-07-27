@@ -24,11 +24,11 @@ Il fonctionne comme un serveur DNS qui redirige les domaines de pistage vers un 
 Cependant, Dnsmasq n'est pas désactivé et continuera à fonctionner en tant que *serveur DNS localhost*.
 
 
-**Version incluse :** 0.107.52~ynh1
+**Version incluse :** 0.107.52~ynh2
 
 ## Captures d’écran
 
-![Capture d’écran de AdGuard Home](./doc/screenshots/demo.gif)
+![Capture d’écran de AdGuard Home](./doc/screenshots/screenshot.png)
 
 ## Documentations et ressources
 

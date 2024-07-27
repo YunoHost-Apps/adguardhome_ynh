@@ -24,11 +24,11 @@ It operates as a DNS server that re-routes tracking domains to a "black hole", t
 However, Dnsmasq is not disabled and will continue to function as the *localhost DNS server*.
 
 
-**分发版本：** 0.107.52~ynh1
+**分发版本：** 0.107.52~ynh2
 
 ## 截图
 
-![AdGuard Home 的截图](./doc/screenshots/demo.gif)
+![AdGuard Home 的截图](./doc/screenshots/screenshot.png)
 
 ## 文档与资源
 
