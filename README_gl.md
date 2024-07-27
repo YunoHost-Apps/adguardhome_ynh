@@ -28,7 +28,7 @@ However, Dnsmasq is not disabled and will continue to function as the *localhost
 
 ## Capturas de pantalla
 
-![Captura de pantalla de AdGuard Home](./doc/screenshots/screenshot.png)
+![Captura de pantalla de AdGuard Home](./doc/screenshots/screenshot.jpg)
 
 ## Documentación e recursos
 
