@@ -7,7 +7,7 @@ description.fr = "Serveur DNS, bloqueur de publicités et trackers"
 id = "adguardhome"
 name = "AdGuard Home"
 
-version = "0.107.52~ynh1"
+version = "0.107.52~ynh2"
 
 maintainers = [ "ddataa", "OniriCorpe" ]
 
