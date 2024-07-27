@@ -28,7 +28,7 @@ However, Dnsmasq is not disabled and will continue to function as the *localhost
 
 ## 截图
 
-![AdGuard Home 的截图](./doc/screenshots/demo.gif)
+![AdGuard Home 的截图](./doc/screenshots/screenshot.png)
 
 ## 文档与资源
 
