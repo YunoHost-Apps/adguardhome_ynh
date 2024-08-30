@@ -1,11 +1,7 @@
 #!/bin/bash
 
 #=================================================
-# COMMON VARIABLES
-#=================================================
-
-#=================================================
-# PERSONAL HELPERS
+# COMMON VARIABLES AND CUSTOM HELPERS
 #=================================================
 
 get_network_interface(){
@@ -18,7 +14,8 @@ get_network_interface(){
         # shellcheck disable=SC2005
         echo "$(echo "$(ip -4 route get 1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+' || true)"
     else
-        # shellcheck disable=SC2005 
+        # shellcheck disable=SC2005
+
         echo "$(echo "$(ip -6 route get ::1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+' || true)"
     fi
 }
@@ -30,7 +27,7 @@ configure_network_interface_dnsmasq(){
     local ipv6_interface="$2"
 
     if [ -z "$ipv4_interface" ] && [ -z "$ipv6_interface" ]; then
-            ynh_die --message="Impossible to find the main network interface, please report this issue."
+            ynh_die "Impossible to find the main network interface, please report this issue."
     elif [ "$ipv4_interface" != "$ipv6_interface" ]; then
             if [ -z "$ipv4_interface" ]; then
                     echo -e "bind-interfaces\nexcept-interface=$ipv6_interface" > "/etc/dnsmasq.d/$app"
@@ -45,7 +42,7 @@ configure_network_interface_dnsmasq(){
 
     systemctl restart dnsmasq
 
-    ynh_store_file_checksum --file="/etc/dnsmasq.d/$app"
+    ynh_store_file_checksum "/etc/dnsmasq.d/$app"
 }
 
 is_public_ip(){
@@ -79,7 +76,7 @@ process_ips(){
     # for each IP
     for ip in $ips; do
         # check if the so-called IP really is one
-        if ynh_validate_ip4 --ip_address="$ip" || ynh_validate_ip6 --ip_address="$ip"; then
+        if ynh_validate_ip --family=4 --ip_address="$ip" || ynh_validate_ip6 --ip_address="$ip"; then
             # we can't use IPv6 LLA for DNS: https://github.com/AdguardTeam/AdGuardHome/issues/2926#issuecomment-1284489380
             # if we try to bind port 53 on a fe80:: address, AGH crashes
             if ! [[ "$ip" =~ ^fe80:* ]]; then
@@ -105,11 +102,12 @@ if [ -z "${ipv4_addr:-}" ] && [ -z "${ipv6_addr:-}" ]; then
     if [ -z "${expose_port_53:-}" ] || [[ "$expose_port_53" = "false" ]]; then
         # if the variable 'expose_port_53' is unset or false, maybe the machine
         # doesn't have any private IP? User guidance is relevant...
-        ynh_die --message="At leat one IP adress is required to run AdGuard Home. Please report this error. 
+        ynh_die "At leat one IP adress is required to run AdGuard Home. Please report this error.
+
         (You can refer to [the troubleshooting page](https://github.com/YunoHost-Apps/adguardhome_ynh/blob/master/doc/TROUBLESHOOTING.md) to get help)"
     else
         # else, do not show the message under parenthesis, because it's irrelevant
-        ynh_die --message="At leat one IP adress is required to run AdGuard Home. Please report this error."
+        ynh_die "At leat one IP adress is required to run AdGuard Home. Please report this error."
     fi
 fi
 
@@ -132,11 +130,3 @@ with open(\"$install_dir/AdGuardHome.yaml\", 'w') as file:
     yaml.dump(conf_file, file)
 "
 }
-
-#=================================================
-# EXPERIMENTAL HELPERS
-#=================================================
-
-#=================================================
-# FUTURE OFFICIAL HELPERS
-#=================================================
