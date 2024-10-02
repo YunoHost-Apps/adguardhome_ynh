@@ -66,6 +66,8 @@ type = "boolean"
 
 [resources]
     [resources.sources.main]
+    i386.sha256 = "dba890add7a7588fbcf0dea2cb6cce5d0ffe713b908c256d8e38735e6528b699"
+    i386.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.52/AdGuardHome_linux_386.tar.gz"
     amd64.sha256 = "a2645ecf23ccadbb0d97b324aef9bc67d126b8e394428ae5a23c2f1b73c5d140"
     amd64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.52/AdGuardHome_linux_amd64.tar.gz"
     arm64.sha256 = "86ae7a7c2db9c158b9db9f350568485e3ccc43e7039624d1a5bc50bb1dee1048"
@@ -74,6 +76,7 @@ type = "boolean"
     armhf.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.52/AdGuardHome_linux_armv7.tar.gz"
     in_subdir = 2
 
+    autoupdate.asset.i386 = "^AdGuardHome_linux_386.tar.gz$"
     autoupdate.asset.amd64 = "^AdGuardHome_linux_amd64.tar.gz$"
     autoupdate.asset.arm64 = "^AdGuardHome_linux_arm64.tar.gz$"
     autoupdate.asset.armhf = "^AdGuardHome_linux_armv7.tar.gz$"
