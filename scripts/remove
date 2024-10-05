@@ -1,26 +1,20 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC START
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
 # PROCESS CLOSING PORTS
 #=================================================
-ynh_script_progression --message="Closing ports..." --weight=2
+ynh_script_progression "Closing ports..."
 
 # close ports
-ynh_print_info --message="Closing port 53..."
-ynh_exec_warn_less yunohost firewall disallow Both 53
+ynh_print_info "Closing port 53..."
+ynh_hide_warnings yunohost firewall disallow Both 53
 if [ "$dns_over_https" == "true" ]; then
-    ynh_print_info --message="Closing DoH and DoQ ports..."
-    ynh_exec_warn_less yunohost firewall disallow Both "$port_dns_over_tls" --no-reload
-    ynh_exec_warn_less yunohost firewall disallow UDP "$port_dns_over_quic"
+    ynh_print_info "Closing DoH and DoQ ports..."
+    ynh_hide_warnings yunohost firewall disallow Both "$port_dns_over_tls" --no-reload
+    ynh_hide_warnings yunohost firewall disallow UDP "$port_dns_over_quic"
 fi
 
 #=================================================
@@ -30,26 +24,26 @@ fi
 #=================================================
 
 # Remove the service from the list of services known by YunoHost (added from `yunohost service add`)
-ynh_script_progression --message="Removing $app service integration..." --weight=1
+ynh_script_progression "Removing $app service integration..."
 yunohost service remove "$app"
 
-ynh_script_progression --message="Removing system configurations related to $app..." --weight=1
+ynh_script_progression "Removing system configurations related to $app..."
 
 # Remove the dedicated systemd config
-ynh_remove_systemd_config
+ynh_config_remove_systemd
 
 # Remove the dedicated NGINX config
-ynh_remove_nginx_config
+ynh_config_remove_nginx
 
 #=================================================
 # REMOVE VARIOUS FILES specific to the app...
 #=================================================
 
 # remove the kernel config file for DoQ
-ynh_secure_remove --file="/etc/sysctl.d/10-adguardhome.conf"
+ynh_safe_rm "/etc/sysctl.d/10-adguardhome.conf"
 
 # Remove the dedicated dnsmasq config for AdGuardHome
-ynh_secure_remove --file="/etc/dnsmasq.d/$app"
+ynh_safe_rm "/etc/dnsmasq.d/$app"
 
 systemctl restart dnsmasq
 
@@ -57,4 +51,4 @@ systemctl restart dnsmasq
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Removal of $app completed" --last
+ynh_script_progression "Removal of $app completed"
