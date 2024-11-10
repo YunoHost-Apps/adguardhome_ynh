@@ -24,7 +24,7 @@ It operates as a DNS server that re-routes tracking domains to a "black hole", t
 However, Dnsmasq is not disabled and will continue to function as the *localhost DNS server*.
 
 
-**Versión actual:** 0.107.52~ynh2
+**Versión actual:** 0.107.54~ynh1
 
 ## Capturas
 
@@ -41,7 +41,7 @@ However, Dnsmasq is not disabled and will continue to function as the *localhost
 
 ## Información para desarrolladores
 
-Por favor enviar sus correcciones a la [`branch testing`](https://github.com/YunoHost-Apps/adguardhome_ynh/tree/testing
+Por favor enviar sus correcciones a la [rama `testing`](https://github.com/YunoHost-Apps/adguardhome_ynh/tree/testing).
 
 Para probar la rama `testing`, sigue asÍ:
 
