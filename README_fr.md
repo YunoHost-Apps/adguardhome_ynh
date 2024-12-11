@@ -5,7 +5,9 @@ Il NE doit PAS être modifié à la main.
 
 # AdGuard Home pour YunoHost
 
-[![Niveau d’intégration](https://dash.yunohost.org/integration/adguardhome.svg)](https://ci-apps.yunohost.org/ci/apps/adguardhome/) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/adguardhome.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/adguardhome.maintain.svg)
+[![Niveau d’intégration](https://apps.yunohost.org/badge/integration/adguardhome)](https://ci-apps.yunohost.org/ci/apps/adguardhome/)
+![Statut du fonctionnement](https://apps.yunohost.org/badge/state/adguardhome)
+![Statut de maintenance](https://apps.yunohost.org/badge/maintained/adguardhome)
 
 [![Installer AdGuard Home avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=adguardhome)
 
@@ -24,7 +26,7 @@ Il fonctionne comme un serveur DNS qui redirige les domaines de pistage vers un 
 Cependant, Dnsmasq n'est pas désactivé et continuera à fonctionner en tant que *serveur DNS localhost*.
 
 
-**Version incluse :** 0.107.54~ynh1
+**Version incluse :** 0.107.55~ynh1
 
 ## Captures d’écran
 
