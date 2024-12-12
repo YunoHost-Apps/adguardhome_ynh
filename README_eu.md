@@ -5,7 +5,9 @@ EZ editatu eskuz.
 
 # AdGuard Home YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/adguardhome.svg)](https://ci-apps.yunohost.org/ci/apps/adguardhome/) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/adguardhome.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/adguardhome.maintain.svg)
+[![Integrazio maila](https://apps.yunohost.org/badge/integration/adguardhome)](https://ci-apps.yunohost.org/ci/apps/adguardhome/)
+![Funtzionamendu egoera](https://apps.yunohost.org/badge/state/adguardhome)
+![Mantentze egoera](https://apps.yunohost.org/badge/maintained/adguardhome)
 
 [![Instalatu AdGuard Home YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=adguardhome)
 
@@ -24,7 +26,7 @@ It operates as a DNS server that re-routes tracking domains to a "black hole", t
 However, Dnsmasq is not disabled and will continue to function as the *localhost DNS server*.
 
 
-**Paketatutako bertsioa:** 0.107.54~ynh1
+**Paketatutako bertsioa:** 0.107.55~ynh1
 
 ## Pantaila-argazkiak
 
