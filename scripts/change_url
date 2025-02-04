@@ -1,50 +1,40 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC STARTING
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# STANDARD MODIFICATIONS
-#=================================================
 # STOP SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Stopping a systemd service..." --weight=1
+ynh_script_progression "Stopping $app's systemd service..."
 
-ynh_systemd_action --service_name="$app" --action="stop" --log_path="systemd"
+ynh_systemctl --service="$app" --action="stop" --log_path="systemd"
 
 #=================================================
 # MODIFY URL IN NGINX CONF
 #=================================================
-ynh_script_progression --message="Updating NGINX web server configuration..." --weight=1
+ynh_script_progression "Updating NGINX web server configuration..."
 
-ynh_change_url_nginx_config
+ynh_config_change_url_nginx
 
 #=================================================
 # SETUP SSOWAT
 #=================================================
-ynh_script_progression --message="Configuring permissions..."
+ynh_script_progression "Configuring permissions..."
 
 # Temporary fix for the API permission (workaround for https://github.com/YunoHost/issues/issues/2294 )
 ynh_permission_url --permission="api" --url="re:$new_domain\/control" --auth_header="false" --clear_urls
 ynh_permission_url --permission="doh" --url="re:$new_domain\/dns-query" --auth_header="false" --clear_urls
 
 #=================================================
-# GENERIC FINALISATION
-#=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..." --weight=1
+ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemd_action --service_name="$app" --action="start" --log_path="systemd"
+ynh_systemctl --service="$app" --action="start" --log_path="systemd"
 
 #=================================================
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Change of URL completed for $app" --last
+ynh_script_progression "Change of URL completed for $app"
