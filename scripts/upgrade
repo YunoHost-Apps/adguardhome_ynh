@@ -79,6 +79,9 @@ if [ -z "${new_password:-}" ]; then
 	ynh_app_setting_set --app="$app" --key=new_password --value=""
 fi
 
+# workaround for https://github.com/YunoHost/issues/issues/2422
+ynh_app_setting_set --key=protect_against_basic_auth_spoofing --value=False
+
 #=================================================
 # PROCESS OPENING/CLOSING PORTS
 #=================================================
