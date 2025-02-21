@@ -2,35 +2,36 @@ test_format = 1.0
 
 [default]
 
-# -------------------------------
-# Default args to use for install
-# -------------------------------
+    # -------------------------------
+    # Default args to use for install
+    # -------------------------------
 
-# false by default
-args.expose_port_53 = 1
-args.dns_over_https = 1
+    # false by default
+    args.expose_port_53 = 1
+    args.dns_over_https = 1
 
-# -------------------------------
-# Commits to test upgrade from
-# -------------------------------
+    # -------------------------------
+    # Commits to test upgrade from
+    # -------------------------------
 
-# test_upgrade_from.c1b81566.name = "Upgrade from 0.107.43~ynh3"
+    # test_upgrade_from.c1b81566.name = "Upgrade from 0.107.43~ynh3"
+    test_upgrade_from.16bb0ea05f7a0a1b4376d6037199e12ed3d1e31e.name = "Upgrade from 0.107.56~ynh2"
 
-# -------------------------------
-# additional tests suite
-# -------------------------------
+    # -------------------------------
+    # additional tests suite
+    # -------------------------------
 
-[expose_port_53]
-only = ["install.root"]
-args.expose_port_53 = 0
-args.dns_over_https = 1
+    [expose_port_53]
+    only = ["install.root"]
+    args.expose_port_53 = 0
+    args.dns_over_https = 1
 
-[open_doh_doq_ports]
-only = ["install.root"]
-args.expose_port_53 = 1
-args.dns_over_https = 0
+    [open_doh_doq_ports]
+    only = ["install.root"]
+    args.expose_port_53 = 1
+    args.dns_over_https = 0
 
-[open_both_port_53_and_doh_doq_ports]
-only = ["install.root"]
-args.expose_port_53 = 0
-args.dns_over_https = 0
+    [open_both_port_53_and_doh_doq_ports]
+    only = ["install.root"]
+    args.expose_port_53 = 0
+    args.dns_over_https = 0
