@@ -26,7 +26,7 @@ It operates as a DNS server that re-routes tracking domains to a "black hole", t
 However, Dnsmasq is not disabled and will continue to function as the *localhost DNS server*.
 
 
-**Versión proporcionada:** 0.107.57~ynh1
+**Versión proporcionada:** 0.107.58~ynh1
 
 ## Capturas de pantalla
 
