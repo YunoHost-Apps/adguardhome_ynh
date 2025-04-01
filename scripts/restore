@@ -66,10 +66,6 @@ ipv6_addr=$(process_ips "$(ip -6 address show "$ipv6_interface" 2> /dev/null | g
 # update the IP adresses in the AGH config file
 update_agh_ip_config
 
-# this will be treated as a security issue.
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R "$app:$app" "$install_dir"
 setcap 'CAP_NET_BIND_SERVICE=+eip CAP_NET_RAW=+eip' "$install_dir/AdGuardHome"
 
 systemctl restart dnsmasq
