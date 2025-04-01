@@ -14,7 +14,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression --message="Storing installation settings..." --weight=2
 
-if [[ $dns_over_https == 0 ]]; then
+if [[ $dns_over_https == 1 ]]; then
     dns_over_https="true"
 else
     dns_over_https="false"
@@ -22,7 +22,7 @@ fi
 
 ynh_app_setting_set --app="$app" --key=dns_over_https --value="$dns_over_https"
 
-if [[ $expose_port_53 == 0 ]]; then
+if [[ $expose_port_53 == 1 ]]; then
     expose_port_53="true"
 else
     expose_port_53="false"
