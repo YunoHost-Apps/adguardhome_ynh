@@ -1,18 +1,12 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC START
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
 # STORE SETTINGS FROM MANIFEST
 #=================================================
-ynh_script_progression --message="Storing installation settings..." --weight=2
+ynh_script_progression "Storing installation settings..."
 
 if [[ $dns_over_https == 1 ]]; then
     dns_over_https="true"
@@ -20,7 +14,7 @@ else
     dns_over_https="false"
 fi
 
-ynh_app_setting_set --app="$app" --key=dns_over_https --value="$dns_over_https"
+ynh_app_setting_set --key=dns_over_https --value="$dns_over_https"
 
 if [[ $expose_port_53 == 1 ]]; then
     expose_port_53="true"
@@ -28,9 +22,9 @@ else
     expose_port_53="false"
 fi
 
-ynh_app_setting_set --app="$app" --key=expose_port_53 --value="$expose_port_53"
+ynh_app_setting_set --key=expose_port_53 --value="$expose_port_53"
 
-ynh_app_setting_set --app="$app" --key=new_password --value=""
+ynh_app_setting_set --key=new_password --value=""
 
 # workaround for https://github.com/YunoHost/issues/issues/2422
 ynh_app_setting_set --key=protect_against_basic_auth_spoofing --value=False
@@ -38,52 +32,49 @@ ynh_app_setting_set --key=protect_against_basic_auth_spoofing --value=False
 #=================================================
 # PROCESS OPENING/CLOSING PORTS
 #=================================================
-ynh_script_progression --message="Process opening & closing ports..." --weight=2
+ynh_script_progression "Process opening & closing ports..."
 
 # if the port 53 is not open, open it, it's mandatory to use AGH
 if ! yunohost firewall list | grep -q " 53$"; then
-    ynh_print_info --message="Opening port 53..."
-    ynh_exec_warn_less yunohost firewall allow Both 53
+    ynh_print_info "Opening port 53..."
+    ynh_hide_warnings yunohost firewall allow Both 53
 fi
 
 if [ "${dns_over_https:-}" = true ]; then
 	# if DoH and DoQ are closed
 	if ! yunohost firewall list | grep -q " $port_dns_over_tls$" && ! yunohost firewall list | grep -q " $port_dns_over_quic$"; then
-		ynh_print_info --message="Opening DoH and DoQ ports..."
-		ynh_exec_warn_less yunohost firewall allow Both "$port_dns_over_tls" --no-reload
-		ynh_exec_warn_less yunohost firewall allow UDP "$port_dns_over_quic"
+		ynh_print_info "Opening DoH and DoQ ports..."
+		ynh_hide_warnings yunohost firewall allow Both "$port_dns_over_tls" --no-reload
+		ynh_hide_warnings yunohost firewall allow UDP "$port_dns_over_quic"
 	else
 		# no need to open the ports, as they were opened at the 'Provisioning ports' step
-		ynh_print_info --message="DoH and DoQ ports are open."
+		ynh_print_info "DoH and DoQ ports are open."
 	fi
 else
     # if dns_over_https is false, we need to close ports,
     # as they were opened at the 'Provisioning ports' step
-    ynh_print_info --message="Closing DoH and DoQ ports..."
-    ynh_exec_warn_less yunohost firewall disallow Both "$port_dns_over_tls" --no-reload
-    ynh_exec_warn_less yunohost firewall disallow UDP "$port_dns_over_quic"
+    ynh_print_info "Closing DoH and DoQ ports..."
+    ynh_hide_warnings yunohost firewall disallow Both "$port_dns_over_tls" --no-reload
+    ynh_hide_warnings yunohost firewall disallow UDP "$port_dns_over_quic"
 fi
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Setting up source files..." --weight=4
+ynh_script_progression "Setting up source files..."
 
 # Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source --dest_dir="$install_dir"
-
-chmod -R o-rwx "$install_dir"
-chown -R "$app:$app" "$install_dir"
 
 setcap 'CAP_NET_BIND_SERVICE=+eip CAP_NET_RAW=+eip' "$install_dir/AdGuardHome"
 
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Configuring NGINX web server..." --weight=3
+ynh_script_progression "Configuring NGINX web server..."
 
 # Create a dedicated NGINX config
-ynh_add_nginx_config
+ynh_config_add_nginx
 
 #=================================================
 # SPECIFIC SETUP
@@ -94,19 +85,19 @@ ynh_add_nginx_config
 usermod -a -G ssl-cert "$app"
 
 # adding a kernel config file for DoQ
-ynh_add_config --template="10-adguardhome.conf" --destination="/etc/sysctl.d/10-adguardhome.conf"
+ynh_config_add --template="10-adguardhome.conf" --destination="/etc/sysctl.d/10-adguardhome.conf"
 
 #=================================================
 # ADD A CONFIGURATION
 #=================================================
-ynh_script_progression --message="Adding a configuration file..." --weight=1
+ynh_script_progression "Adding $app's configuration..."
 
 # user's password encryption
 password=$(python3 -c "import bcrypt; print(bcrypt.hashpw(b\"$password\", bcrypt.gensalt(rounds=10)).decode())")
-ynh_app_setting_set --app="$app" --key=password --value="$password"
+ynh_app_setting_set --key=password --value="$password"
 
 # Main config File
-ynh_add_config --template="AdGuardHome.yaml" --destination="$install_dir/AdGuardHome.yaml"
+ynh_config_add --template="AdGuardHome.yaml" --destination="$install_dir/AdGuardHome.yaml"
 
 # get the name of the network interface in IPv4 and IPv6
 ipv4_interface="$(get_network_interface 4)"
@@ -132,10 +123,10 @@ chown -R "$app:$app" "$install_dir/AdGuardHome.yaml"
 #=================================================
 # SETUP SYSTEMD
 #=================================================
-ynh_script_progression --message="Configuring a systemd service..." --weight=1
+ynh_script_progression "Configuring $app's systemd service..."
 
 # Create a dedicated systemd config
-ynh_add_systemd_config
+ynh_config_add_systemd
 
 # declare needs_exposed_ports according to real user need
 if [ "$dns_over_https" == "true" ] && [ "$expose_port_53" == "true" ]; then
@@ -151,13 +142,13 @@ fi
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..." --weight=2
+ynh_script_progression "Starting $app's systemd service..."
 
 # Start a systemd service
-ynh_systemd_action --service_name="$app" --action="restart" --log_path=systemd
+ynh_systemctl --service="$app" --action="restart" --log_path=systemd
 
 #=================================================
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Installation of $app completed" --last
+ynh_script_progression "Installation of $app completed"
