@@ -3,7 +3,7 @@
 source _common.sh
 source /usr/share/yunohost/helpers
 
-#REMOVEME? ynh_abort_if_errors
+ynh_abort_if_errors
 
 # import needed settings
 port_dns_over_tls=$(ynh_app_setting_get --key=port_dns_over_tls)
