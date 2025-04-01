@@ -15,7 +15,6 @@ get_network_interface(){
         echo "$(echo "$(ip -4 route get 1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+' || true)"
     else
         # shellcheck disable=SC2005
-
         echo "$(echo "$(ip -6 route get ::1.2.3.4 2> /dev/null)" | head -n1 | grep -oP '(?<=dev )\w+' || true)"
     fi
 }
@@ -76,7 +75,7 @@ process_ips(){
     # for each IP
     for ip in $ips; do
         # check if the so-called IP really is one
-        if ynh_validate_ip --family=4 --ip_address="$ip" || ynh_validate_ip6 --ip_address="$ip"; then
+        if ynh_validate_ip --family=4 --ip_address="$ip" || ynh_validate_ip --family=6 --ip_address="$ip"; then
             # we can't use IPv6 LLA for DNS: https://github.com/AdguardTeam/AdGuardHome/issues/2926#issuecomment-1284489380
             # if we try to bind port 53 on a fe80:: address, AGH crashes
             if ! [[ "$ip" =~ ^fe80:* ]]; then
