@@ -3,7 +3,7 @@ Este archivo README esta generado automaticamente<https://github.com/YunoHost/ap
 No se debe editar a mano.
 -->
 
-# AdGuard Home para Yunohost
+# AdGuard Home para YunoHost
 
 [![Nivel de integración](https://apps.yunohost.org/badge/integration/adguardhome)](https://ci-apps.yunohost.org/ci/apps/adguardhome/)
 ![Estado funcional](https://apps.yunohost.org/badge/state/adguardhome)
