@@ -7,7 +7,7 @@ description.fr = "Serveur DNS, bloqueur de publicités et trackers"
 id = "adguardhome"
 name = "AdGuard Home"
 
-version = "0.107.55~ynh1"
+version = "0.107.59~ynh1"
 
 maintainers = [ "ddataa", "OniriCorpe" ]
 
@@ -67,14 +67,14 @@ type = "boolean"
 
 [resources]
     [resources.sources.main]
-    i386.sha256 = "1d651344f91aaa4dba03679e375dc350d28134cfa30c16b952eaa3ad8ccf2b99"
-    i386.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.55/AdGuardHome_linux_386.tar.gz"
-    amd64.sha256 = "125fc801e9a82323a0418a6623517ce2a4c5b5e1d3d07de7718a765b1cd97096"
-    amd64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.55/AdGuardHome_linux_amd64.tar.gz"
-    arm64.sha256 = "007b106d3587d6635a7e146da46637d60f3d8cfd3b4d99cbe5f26f4b411b2c35"
-    arm64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.55/AdGuardHome_linux_arm64.tar.gz"
-    armhf.sha256 = "366d3d8a1e788d910330908126cb78dd297677abd55c27459e458157895e867b"
-    armhf.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.55/AdGuardHome_linux_armv7.tar.gz"
+    i386.sha256 = "f25c8e3021cb0e849d8ceb2b060d5fa0511b1edb2a7094b706a6bfbcf482a4f5"
+    i386.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.59/AdGuardHome_linux_386.tar.gz"
+    amd64.sha256 = "47af673fed365e2704854c6aadcd2c23913411e76efce31b7bcf16755bb80797"
+    amd64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.59/AdGuardHome_linux_amd64.tar.gz"
+    arm64.sha256 = "efc7d2e7e0507af1269f36f9f04274f9097fa3fe0ae1f0c18d2be586ff452c5c"
+    arm64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.59/AdGuardHome_linux_arm64.tar.gz"
+    armhf.sha256 = "c0ae9af3587fd324cec18b0ee04213902fb3cd268597087ea7cfb71aab8e21a0"
+    armhf.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.59/AdGuardHome_linux_armv7.tar.gz"
     in_subdir = 2
 
     autoupdate.asset.i386 = "^AdGuardHome_linux_386.tar.gz$"

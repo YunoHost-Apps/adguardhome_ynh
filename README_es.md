@@ -3,7 +3,7 @@ Este archivo README esta generado automaticamente<https://github.com/YunoHost/ap
 No se debe editar a mano.
 -->
 
-# AdGuard Home para Yunohost
+# AdGuard Home para YunoHost
 
 [![Nivel de integración](https://apps.yunohost.org/badge/integration/adguardhome)](https://ci-apps.yunohost.org/ci/apps/adguardhome/)
 ![Estado funcional](https://apps.yunohost.org/badge/state/adguardhome)
@@ -26,7 +26,7 @@ It operates as a DNS server that re-routes tracking domains to a "black hole", t
 However, Dnsmasq is not disabled and will continue to function as the *localhost DNS server*.
 
 
-**Versión actual:** 0.107.55~ynh1
+**Versión actual:** 0.107.59~ynh1
 
 ## Capturas
 

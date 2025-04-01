@@ -26,7 +26,7 @@ It operates as a DNS server that re-routes tracking domains to a "black hole", t
 However, Dnsmasq is not disabled and will continue to function as the *localhost DNS server*.
 
 
-**Paketatutako bertsioa:** 0.107.55~ynh1
+**Paketatutako bertsioa:** 0.107.59~ynh1
 
 ## Pantaila-argazkiak
 
@@ -45,7 +45,7 @@ However, Dnsmasq is not disabled and will continue to function as the *localhost
 
 Bidali `pull request`a [`testing` abarrera](https://github.com/YunoHost-Apps/adguardhome_ynh/tree/testing).
 
-`testing` abarra probatzeko, ondorengoa egin:
+`testing` abarra probatzeko, honakoa egin:
 
 ```bash
 sudo yunohost app install https://github.com/YunoHost-Apps/adguardhome_ynh/tree/testing --debug
