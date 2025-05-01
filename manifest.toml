@@ -19,15 +19,17 @@ userdoc = "https://kb.adguard.com/en"
 website = "https://adguard.com/adguard-home.html"
 
 [integration]
+yunohost = ">= 12.0.2"
+helpers_version = "2.1"
 architectures = "all"
-disk = "50M"
-ldap = false
 multi_instance = false
+
+ldap = false
+sso = false
+
+disk = "50M"
 ram.build = "200M"
 ram.runtime = "200M"
-sso = false
-yunohost = ">= 11.2.18"
-helpers_version = "2.1"
 
 [install]
     [install.domain]
