@@ -21,7 +21,7 @@ Vous devez savoir que lorsque vous exposez votre serveur DNS sur Internet, quico
 Ce risque est grandement limité par le système de limitation du nombre de requêtes (rate limiting), qui est consifuré pr défaut à 20 requêtes par secondes par client :
 `Settings → DNS settings → DNS server configuration → Rate limit`
 
-Vous pouvez complètement ou presque complètement ces risques d'usages non autorisés à l'aide de la section [Liste blanche](#liste-blanche) plus loin dans cette documentation.
+Vous pouvez complètement ou presque complètement réduire ces risques d'usages non autorisés à l'aide de la section [Liste blanche](#liste-blanche) plus loin dans cette documentation.
 
 Pour utiliser AdGuard Home sur votre réseau domestique si vous vous auto-hébergez à la maison, il **n'est pas nécessaire** d'activer ce paramètre.  
 Vous avez simplement à utiliser l'adresse IP privée de votre serveur (telle que `192.168.0.1` ou similaire) en tant qu'adresse IP du serveur DNS de vos appareils électroniques domestiques.  
@@ -30,7 +30,7 @@ La bonne adresse à utiliser est indiquée en haut de la page "Setup Guide" de v
 Si vous voulez exposer le port 53 sur Internet, vous devrez utiliser l'adresse IP publique de votre serveur (la même que celle configurée dans les paramètres DNS de votre nom de domaine) sur les apapreils situés ou pouvant se situer à l'extérieur de votre domicile.
 
 **Avertissement :** vous ne devez pas avoir d'adresse IP publique dans votre configuration AdGuard Home si le port 53 n'est pas exposé sur Internet (sinon AGH crash).  
-**Veuillez noter :** elles devraient être automatiquement lors de la mise à jour du packge ou en modifiant ce réglage de l'exposition du port 53, mais c'est dans la doc au cas où.  
+**Veuillez noter :** elles devraient être automatiquement lors de la mise à jour du package ou en modifiant ce réglage de l'exposition du port 53, mais c'est dans la doc au cas où.  
 Vous pouvez les retirer dans la configuration située à `/var/www/adguardhome/AdGuardHome.yaml` dans la section `dns: bind_hosts:`.  
 Si une IP **ne débute pas** par ce qui suit, c'est une IP publique :
 
@@ -53,7 +53,7 @@ Ce paramètre est **désactivé** par défaut.
 
 Si activé, vous devez savoir que quiconque connaît le nom de domaine de votre AdGuard Home peut l'utiliser. **Il peut être détourné** afin de réaliser des [attaques par amplification DNS](https://www.malekal.com/attaque-dos-amplification) !
 
-Il est vraiment importantd'utuliser le panneau de configuration inclus dans l'interface d'administration Web de YunoHost pour activer ou désactiver ce paramètre, et donc **NE PAS** utiliser le réglage inclus dans AdGuard Home.  
+Il est vraiment important d'utiliser le panneau de configuration inclus dans l'interface d'administration Web de YunoHost pour activer ou désactiver ce paramètre, et donc **NE PAS** utiliser le réglage inclus dans AdGuard Home.  
 Cela en raison de la nécessité que YunoHost réalise des réglages automatisés tels que ouvrir ou fermer des ports et rafraichir la liste des IP dans le fichier de configuration de AGH, qui ne peuvent être réalisés qu'en passant par ce paneau de configuration dédié.
 
 Si vous auto-hébergez votre serveur à la maison, afin de pouvoir utiliser de DoT ou DoQ, vous devez aussi ouvrir vous même les ports suivant dans les réglages de votre routeur :
@@ -69,7 +69,7 @@ Puis vous pourrez utiliser les adresses suivantes en tant que serveur DNS DoH, D
 
 ## Liste blanche
 
-Sir votre prot 53 est exposé sur Internet, vous pouvez sécuriser votre instance AdGuard Home à l'aide de la liste blanche, afin d'empêcher des usages non autorisés.
+Si votre port 53 est exposé sur Internet, vous pouvez sécuriser votre instance AdGuard Home à l'aide de la liste blanche, afin d'empêcher des usages non autorisés.
 
 Nous avons déjà reçu des messages d'utilisateurices de YunoHost interloqué-es en se rendant compte que leur instance AGH recevait des dizaines de milliers de requêtes inconnues par jour, cela étant du à l'exposition publique du port 53 sur Internet et au manque de sécurisation de leur instance.
 
@@ -91,7 +91,7 @@ fc00::/7
 fe80::/16
 ```
 
-**Note :** le slash `/` et le numéro le suivant, après une adresse IP, representent le masque de sous réseau, ceci est appelé la notation CIDR. Si vous voulez en savoir plus sur la notation CIDR, [vous pouvez lire cet article](https://whatismyipaddress.com/cidr) (en anglais).
+**Note :** le slash `/` et le numéro le suivant, après une adresse IP, représentent le masque de sous réseau, ceci est appelé la notation CIDR. Si vous voulez en savoir plus sur la notation CIDR, [vous pouvez lire cet article](https://whatismyipaddress.com/cidr) (en anglais).
 
 ### Authoriser quelques adresses IP publiques
 
