@@ -17,7 +17,7 @@ Android offers a Private DNS feature starting its version 9 and above.
 This Private DNS setting will only work for DNS-over-TLS with Adguard Home, since DNS-over-HTTPS is limited to a couple of hardcoded providers.
 Make sure to have followed the instructions of the Preamble above.
 
-⚠️ Note: You want to use the [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid) option to whitelist your client with DNS-over-TLS since YunoHost can't handle wildcard domain names.
+⚠️ Note: You can't use the [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid) option to whitelist your client with DNS-over-TLS since YunoHost can't handle wildcard domain names.
 
 Android being available under various flavours depending on your phone manufacturer, the location of that setting can vary.
 It is generally along the lines of `Settings → Connections → More connection parameters → Private DNS`.
