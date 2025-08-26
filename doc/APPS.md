@@ -4,7 +4,7 @@
 
 To use the DNS-over-HTTPS/TLS/QUIC functionality, you need to enable the "Enable DNS-over-HTTPS/TLS/QUIC?" option in your YunoHost admin panel, in the AdGuard Home app page.
 
-If you're reading this using the YunoHost interface, you should already be in the right page: just click on the [AdGuard Home configuration](#/apps/__APP__/main) option at the top of this text, toggle on "Activate DNS over HTTP/TLS/QUIC?" then "Save".
+If you're reading this using the YunoHost interface, you should already be in the right page: just click on the [AdGuard Home configuration](#/apps/__APP__/main) option at the top of this text, toggle on "Activate DNS over HTTP/TLS/QUIC?" then "Save".  
 Else, open The YunoHost Webadmin and follow this path: `Applications → AdGuard Home → AdGuard Home configuration`.
 
 From the command line interface: `yunohost app config set __APP__ main.options.dns_over_https -v 1`
@@ -13,19 +13,19 @@ From the command line interface: `yunohost app config set __APP__ main.options.d
 
 ### Built-in Private DNS
 
-Android offers a Private DNS feature starting its version 9 and above.
-This Private DNS setting will only work for DNS-over-TLS with Adguard Home, since DNS-over-HTTPS is limited to a couple of hardcoded providers.
+Android offers a Private DNS feature starting its version 9 and above.  
+This Private DNS setting will only work for DNS-over-TLS with Adguard Home, since DNS-over-HTTPS is limited to a couple of hardcoded providers.  
 Make sure to have followed the instructions of the Preamble above.
 
 ⚠️ Note: You can't use the [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid) option to whitelist your client with DNS-over-TLS since YunoHost can't handle wildcard domain names.
 
 Android being available under various flavours depending on your phone manufacturer, the location of that setting can vary.
-It is generally along the lines of `Settings → Connections → More connection parameters → Private DNS`.
+It is generally along the lines of `Settings → Connections → More connection parameters → Private DNS`.  
 There, select "Hostname of the private DNS provider" and enter your Adguard Home's domain: `__DOMAIN__` (no protocol, no slash, only the domain).
 
 ### Intra
 
-Intra by [Jigsaw Operations LLC](https://jigsaw.google.com) can be downloaded from [Google Play](https://play.google.com/store/apps/details?id=app.intra) or [F-Droid](https://f-droid.org/packages/app.intra/).
+Intra by [Jigsaw Operations LLC](https://jigsaw.google.com) can be downloaded from [Google Play](https://play.google.com/store/apps/details?id=app.intra) or [F-Droid](https://f-droid.org/packages/app.intra/).  
 This free app can connect you to your Adguard Home server through DNS-over-HTTPS.
 
 To configure it, once installed:
