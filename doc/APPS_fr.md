@@ -32,6 +32,7 @@ Pour la configurer, une fois installée :
 - Choisissez `URL de serveur personnaliséer` et encodez votre URL :
   - `https://__DOMAIN__/dns-query`
   - Si vous souhaitez suivre les requêtes de votre appareil ou utiliser des règles personnalisées, remplacez [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid) dans l'URL suivante: `https://__DOMAIN__/dns-query/ClientID`,
+    - N'oubliez pas d'ajouter un ClientID identique dans votre liste blanche : `Settings → DNS settings → Access settings → Allowed clients`
 - Retournez au menu principal de l'app, et activez-la avec l'interrupteur en haut à droite de l'écran.
 
 Techniquement, elle créé une connexion VPN locale pour imposer l'usage de votre serveur DNS : une icône 🔑 apparaîtra en haut de votre écran, une fois activée.
