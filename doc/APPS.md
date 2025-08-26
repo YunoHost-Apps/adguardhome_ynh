@@ -2,7 +2,7 @@
 
 ## Preamble
 
-To use the DNS-over-HTTPS/TLS/QUIC functionality, you need to enable it from your app's YunoHost configuration panel.
+To use the DNS-over-HTTPS/TLS/QUIC functionality, you need to enable the "Enable DNS-over-HTTPS/TLS/QUIC?" option in your YunoHost admin panel, in the AdGuard Home app page.
 
 If you're reading this using the YunoHost interface, you should already be in the right page: just click on the [AdGuard Home configuration](#/apps/__APP__/main) option at the top of this text, toggle on "Activate DNS over HTTP/TLS/QUIC?" then "Save".
 Else, open The YunoHost Webadmin and follow this path: `Applications → AdGuard Home → AdGuard Home configuration`.
@@ -16,6 +16,8 @@ From the command line interface: `yunohost app config set __APP__ main.options.d
 Android offers a Private DNS feature starting its version 9 and above.
 This Private DNS setting will only work for DNS-over-TLS with Adguard Home, since DNS-over-HTTPS is limited to a couple of hardcoded providers.
 Make sure to have followed the instructions of the Preamble above.
+
+⚠️ Note: You want to use the [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid) option to whitelist your client with DNS-over-TLS since YunoHost can't handle wildcard domain names.
 
 Android being available under various flavours depending on your phone manufacturer, the location of that setting can vary.
 It is generally along the lines of `Settings → Connections → More connection parameters → Private DNS`.
@@ -65,7 +67,7 @@ Make sure you have followed the instructions of the Preamble above, then go to t
 - Hostname: keep it that way
 - HTTPS port: same, keep it that way
 - Protocol: now you have to made a choice: select either DNS-over-HTTPS or DNS-over-TLS
-  - If you want to use the [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid) option to whitelist your client, you can't choose DNS-over-TLS since YunoHost can't handle wildcard domain names, so mandatory DNS-over-HTTPS for you
+  - ⚠️ If you want to use the [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid) option to whitelist your client, you can't choose DNS-over-TLS since YunoHost can't handle wildcard domain names, so mandatory DNS-over-HTTPS for you
   - If you don't know which one to choose, here's some help:
     - As stated above, pick DNS-over-HTTPS if you want to use the ClientID feature to authenticate your requests
     - Pick DNS-over-HTTPS if you are likely to use networks that filter the DNS-over-TLS port, such as companies, schools, etc.

@@ -2,7 +2,8 @@
 
 ## Préambule
 
-Pour utiliser la fonctionnalité DNS sur HTTP/TLS/QUIC, vous devez l'activer dans l'interface d'administration de YunoHost.
+Pour utiliser la fonctionnalité DNS sur HTTP/TLS/QUIC, vous devez activer l'option "Activer le DNS-sur-HTTPS/TLS/QUIC ?" dans le panneau d'administration de YunoHost à la page de l'app AdGuard Home.
+
 Si vous lisez ceci via l'interface web de YunoHost, vous devriez déjà être au bon endroit: cliquez simplement sur l'option [AdGuard Home configuration](#/apps/adguardhome/main) au dessus de ce texte, activez "Activate DNS over HTTP/TLS/QUIC?" puis cliquez sur "Save".
 Sinon, ouvrez l'interface d'administration Web et suivez ce chemin : `Applications → AdGuard Home → AdGuard Home configuration`
 
@@ -14,6 +15,8 @@ Depuis la ligne de commande: `yunohost app config set __APP__ main.options.dns_o
 
 Android propose une fonctionalité nommée **DNS privé** depuis sa version 9.
 Ce paramètre **DNS privé** ne fonctionnera que pour *DNS-over-TLS*, car *DNS-over-HTTPS* n'est limité qu'à une paire de fournisseurs figés dans le code.
+
+⚠️ Note : Vous ne pouvez pas utiliser la fonctionnalité [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid) afin de mettre vos appareils sur liste blanche avec DNS-over-TLS car YunoHost ne peut pas gérer les noms de domaines "wildcard".
 
 Android étant distribuée en de multiples variantes selon les fournisseurs d'appareils, l'emplacement de ce paramètre peut varier.
 Il est peu ou prou placé dans `Paramètres → Connexions → Plus de paramètres de connexion → DNS privé`
@@ -63,7 +66,7 @@ Assurez-vous d'avoir suivi les instructions du Préambule ci-dessus, puis rendez
 - Hostname : laisser comme tel
 - HTTPS port : laisser aussi comme tel
 - Protocol : vous devez désormais faire un choix entre DNS-over-HTTPS et DNS-over-TLS
-  - Si vous désirez utiliser la fonctionnalité [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid) afin de mettre vos appareils sur liste blanche, vous ne pouvez pas choisir DNS-over-TLS car YunoHost ne peut pas gérer les noms de domaines "wildcard", l'usage du DNS-over-HTTPS sera donc obligatoire pour vous
+  - ⚠️ Si vous désirez utiliser la fonctionnalité [ClientID](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients#clientid) afin de mettre vos appareils sur liste blanche, vous ne pouvez pas choisir DNS-over-TLS car YunoHost ne peut pas gérer les noms de domaines "wildcard", l'usage du DNS-over-HTTPS sera donc obligatoire pour vous
   - Si vous ne savez pas lequel choisir, voici un peu d'aide :
     - Comme expliqué ci-dessus, choisissez DNS-over-HTTPS si vous souhaitez utiliser la fonctionnalité ClientID pour authentifier vos requêtes
     - Choisissez DNS-over-HTTPS si vous devez fréquemment utiliser des réseaux succeptibles de filtrer le port du DNS-over-TLS, tels que ceux des entreprises, des écoles, etc.
