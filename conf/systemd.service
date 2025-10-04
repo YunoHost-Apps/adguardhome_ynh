@@ -13,6 +13,9 @@ WorkingDirectory=__INSTALL_DIR__/
 ExecStart=__INSTALL_DIR__/AdGuardHome --no-check-update
 Restart=always
 RestartSec=10
+MemoryHigh=500M
+MemoryMax=700M
+CPUQuota=40%
 #EnvironmentFile=-/etc/sysconfig/AdGuardHome
 
 # Sandboxing options to harden security
