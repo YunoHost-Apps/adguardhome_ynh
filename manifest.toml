@@ -29,7 +29,7 @@ sso = false
 
 disk = "50M"
 ram.build = "200M"
-ram.runtime = "200M"
+ram.runtime = "300M"
 
 [install]
     [install.domain]
