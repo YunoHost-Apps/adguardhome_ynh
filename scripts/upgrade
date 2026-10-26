@@ -168,6 +168,8 @@ update_agh_ip_config
 chmod 700 /var/www/adguardhome
 chmod 700 /var/www/adguardhome/data
 chmod 700 /var/www/adguardhome/data/filters
+chmod 600 var/www/adguardhome/data/querylog.json
+chmod 600 /var/www/adguardhome/data/stats.db
 chmod 600 /var/www/adguardhome/data/sessions.db
 chmod 600 "$install_dir/AdGuardHome.yaml"
 
