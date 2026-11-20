@@ -2,10 +2,10 @@
 
 packaging_format = 2
 
-description.en = "Network-wide ads & trackers blocking DNS server"
-description.fr = "Serveur DNS, bloqueur de publicités et trackers"
 id = "adguardhome"
 name = "AdGuard Home"
+description.en = "Network-wide ads & trackers blocking DNS server"
+description.fr = "Serveur DNS, bloqueur de publicités et trackers"
 
 version = "1.0.0~ynh1"
 
