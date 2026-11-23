@@ -2,12 +2,12 @@
 
 packaging_format = 2
 
-description.en = "Network-wide ads & trackers blocking DNS server"
-description.fr = "Serveur DNS, bloqueur de publicités et trackers"
 id = "adguardhome"
 name = "AdGuard Home"
+description.en = "Network-wide ads & trackers blocking DNS server"
+description.fr = "Serveur DNS, bloqueur de publicités et trackers"
 
-version = "0.107.80~ynh1"
+version = "1.0.0~ynh1"
 
 maintainers = [ "ddataa", "OniriCorpe" ]
 
@@ -69,14 +69,14 @@ type = "boolean"
 
 [resources]
     [resources.sources.main]
-    i386.sha256 = "6f8dcf4b66bf0573e3cda13da3a56b7cf545e12d7ff34c9f1a97021f611e5fcd"
-    i386.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.80/AdGuardHome_linux_386.tar.gz"
-    amd64.sha256 = "28593bc761d71469abdbc6f39ca42cbed763ec92b63082c729177b037ed51d18"
-    amd64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.80/AdGuardHome_linux_amd64.tar.gz"
-    arm64.sha256 = "d5e17d0d724418ddef8b7723ed8ade7eef4e621ec5b0e43a341859cca71a3d8f"
-    arm64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.80/AdGuardHome_linux_arm64.tar.gz"
-    armhf.sha256 = "760b941d49eaf92c3fd85ddd47f81530382f5cab8054165fd7f4089e1e9389dc"
-    armhf.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.80/AdGuardHome_linux_armv7.tar.gz"
+    i386.sha256 = "b7e8e43b90abe4f147817335cb5393347b4e11dc09decb1cb65e0230624473e8"
+    i386.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v1.0.0/AdGuardHome_linux_386.tar.gz"
+    amd64.sha256 = "19e023d98eb42eb1cdbfd6e4b6ebc937dade59e969506c62eafb3a3d6d2c1e4f"
+    amd64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v1.0.0/AdGuardHome_linux_amd64.tar.gz"
+    arm64.sha256 = "f5c331d29580726179d3119c0464ddacd6fdcd487a0a9e108532f58fdf772604"
+    arm64.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v1.0.0/AdGuardHome_linux_arm64.tar.gz"
+    armhf.sha256 = "7daac1e31ad5b244dd2bb87dca686f55a291156b2ea0477041acdf2cf3b23165"
+    armhf.url = "https://github.com/AdguardTeam/AdGuardHome/releases/download/v1.0.0/AdGuardHome_linux_armv7.tar.gz"
     in_subdir = 2
 
     autoupdate.asset.i386 = "^AdGuardHome_linux_386.tar.gz$"
