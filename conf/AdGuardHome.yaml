@@ -2,8 +2,15 @@ http:
   pprof:
     port: 6060
     enabled: false
+  doh:
+    routes:
+      - GET /dns-query
+      - POST /dns-query
+      - GET /dns-query/{ClientID}
+      - POST /dns-query/{ClientID}
+    insecure_enabled: true
   address: 127.0.0.1:__PORT__
-  session_ttl: 720h
+  session_ttl: 30d
 users:
   - name: __ADMIN__
     password: __PASSWORD__
@@ -27,15 +34,14 @@ dns:
     - https://dns-unfiltered.adguard.com/dns-query
   upstream_dns_file: ""
   bootstrap_dns:
-  - 9.9.9.10
-  - 149.112.112.10
-  - 194.242.2.2
-  - 2620:fe::10
-  - 2620:fe::fe:10
-  - 2a07:e340::2
+    - 9.9.9.10
+    - 149.112.112.10
+    - 194.242.2.2
+    - 2620:fe::10
+    - 2620:fe::fe:10
+    - 2a07:e340::2
   fallback_dns: []
-  all_servers: true
-  fastest_addr: false
+  upstream_mode: parallel
   fastest_timeout: 1s
   allowed_clients: []
   disallowed_clients: []
@@ -46,10 +52,13 @@ dns:
   trusted_proxies:
     - 127.0.0.0/8
     - ::1/128
+  cache_enabled: true
   cache_size: 41943040
-  cache_ttl_min: 10800
-  cache_ttl_max: 86400
+  cache_ttl_min: 86400
+  cache_ttl_max: 0
   cache_optimistic: true
+  cache_optimistic_answer_ttl: 30s
+  cache_optimistic_max_age: 12h
   bogus_nxdomain: []
   aaaa_disabled: false
   enable_dnssec: false
@@ -62,50 +71,56 @@ dns:
   ipset: []
   ipset_file: ""
   bootstrap_prefer_ipv6: true
-  upstream_timeout: 10s
+  upstream_timeout: 1s
   private_networks: []
-  use_private_ptr_resolvers: false
+  use_private_ptr_resolvers: true
   local_ptr_upstreams: []
   use_dns64: false
   dns64_prefixes: []
   serve_http3: true
   use_http3_upstreams: true
   serve_plain_dns: true
+  hostsfile_enabled: true
+  pending_requests:
+    enabled: true
 tls:
   enabled: __DNS_OVER_HTTPS__
-  server_name: "__DOMAIN__"
+  server_name: __DOMAIN__
   force_https: false
   port_https: 0
   port_dns_over_tls: __PORT_DNS_OVER_TLS__
   port_dns_over_quic: __PORT_DNS_OVER_QUIC__
   port_dnscrypt: 0
   dnscrypt_config_file: ""
-  allow_unencrypted_doh: true
   certificate_chain: ""
   private_key: ""
-  certificate_path: "/etc/yunohost/certs/__DOMAIN__/crt.pem"
-  private_key_path: "/etc/yunohost/certs/__DOMAIN__/key.pem"
+  certificate_path: /etc/yunohost/certs/__DOMAIN__/crt.pem
+  private_key_path: /etc/yunohost/certs/__DOMAIN__/key.pem
   strict_sni_check: false
 querylog:
+  dir_path: ""
   ignored: []
-  interval: 24h
+  interval: 6h
   size_memory: 1000
   enabled: true
+  ignored_enabled: false
   file_enabled: true
 statistics:
+  dir_path: ""
   ignored: []
-  interval: 720h
+  interval: 30d
   enabled: true
+  ignored_enabled: false
 filters:
   - enabled: true
     url: https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt
     name: AdGuard DNS filter
     id: 1
-  - enabled: false
+  - enabled: true
     url: https://adaway.org/hosts.txt
     name: AdAway Default Blocklist
     id: 2
-  - enabled: false
+  - enabled: true
     url: https://www.malwaredomainlist.com/hostslist/hosts.txt
     name: MalwareDomainList.com Hosts List
     id: 3
@@ -140,6 +155,7 @@ filtering:
     enabled: false
     bing: false
     duckduckgo: false
+    ecosia: true
     google: false
     pixabay: false
     yandex: false
@@ -148,15 +164,19 @@ filtering:
   parental_block_host: family-block.dns.adguard.com
   safebrowsing_block_host: standard-block.dns.adguard.com
   rewrites: []
+  safe_fs_patterns:
+    - __DATA_DIR__/data/userfilters/*
+  max_http_size: 256MB
   safebrowsing_cache_size: 1048576
   safesearch_cache_size: 1048576
   parental_cache_size: 1048576
   cache_time: 30
   filters_update_interval: 12
-  blocked_response_ttl: 10
+  blocked_response_ttl: 60
   filtering_enabled: true
+  rewrites_enabled: true
   parental_enabled: false
-  safebrowsing_enabled: true
+  safebrowsing_enabled: false
   protection_enabled: true
 clients:
   runtime_sources:
@@ -167,6 +187,7 @@ clients:
     hosts: true
   persistent: []
 log:
+  enabled: true
   file: ""
   max_backups: 0
   max_size: 100
@@ -175,7 +196,7 @@ log:
   local_time: false
   verbose: false
 os:
-  group: "__APP__"
-  user: "__APP__"
+  group: __APP__
+  user: __APP__
   rlimit_nofile: 0
-schema_version: 27
+schema_version: 34
